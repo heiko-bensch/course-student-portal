@@ -6,6 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 public class CourseController {
     private static String COURSE_LIST = "course-list";
@@ -26,6 +28,7 @@ public class CourseController {
     @GetMapping("/courseCreate")
     public String createCourseForm(Model model) {
         model.addAttribute("course", new Course(null, null, null, null, null, null));
+        model.addAttribute("allDays", List.of("Montag","Dienstag","Mittwoch","Donnerstag"));
         return COURSE_CREATE;
     }
 
@@ -40,6 +43,7 @@ public class CourseController {
         Course course = courseService.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid course ID:" + id));
         model.addAttribute("course", course);
+        model.addAttribute("allDays", List.of("Montag","Dienstag","Mittwoch","Donnerstag"));
         return COURSE_CREATE;
     }
 

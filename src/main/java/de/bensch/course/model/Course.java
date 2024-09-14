@@ -14,7 +14,7 @@ public class Course {
     Integer year;
     String name;
     String instructor;
-    String dayOfWeeg;
+    String dayOfWeek;
 }
 
 
