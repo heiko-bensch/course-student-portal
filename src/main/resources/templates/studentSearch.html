@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Student Search and Details</title>
+</head>
+<body>
+<form th:action="@{/search}" method="get">
+    <label for="className">Class:</label>
+    <select id="className" name="className">
+        <option th:each="className : ${classNames}" th:value="${className}" th:text="${className}"></option>
+    </select>
+
+    <label for="query">Student Name:</label>
+    <input type="text" id="query" name="query" placeholder="Enter student name" />
+
+    <button type="submit">Search</button>
+</form>
+
+<!--<div th:if="${students != null}">-->
+<!--    <h2>Results:</h2>-->
+<!--    <table>-->
+<!--        <thead>-->
+<!--        <tr>-->
+<!--            <th>Name</th>-->
+<!--            <th>Details</th>-->
+<!--        </tr>-->
+<!--        </thead>-->
+<!--        <tbody>-->
+<!--        <tr th:each="student : ${students}">-->
+<!--            <td th:text="${student.name}"></td>-->
+<!--            <td><button th:onclick="'viewDetails(' + ${student.id} + ')'">View Details</button></td>-->
+<!--        </tr>-->
+<!--        </tbody>-->
+<!--    </table>-->
+<!--</div>-->
+
+<!--<div th:if="${selectedStudent != null}">-->
+<!--    <h2>Student Details:</h2>-->
+<!--    <p>Name: <span th:text="${selectedStudent.name}"></span></p>-->
+<!--    <p>Age: <span th:text="${selectedStudent.age}"></span></p>-->
+
+<!--    <form th:action="@{/assignCourse}" method="post">-->
+<!--        <input type="hidden" name="studentId" th:value="${selectedStudent.id}" />-->
+<!--        <label for="course">Assign Course:</label>-->
+<!--        <select id="course" name="courseId">-->
+<!--            <option th:each="course : ${courses}" th:value="${course.id}" th:text="${course.name}"></option>-->
+<!--        </select>-->
+<!--        <button type="submit">Assign Course</button>-->
+<!--    </form>-->
+<!--</div>-->
+
+<!--<script>-->
+<!--    function viewDetails(studentId) {-->
+<!--        window.location.href = `/student/details/${studentId}`;-->
+<!--    }-->
+<!--</script>-->
+
+</body>
+</html>
