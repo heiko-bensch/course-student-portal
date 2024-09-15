@@ -1,0 +1,35 @@
+name: Publish package to GitHub Packages
+
+on:
+  release:
+    types: [created]
+
+permissions:
+  contents: read
+  issues: read
+  checks: write
+  pull-requests: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: 'gradle'
+
+#      - name: Publish JAR
+#        run: ./gradlew publish -Prelease.useLastTag=true
+#        env:
+#          USERNAME: ${{ secrets.USERNAME }}
+#          TOKEN: ${{ secrets.TOKEN }}
+
+      - name: Publish Docker
+        run: |
+          ./gradlew -Prelease.useLastTag=true -Djib.to.auth.username=gradle -Djib.to.auth.password=$GH_TOKEN jib -x check
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
