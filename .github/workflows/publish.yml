@@ -4,15 +4,15 @@ on:
   release:
     types: [created]
 
-permissions:
-  contents: read
-  issues: read
-  checks: write
-  pull-requests: write
-
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: admin
+      attestations: write
+      id-token: write
+      checks: write
     steps:
       - uses: actions/checkout@v4
       - name: Set up JDK 17
@@ -30,6 +30,8 @@ jobs:
 
       - name: Publish Docker
         run: |
-          ./gradlew -Prelease.useLastTag=true -Djib.to.auth.username=gradle -Djib.to.auth.password=$GH_TOKEN jib -x check
+          echo $GH_TOKEN
+          echo ./gradlew -Prelease.useLastTag=true -Djib.to.auth.username=${{ github.actor }} -Djib.to.auth.password=$GH_TOKEN jib -x check
+          ./gradlew -Prelease.useLastTag=true -Djib.to.auth.username=${{ github.actor }} -Djib.to.auth.password=$GH_TOKEN jib -x check --stacktrace
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
