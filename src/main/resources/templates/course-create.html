@@ -12,7 +12,7 @@
 <div class="container pt-5">
     <div class="row justify-content-center">
         <div class="col-lg-6">
-            <form th:action="@{${course.id == null ? '/courseCreate' : '/courseEdit/' + course.id}}"
+            <form th:action="@{${course.id == null ? urlMappings.COURSE_CREATE : urlMappings.getCourseEditUrl(course.id)}}"
                   th:object="${course}"
                   method="post" class="p-4 border rounded">
                 <div class="mb-6 pt-3">
@@ -50,11 +50,14 @@
                            aria-describedby="halfYearHelp"/>
                     <div id="halfYearHelp" class="form-text">Halbjahr für das der Kurs angeboten wird..</div>
                 </div>
-                <!--                <button type="submit" th:text="${course.id == null ? 'Erstellen' : 'Aktualisieren'}"></button>-->
+                <div class="pt-5">
+                    <button type="submit" class="btn btn-primary"
+                            th:text="${course.id == null ? 'Erstellen' : 'Aktualisieren'}"></button>
+                </div>
             </form>
         </div>
     </div>
-    <a th:href="@{/courses}">Zurück zur Kursliste</a>
+    <a th:href="@{${urlMappings.COURSE_LIST}}">Zurück zur Kursliste</a>
 </div>
 </body>
 </html>

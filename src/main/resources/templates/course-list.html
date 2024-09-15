@@ -1,13 +1,5 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="de">
-<!--<head>-->
-<!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">-->
-<!--    <link th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}" rel="stylesheet"/>-->
-<!--    <link th:href="@{/css/app.css}" rel="stylesheet"/>-->
-<!--    <script th:src="@{/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js}" defer></script>-->
-<!--    <script th:src="@{/js/app.js}" defer></script>-->
-<!--    <title>Kursliste</title>-->
-<!--</head>-->
 <head th:replace="~{fragments/general :: head}">
     <title>Kursliste</title>
 </head>
@@ -37,8 +29,8 @@
                 <td th:text="${course.dayOfWeek}"></td>
                 <td th:text="Hallo"></td>
                 <td>
-                    <a th:href="@{/courseEdit/{id}(id=${course.id})}" class="bi bi-pen"></a>
-                    <a th:href="@{/courseDelete/{id}(id=${course.id})}" onclick="return confirm('Bist du sicher?')"
+                    <a th:href="@{${urlMappings.COURSE_EDIT}(id=${course.id})}" class="bi bi-pen"></a>
+                    <a th:href="@{${urlMappings.COURSE_DELETE}(id=${course.id})}" onclick="return confirm('Bist du sicher?')"
                        class="bi bi-x"></a>
                 </td>
             </tr>
@@ -46,7 +38,7 @@
         </table>
 <!--    </div>-->
     <div class="container ">
-        <a th:href="@{/courseCreate}" class="btn btn-primary">Neuer Kurs</a>
+        <a th:href="@{${urlMappings.COURSE_CREATE}}" class="btn btn-primary">Neuer Kurs</a>
     </div>
 </div>
 
