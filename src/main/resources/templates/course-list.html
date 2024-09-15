@@ -4,44 +4,77 @@
     <title>Kursliste</title>
 </head>
 <body>
+<!-- Bootstrap Modal for Confirmation -->
+<div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmationModalLabel">Bestätigung erforderlich</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Bist du sicher, dass du diesen Kurs löschen möchtest?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
+                <a id="confirmDeleteButton" class="btn btn-danger" href="#">Löschen</a>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var deleteLinks = document.querySelectorAll('.delete-link');
+        var confirmDeleteButton = document.getElementById('confirmDeleteButton');
+        var confirmationModal = new bootstrap.Modal(document.getElementById('confirmationModal'));
+
+        deleteLinks.forEach(function(link) {
+            link.addEventListener('click', function(event) {
+                event.preventDefault(); // Prevent the default link behavior
+                var deleteUrl = this.getAttribute('href');
+                confirmDeleteButton.setAttribute('href', deleteUrl);
+                confirmationModal.show();
+            });
+        });
+    });
+</script>
+
+
+
+<!-- Normal list-->
 <div class="container-fluid p-5 bg-primary text-white text-center">
     <h1 class="display-1">Kurse</h1>
 </div>
-
 <div class="container pt-5 ">
-<!--    <div class="col-xxl-12">-->
-        <table class="table table-striped ">
-            <thead class="table-primary">
-            <tr>
-                <th class="col-1" scope="col">#</th>
-                <th class="col-3" scope="col">Name</th>
-                <th class="col-3" scope="col">Instructor</th>
-                <th class="col-1" scope="col">Day of Week</th>
-                <th class="col-1" scope="col">Class</th>
-                <th class="col-1" scope="col">Aktionen</th>
-            </tr>
-            </thead>
-            <tbody class="table-group-divider">
-            <tr th:each="course : ${courseList}">
-                <td th:text="${course.id}"></td>
-                <td th:text="${course.name}"></td>
-                <td th:text="${course.instructor}"></td>
-                <td th:text="${course.dayOfWeek}"></td>
-                <td th:text="Hallo"></td>
-                <td>
-                    <a th:href="@{${urlMappings.COURSE_EDIT}(id=${course.id})}" class="bi bi-pen"></a>
-                    <a th:href="@{${urlMappings.COURSE_DELETE}(id=${course.id})}" onclick="return confirm('Bist du sicher?')"
-                       class="bi bi-x"></a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-<!--    </div>-->
+    <table class="table table-striped ">
+        <thead class="table-primary">
+        <tr>
+            <th class="col-1" scope="col">#</th>
+            <th class="col-3" scope="col">Name</th>
+            <th class="col-3" scope="col">Instructor</th>
+            <th class="col-1" scope="col">Day of Week</th>
+            <th class="col-1" scope="col">Class</th>
+            <th class="col-1" scope="col">Aktionen</th>
+        </tr>
+        </thead>
+        <tbody class="table-group-divider">
+        <tr th:each="course : ${courseList}">
+            <td th:text="${course.id}"></td>
+            <td th:text="${course.name}"></td>
+            <td th:text="${course.instructor}"></td>
+            <td th:text="${course.dayOfWeek}"></td>
+            <td th:text="Hallo"></td>
+            <td>
+                <a th:href="@{${urlMappings.COURSE_EDIT}(id=${course.id})}" class="bi bi-pen"></a>
+                <a th:href="@{${urlMappings.COURSE_DELETE}(id=${course.id})}"
+                   class="delete-link bi bi-x" style="cursor: pointer;"></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
     <div class="container ">
         <a th:href="@{${urlMappings.COURSE_CREATE}}" class="btn btn-primary">Neuer Kurs</a>
     </div>
 </div>
-
-
 </body>
 </html>

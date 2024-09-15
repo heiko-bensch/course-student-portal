@@ -11,7 +11,7 @@ import java.util.Optional;
 @Service
 public class CourseService {
     private List<Course> courses =  new ArrayList<>(List.of(
-            new Course(1L,1,2024,"Kurs 1","du","MOntag"),
+            new Course(1L,1,2024,"Kurs 1","du","Montag"),
             new Course(2L,1,2024,"Kurs 2","du","Dienstag"),
             new Course(3L,1,2024,"Kurs 4","ich","Mittwoch")
     ));

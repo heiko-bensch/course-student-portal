@@ -51,13 +51,13 @@
                     <div id="halfYearHelp" class="form-text">Halbjahr für das der Kurs angeboten wird..</div>
                 </div>
                 <div class="pt-5">
-                    <button type="submit" class="btn btn-primary"
+                    <button type="submit" class="btn btn-primary col-lg-2"
                             th:text="${course.id == null ? 'Erstellen' : 'Aktualisieren'}"></button>
+                    <a th:href="@{${urlMappings.COURSE_LIST}}" class="btn btn-secondary col-lg-4"> Zurück zur Kursliste</a>
                 </div>
             </form>
         </div>
     </div>
-    <a th:href="@{${urlMappings.COURSE_LIST}}">Zurück zur Kursliste</a>
 </div>
 </body>
 </html>
