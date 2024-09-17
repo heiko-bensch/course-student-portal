@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="de">
 <head th:replace="~{fragments/general :: head}">
-    <title>Kurs erstellen</title>
+    <title>#{course-create.title}</title>
 </head>
-<title>Kurs erstellen</title>
+<title>#{course-create.title}</title>
 <body>
 
 <div class="container-fluid p-5 bg-primary text-white text-center">
-    <h1 th:text="${course.id == null ? 'Kurs erstellen' : 'Kurs bearbeiten'}">Kurs erstellen</h1>
+    <h1 th:if="${course.id == null}" th:text="#{course-create.title}"></h1>
+    <h1 th:if="${course.id != null}" th:text="#{course-modify.title}"></h1>
 </div>
 <div class="container pt-5">
     <div class="row justify-content-center">
@@ -16,19 +17,19 @@
                   th:object="${course}"
                   method="post" class="p-4 border rounded">
                 <div class="mb-6 pt-3">
-                    <label class="form-label" for="name">Name:</label>
+                    <label class="form-label" for="name" th:text="#{course-modify.name}"></label>
                     <input class="form-control" type="text" id="name" th:field="*{name}" required
                            aria-describedby="nameHelp"/>
-                    <div id="nameHelp" class="form-text">Kursname aus der Kursliste.</div>
+                    <div id="nameHelp" class="form-text" th:text="#{course-modify.name.help}"></div>
                 </div>
                 <div class="mb-6 pt-3">
-                    <label class="form-label" for="instructor">Instructor:</label>
+                    <label class="form-label" for="instructor" th:text="#{course-modify.instructor}">:</label>
                     <input class="form-control" type="text" id="instructor" th:field="*{instructor}" required
                            aria-describedby="instructorHelp"/>
-                    <div id="instructorHelp" class="form-text">Kursleiter aus der Kursliste.</div>
+                    <div id="instructorHelp" class="form-text" th:text="#{course-modify.instructor.help}"></div>
                 </div>
                 <div class="mb-6 pt-3">
-                    <label class="form-label" for="dayOfWeek">Day of Week:</label>
+                    <label class="form-label" for="dayOfWeek" th:text="#{course-modify.day-of-week}"></label>
                     <select id="dayOfWeek" class="form-select" aria-describedby="dayOfWeekHelp"
                             th:field="*{dayOfWeek}">
                         <option th:each="day : ${allDays}"
@@ -36,24 +37,24 @@
                                 th:text="${day}">Wireframe
                         </option>
                     </select>
-                    <div id="dayOfWeekHelp" class="form-text">Wochentag an dem der Kurs angeboten wird.</div>
+                    <div id="dayOfWeekHelp" class="form-text" th:text="#{course-modify.day-of-week.help}"></div>
                 </div>
                 <div class="mb-6 pt-3">
-                    <label class="form-label" for="year">Year:</label>
+                    <label class="form-label" for="year" th:text="#{course-modify.year}"></label>
                     <input class="form-control" type="text" id="year" th:field="*{year}" required
                            aria-describedby="yearHelp"/>
-                    <div id="yearHelp" class="form-text">Jahrgangsstufen für die der Kurs angeboten wird.</div>
+                    <div id="yearHelp" class="form-text" th:text="#{course-modify.year.help}"></div>
                 </div>
                 <div class="mb-6 pt-3">
-                    <label class="form-label" for="halfYear">Half Year:</label>
+                    <label class="form-label" for="halfYear" th:text="#{course-modify.half-year}"></label>
                     <input class="form-control" type="number" id="halfYear" th:field="*{halfYear}" required
                            aria-describedby="halfYearHelp"/>
-                    <div id="halfYearHelp" class="form-text">Halbjahr für das der Kurs angeboten wird..</div>
+                    <div id="halfYearHelp" class="form-text" th:text="#{course-modify.half-year.help}"></div>
                 </div>
                 <div class="pt-5">
-                    <button type="submit" class="btn btn-primary col-lg-2"
-                            th:text="${course.id == null ? 'Erstellen' : 'Aktualisieren'}"></button>
-                    <a th:href="@{${urlMappings.COURSE_LIST}}" class="btn btn-secondary col-lg-4"> Zurück zur Kursliste</a>
+                    <button th:if="${course.id == null}" type="submit" class="btn btn-primary col-lg-3" th:text="#{course-modify.button.create}"></button>
+                    <button th:if="${course.id != null}" type="submit" class="btn btn-primary col-lg-3" th:text="#{course-modify.button.modify}"></button>
+                    <a th:href="@{${urlMappings.COURSE_LIST}}" class="btn btn-secondary col-lg-4" th:text="#{course-modify.link.back}"></a>
                 </div>
             </form>
         </div>
