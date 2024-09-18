@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="de">
 <head th:replace="~{fragments/general :: head}">
-    <title th:text="#{course-list.title}"></title>
+    <title th:text="#{student-list.title}"></title>
 </head>
 <body>
 <!-- Bootstrap Modal for Confirmation -->
@@ -9,14 +9,14 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="confirmationModalLabel" th:text="#{course-list.delete.confirmation.title}"></h5>
+                <h5 class="modal-title" id="confirmationModalLabel" th:text="#{student-list.delete.confirmation.title}"></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body" th:text="#{course-list.delete.confirmation.text}">
+            <div class="modal-body" th:text="#{student-list.delete.confirmation.text}">
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" th:text="#{course-list.delete.confirmation.btn.cancel}"></button>
-                <a id="confirmDeleteButton" class="btn btn-danger" href="#" th:text="#{course-list.delete.confirmation.btn.ok}"></a>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" th:text="#{student-list.delete.confirmation.btn.cancel}"></button>
+                <a id="confirmDeleteButton" class="btn btn-danger" href="#" th:text="#{student-list.delete.confirmation.btn.ok}"></a>
             </div>
         </div>
     </div>
@@ -40,39 +40,36 @@
 
 
 
-<!-- Normal list-->
 <div class="container-fluid p-5 bg-primary text-white text-center">
-    <h1 class="display-1" th:text="#{course-list.title}"></h1>
+    <h1 class="display-1" th:text="#{student-list.title}"></h1>
 </div>
 <div class="container pt-5 ">
     <table class="table table-striped ">
         <thead class="table-primary">
         <tr>
-            <th class="col-1" scope="col" th:text="#{course-list.table.id}"></th>
-            <th class="col-3" scope="col" th:text="#{course-list.table.name}"></th>
-            <th class="col-3" scope="col" th:text="#{course-list.table.instructor}"></th>
-            <th class="col-1" scope="col"th:text="#{course-list.table.day-of-week}"></th>
-            <th class="col-1" scope="col" th:text="#{course-list.table.class}"></th>
-            <th class="col-1" scope="col" th:text="#{course-list.table.action}"></th>
+            <th class="col-1" scope="col" th:text="#{student-list.table.id}"></th>
+            <th class="col-3" scope="col" th:text="#{student-list.table.name}"></th>
+            <th class="col-3" scope="col" th:text="#{student-list.table.class}"></th>
+            <th class="col-1" scope="col"th:text="#{student-list.table.class-name}"></th>
+            <th class="col-1" scope="col" th:text="#{student-list.table.action}"></th>
         </tr>
         </thead>
         <tbody class="table-group-divider">
-        <tr th:each="course : ${courseList}">
-            <td th:text="${course.id}"></td>
-            <td th:text="${course.name}"></td>
-            <td th:text="${course.instructor}"></td>
-            <td th:text="${course.dayOfWeek}"></td>
-            <td th:text="Hallo"></td>
+        <tr th:each="student : ${studentList}">
+            <td th:text="${student.id}"></td>
+            <td th:text="${student.name}"></td>
+            <td th:text="${student.clazz}"></td>
+            <td th:text="${student.className}"></td>
             <td>
-                <a th:href="@{${urlMappings.COURSE_EDIT}(id=${course.id})}" class="bi bi-pen"></a>
-                <a th:href="@{${urlMappings.COURSE_DELETE}(id=${course.id})}"
+                <a th:href="@{${urlMappings.STUDENT_EDIT}(id=${student.id})}" class="bi bi-pen"></a>
+                <a th:href="@{${urlMappings.STUDENT_DELETE}(id=${student.id})}"
                    class="delete-link bi bi-x" style="cursor: pointer;"></a>
             </td>
         </tr>
         </tbody>
     </table>
     <div class="container ">
-        <a th:href="@{${urlMappings.COURSE_CREATE}}" class="btn btn-primary" th:text="#{course-list.btn.new-course}"></a>
+        <a th:href="@{${urlMappings.STUDENT_CREATE}}" class="btn btn-primary" th:text="#{student-list.btn.new-student}"></a>
     </div>
 </div>
 </body>
