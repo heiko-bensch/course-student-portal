@@ -5,18 +5,22 @@
 </head>
 <body>
 <!-- Bootstrap Modal for Confirmation -->
-<div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+<div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="confirmationModalLabel" th:text="#{course-list.delete.confirmation.title}"></h5>
+                <h5 class="modal-title" id="confirmationModalLabel"
+                    th:text="#{course-list.delete.confirmation.title}"></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" th:text="#{course-list.delete.confirmation.text}">
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" th:text="#{course-list.delete.confirmation.btn.cancel}"></button>
-                <a id="confirmDeleteButton" class="btn btn-danger" href="#" th:text="#{course-list.delete.confirmation.btn.ok}"></a>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                        th:text="#{course-list.delete.confirmation.btn.cancel}"></button>
+                <a id="confirmDeleteButton" class="btn btn-danger" href="#"
+                   th:text="#{course-list.delete.confirmation.btn.ok}"></a>
             </div>
         </div>
     </div>
@@ -27,8 +31,8 @@
         var confirmDeleteButton = document.getElementById('confirmDeleteButton');
         var confirmationModal = new bootstrap.Modal(document.getElementById('confirmationModal'));
 
-        deleteLinks.forEach(function(link) {
-            link.addEventListener('click', function(event) {
+        deleteLinks.forEach(function (link) {
+            link.addEventListener('click', function (event) {
                 event.preventDefault(); // Prevent the default link behavior
                 var deleteUrl = this.getAttribute('href');
                 confirmDeleteButton.setAttribute('href', deleteUrl);
@@ -37,7 +41,6 @@
         });
     });
 </script>
-
 
 
 <!-- Normal list-->
@@ -51,7 +54,7 @@
             <th class="col-1" scope="col" th:text="#{course-list.table.id}"></th>
             <th class="col-3" scope="col" th:text="#{course-list.table.name}"></th>
             <th class="col-3" scope="col" th:text="#{course-list.table.instructor}"></th>
-            <th class="col-1" scope="col"th:text="#{course-list.table.day-of-week}"></th>
+            <th class="col-1" scope="col" th:text="#{course-list.table.day-of-week}"></th>
             <th class="col-1" scope="col" th:text="#{course-list.table.class}"></th>
             <th class="col-1" scope="col" th:text="#{course-list.table.action}"></th>
         </tr>
@@ -72,7 +75,8 @@
         </tbody>
     </table>
     <div class="container ">
-        <a th:href="@{${urlMappings.COURSE_CREATE}}" class="btn btn-primary" th:text="#{course-list.btn.new-course}"></a>
+        <a th:href="@{${urlMappings.COURSE_CREATE}}" class="btn btn-primary"
+           th:text="#{course-list.btn.new-course}"></a>
     </div>
 </div>
 </body>
