@@ -1,20 +1,35 @@
 package de.bensch.course.model;
 
-import lombok.AllArgsConstructor;
+import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name = "course")
 public class Course {
-    //@Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     Long id;
-    Integer halfYear;
-    Integer year;
+
+    @Column(name = "name")
     String name;
+
+    @Column(name = "half_year")
+    Integer halfYear;
+
+    @Column(name = "year_")
+    Integer year;
+
+
+    @Column(name = "instructor")
     String instructor;
+
+    @Column(name = "day_of_week")
     String dayOfWeek;
+
 }
 
 
