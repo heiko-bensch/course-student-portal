@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="de">
+<head th:replace="~{fragments/general :: head}">
+    <title th:text="#{student-create.title}"></title>
+</head>
+<title th:text="#{student-create.title}">"</title>
+<body>
+
+<div class="container-fluid p-5 bg-primary text-white text-center">
+    <h1 th:if="${student.id == null}" th:text="#{student-create.title}"></h1>
+    <h1 th:if="${student.id != null}" th:text="#{student-modify.title}"></h1>
+</div>
+<div class="container pt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <form th:action="@{${student.id == null ? urlMappings.STUDENT_CREATE : urlMappings.getStudentEditUrl(student.id)}}"
+                  th:object="${student}"
+                  method="post" class="p-4 border rounded">
+                <div class="mb-6 pt-3">
+                    <label class="form-label" for="name" th:text="#{student-modify.name}"></label>
+                    <input class="form-control" type="text" id="name" th:field="*{name}" required
+                           aria-describedby="nameHelp"/>
+                    <div id="nameHelp" class="form-text" th:text="#{student-modify.name.help}"></div>
+                </div>
+                <div class="mb-6 pt-3">
+                    <label class="form-label" for="class" th:text="#{student-modify.class}">:</label>
+                    <input class="form-control" type="text" id="class" th:field="*{clazz}" required
+                           aria-describedby="classHelp"/>
+                    <div id="classHelp" class="form-text" th:text="#{student-modify.class.help}"></div>
+                </div>
+                <div class="mb-6 pt-3">
+                    <label class="form-label" for="className" th:text="#{student-modify.class-name}"></label>
+                    <input class="form-control" type="text" id="className" th:field="*{className}" required
+                           aria-describedby="classNameHelp"/>
+                    <div id="classNameHelp" class="form-text" th:text="#{student-modify.class-name.help}"></div>
+                </div>
+                <!--                <div class="mb-6 pt-3">-->
+                <!--                    <label class="form-label" for="year" th:text="#{course-modify.year}"></label>-->
+                <!--                    <input class="form-control" type="text" id="year" th:field="*{year}" required-->
+                <!--                           aria-describedby="yearHelp"/>-->
+                <!--                    <div id="yearHelp" class="form-text" th:text="#{course-modify.year.help}"></div>-->
+                <!--                </div>-->
+                <!--                <div class="mb-6 pt-3">-->
+                <!--                    <label class="form-label" for="halfYear" th:text="#{course-modify.half-year}"></label>-->
+                <!--                    <input class="form-control" type="number" id="halfYear" th:field="*{halfYear}" required-->
+                <!--                           aria-describedby="halfYearHelp"/>-->
+                <!--                    <div id="halfYearHelp" class="form-text" th:text="#{course-modify.half-year.help}"></div>-->
+                <!--                </div>-->
+                <div class="pt-5">
+                    <button th:if="${student.id == null}" type="submit" class="btn btn-primary col-lg-3"
+                            th:text="#{student-modify.button.create}"></button>
+                    <button th:if="${student.id != null}" type="submit" class="btn btn-primary col-lg-3"
+                            th:text="#{student-modify.button.modify}"></button>
+                    <a th:href="@{${urlMappings.STUDENT_LIST}}" class="btn btn-secondary col-lg-4"
+                       th:text="#{student-modify.link.back}"></a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

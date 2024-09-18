@@ -23,7 +23,10 @@ public class StudentService {
     }
 
     public Optional<Student> findById(Long id) {
-        return Optional.empty();
+        return students
+                .stream()
+                .filter(c -> Objects.equals(c.getId(), id))
+                .findFirst();
     }
 
     public void delete(Student student) {

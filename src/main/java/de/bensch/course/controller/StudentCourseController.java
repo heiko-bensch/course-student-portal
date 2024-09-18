@@ -37,7 +37,7 @@ public class StudentCourseController {
         model.addAttribute("selectedStudent", null); // Clear selected student
         model.addAttribute("courses", courses);
 
-        return "students";
+        return "student-list";
     }
 
     @GetMapping("/student/details/{id}")
@@ -52,7 +52,7 @@ public class StudentCourseController {
         model.addAttribute("students", studentService.findStudentsByClassNameAndNameContaining(student.get().getClassName(), ""));
         model.addAttribute("classNames", studentService.getAllClassNames());
 
-        return "students";
+        return "student-list";
     }
 
     @PostMapping("/assignCourse")
