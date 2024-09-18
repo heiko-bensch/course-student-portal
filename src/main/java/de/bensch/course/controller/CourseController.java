@@ -24,7 +24,7 @@ public class CourseController {
 
     @ModelAttribute("urlMappings")
     public UrlMappings urlMappings() {
-        //noinspection InstantiationOfUtilityClass
+        //noinspection
         return new UrlMappings();
     }
 
@@ -37,7 +37,7 @@ public class CourseController {
 
     @GetMapping(COURSE_CREATE)
     public String createCourseForm(Model model) {
-        model.addAttribute("course", new Course(null, null, null, null, null, null));
+        model.addAttribute("course", new Course());
         model.addAttribute("allDays", List.of("Montag", "Dienstag", "Mittwoch", "Donnerstag"));
         return COURSE_CREATE;
     }
@@ -71,9 +71,8 @@ public class CourseController {
 
     @GetMapping(COURSE_DELETE)
     public String deleteCourse(@PathVariable("id") Long id) {
-        Course course = courseService.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid course ID:" + id));
-        courseService.delete(course);
+
+        courseService.delete(id);
         return "redirect:" + COURSE_LIST;
     }
 

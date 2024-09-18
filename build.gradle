@@ -33,11 +33,12 @@ dependencies {
 //    implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
     implementation('org.webjars:bootstrap:5.3.3')
     implementation 'org.flywaydb:flyway-core'
-    implementation 'org.flywaydb:flyway-database-postgresql'
+  //  implementation 'org.flywaydb:flyway-database-postgresql'
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
-    runtimeOnly 'org.postgresql:postgresql'
+    //developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
+    developmentOnly'com.h2database:h2'
+    //runtimeOnly 'org.postgresql:postgresql'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
@@ -71,19 +72,20 @@ spotbugs {
 spotbugsMain {
     reports.create("html") {
         required = true
-        outputLocation = file("$project/build/reports/spotbugs.html")
+
+        outputLocation = file("${layout.buildDirectory.get().asFile}/reports/spotbugs.html")
         setStylesheet("fancy-hist.xsl")
     }
     reports.create("xml") {
         required = true
-        outputLocation = file("$project/build/reports/spotbugs.xml")
+        outputLocation = file("${layout.buildDirectory.get().asFile}/reports/spotbugs.xml")
     }
 }
 
 jacocoTestReport {
     reports {
-        xml.outputLocation = file("$project/build/reports/jacoco/jacoco.xml")
-        html.outputLocation = file("$project/build/reports/jacoco/html")
+        xml.outputLocation = file("${layout.buildDirectory.get().asFile}/reports/jacoco/jacoco.xml")
+        html.outputLocation = file("${layout.buildDirectory.get().asFile}/reports/jacoco/html")
     }
 }
 
