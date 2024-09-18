@@ -72,19 +72,20 @@ spotbugs {
 spotbugsMain {
     reports.create("html") {
         required = true
-        outputLocation = file("$project/build/reports/spotbugs.html")
+
+        outputLocation = file("${layout.buildDirectory.get().asFile}/reports/spotbugs.html")
         setStylesheet("fancy-hist.xsl")
     }
     reports.create("xml") {
         required = true
-        outputLocation = file("$project/build/reports/spotbugs.xml")
+        outputLocation = file("${layout.buildDirectory.get().asFile}/reports/spotbugs.xml")
     }
 }
 
 jacocoTestReport {
     reports {
-        xml.outputLocation = file("$project/build/reports/jacoco/jacoco.xml")
-        html.outputLocation = file("$project/build/reports/jacoco/html")
+        xml.outputLocation = file("${layout.buildDirectory.get().asFile}/reports/jacoco/jacoco.xml")
+        html.outputLocation = file("${layout.buildDirectory.get().asFile}/reports/jacoco/html")
     }
 }
 
