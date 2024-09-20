@@ -40,13 +40,51 @@
             });
         });
     });
+    $(document).ready(function () {
+        $("#btnClear").on("click", function (e) {
+            e.preventDefault();
+            $("#keyword").text("");
+            window.location = "[[@{/course-list}]]";
+        });
+    });
 </script>
 
-
-<!-- Normal list-->
+<div th:replace="fragments/header :: header"></div>
+<!-- ----------------------------------------------------------------------- -->
 <div class="container-fluid p-5 bg-primary text-white text-center">
     <h1 class="display-1" th:text="#{course-list.title}"></h1>
 </div>
+<!-- ----------------------------------------------------------------------- -->
+
+<!-- -------Search field---------------------------------------------------- -->
+<div class="container my-3">
+    <form th:action="@{${urlMappings.COURSE_LIST}}" id="searchForm">
+        <div class="row d-flex">
+            <div class="col-md-6 mt-2">
+                <div class="search">
+                    <i class="fa fa-search"></i>
+                    <input id="keyword" type="search" name="keyword" th:value="${keyword}" required class="form-control"
+                           placeholder="Enter keyword">
+                    <button type="submit" class="btn btn-secondary">Search</button>
+                </div>
+            </div>
+            <div class="col-md-3 input-group mt-2">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="pageSize">Items per page:</label>
+                </div>
+                <select form="searchForm" name="size" th:value="${pageSize}" onchange="changePageSize()" class="size-select"
+                        id="pageSize">
+                    <option th:each="s : ${ {3, 6, 9} }" th:value="${s}" th:text="${s}" th:selected="${s == pageSize}"></option>
+                </select>
+            </div>
+            <div class="col-md-1 mt-2">
+                <button id="btnClear" class="btn btn-info">Clear</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- Normal list-->
 <div class="container pt-5 ">
     <table class="table table-striped ">
         <thead class="table-primary">
@@ -55,21 +93,19 @@
             <th class="col-3" scope="col" th:text="#{course-list.table.name}"></th>
             <th class="col-3" scope="col" th:text="#{course-list.table.instructor}"></th>
             <th class="col-1" scope="col" th:text="#{course-list.table.day-of-week}"></th>
-            <th class="col-1" scope="col" th:text="#{course-list.table.class}"></th>
             <th class="col-1" scope="col" th:text="#{course-list.table.action}"></th>
         </tr>
         </thead>
         <tbody class="table-group-divider">
         <tr th:each="course : ${courseList}">
             <td th:text="${course.id}"></td>
-            <td th:text="${course.name}"></td>
+            <td>[[${course.gradeLevels}]] - [[${course.name}]] </td>
             <td th:text="${course.instructor}"></td>
             <td th:text="${course.dayOfWeek}"></td>
-            <td th:text="Hallo"></td>
             <td>
-                <a th:href="@{${urlMappings.COURSE_EDIT}(id=${course.id})}" class="bi bi-pen"></a>
-                <a th:href="@{${urlMappings.COURSE_DELETE}(id=${course.id})}"
-                   class="delete-link bi bi-x" style="cursor: pointer;"></a>
+                <a th:href="@{${urlMappings.COURSE_EDIT}(id=${course.id})}" target="_blank"><i class="fa-solid fa-pen-to-square"></i></a>
+                &nbsp;
+                <a th:href="@{${urlMappings.COURSE_DELETE}(id=${course.id})}" target="_blank"><i class="fa-solid fa-trash"></i></a>
             </td>
         </tr>
         </tbody>

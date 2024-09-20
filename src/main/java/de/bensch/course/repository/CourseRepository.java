@@ -5,4 +5,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CourseRepository extends JpaRepository<Course, Long> {
 
+    Iterable<Course> findByNameLikeIgnoreCaseOrInstructorLikeIgnoreCaseOrDayOfWeekIsLike(String name,String instructor,String dayOfWeek);
+
+    Iterable<Course> findByNameLikeIgnoreCase(String keyword);
+
+    Iterable<Course> findByNameContainingIgnoreCase(String keyword);
+
+
+    Iterable<Course> findByNameContainingIgnoreCaseOrInstructorContainingIgnoreCase(String keyword, String keyword1);
 }

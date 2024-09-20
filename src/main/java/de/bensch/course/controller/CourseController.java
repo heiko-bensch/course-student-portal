@@ -2,12 +2,10 @@ package de.bensch.course.controller;
 
 import de.bensch.course.model.Course;
 import de.bensch.course.service.CourseService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,10 +26,14 @@ public class CourseController {
         return new UrlMappings();
     }
 
-
     @GetMapping(COURSE_LIST)
-    public String courses(Model model) {
-        model.addAttribute("courseList", courseService.findAll());
+    public String courses(Model model, @RequestParam(required = false) String keyword) {
+        if(StringUtils.isBlank(keyword)){
+            model.addAttribute("courseList", courseService.findAll());
+        }else {
+            model.addAttribute("courseList", courseService.findByKeyword(keyword));
+            model.addAttribute("keyword", keyword);
+        }
         return COURSE_LIST;
     }
 

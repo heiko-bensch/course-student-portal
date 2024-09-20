@@ -31,4 +31,7 @@ public class CourseService {
         this.courseRepository.deleteById(id);
     }
 
+    public Iterable<Course> findByKeyword(String keyword) {
+        return courseRepository.findByNameContainingIgnoreCaseOrInstructorContainingIgnoreCase(keyword, keyword);
+    }
 }

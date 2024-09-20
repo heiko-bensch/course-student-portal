@@ -23,12 +23,14 @@ public class Course {
     @Column(name = "year_")
     Integer year;
 
-
     @Column(name = "instructor")
     String instructor;
 
     @Column(name = "day_of_week")
     String dayOfWeek;
+
+    @Column(name = "grade_levels")
+    String gradeLevels;
 
 }
 
