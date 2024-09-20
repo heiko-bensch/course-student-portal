@@ -27,7 +27,8 @@ public class Course {
     String instructor;
 
     @Column(name = "day_of_week")
-    String dayOfWeek;
+    @Enumerated(EnumType.STRING)
+    WeekDay dayOfWeek;
 
     @Column(name = "grade_levels")
     String gradeLevels;

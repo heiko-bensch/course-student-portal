@@ -1,6 +1,7 @@
 package de.bensch.course.controller;
 
 import de.bensch.course.model.Course;
+import de.bensch.course.model.WeekDay;
 import de.bensch.course.service.CourseService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
@@ -40,7 +41,7 @@ public class CourseController {
     @GetMapping(COURSE_CREATE)
     public String createCourseForm(Model model) {
         model.addAttribute("course", new Course());
-        model.addAttribute("allDays", List.of("Montag", "Dienstag", "Mittwoch", "Donnerstag"));
+        model.addAttribute("allDays", WeekDay.values());
         return COURSE_CREATE;
     }
 
@@ -61,7 +62,7 @@ public class CourseController {
         Course course = courseService.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid course ID:" + id));
         model.addAttribute("course", course);
-        model.addAttribute("allDays", List.of("Montag", "Dienstag", "Mittwoch", "Donnerstag"));
+        model.addAttribute("allDays", WeekDay.values());
         return COURSE_CREATE;
     }
 
