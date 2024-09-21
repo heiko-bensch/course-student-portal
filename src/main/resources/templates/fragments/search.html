@@ -1,0 +1,37 @@
+<div th:fragment="search(searchUrl)" class="container my-3">
+    <form th:action="@{${searchUrl}}" id="searchForm">
+        <div class="row d-flex">
+            <div class="col-md-6 mt-2">
+                <div class="search">
+                    <i class="fa fa-search"></i>
+                    <input id="keyword" type="search" name="keyword" th:value="${keyword}" required class="form-control"
+                           placeholder="Enter keyword">
+                    <button type="submit" class="btn btn-secondary">Search</button>
+                </div>
+            </div>
+            <div class="col-md-3 input-group mt-2">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="pageSize">Items per page:</label>
+                </div>
+                <select form="searchForm" name="size" th:value="${pageSize}" onchange="changePageSize()"
+                        class="size-select"
+                        id="pageSize">
+                    <option th:each="s : ${ {3, 6, 9} }" th:value="${s}" th:text="${s}"
+                            th:selected="${s == pageSize}"></option>
+                </select>
+            </div>
+            <div class="col-md-1 mt-2">
+                <button id="btnClear" class="btn btn-info">Clear</button>
+            </div>
+        </div>
+    </form>
+    <script>
+        $(document).ready(function () {
+            $("#btnClear").on("click", function (e) {
+                e.preventDefault();
+                $("#keyword").text("");
+                window.location = `[[@{${searchUrl}}]]`;
+            });
+        });
+    </script>
+</div>

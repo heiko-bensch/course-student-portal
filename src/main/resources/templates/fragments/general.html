@@ -1,17 +1,64 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="de">
-<head th:fragment="head">
+<div th:fragment="styles">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0" />
 
-    <link th:href="@{/webjars/font-awesome/6.5.2/css/all.css}" rel="stylesheet"/>
-    <link th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css"th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}" />
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
-<!--    <link th:href="@{/css/app.css}" rel="stylesheet"/>-->
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/font-awesome/6.5.2/css/all.css}"/>
+
+<!--    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />-->
+<!--    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />-->
+<!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"-->
+<!--          integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="-->
+<!--          crossorigin="anonymous" referrerpolicy="no-referrer" />-->
+<!--    <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>-->
+<!--    <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>-->
 
     <script type="text/javascript" th:src="@{/webjars/jquery/3.7.1/jquery.slim.js}"></script>
     <script type="text/javascript" th:src="@{/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js}" defer></script>
+</div>
 
-<!--    <script th:src="@{/js/app.js}" defer></script>-->
-</head>
-</html>
+<div th:fragment="confirmationModal(confirmationText)">
+    <!-- Bootstrap Modal for Confirmation -->
+    <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmationModalLabel"
+                        th:text="#{delete.confirmation.title}"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" th:text="${confirmationText}">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                            th:text="#{delete.confirmation.btn.cancel}"></button>
+                    <a id="confirmDeleteButton" class="btn btn-danger" href="#"
+                       th:text="#{delete.confirmation.btn.ok}"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var deleteLinks = document.querySelectorAll('.delete-link');
+            var confirmDeleteButton = document.getElementById('confirmDeleteButton');
+            var confirmationModal = new bootstrap.Modal(document.getElementById('confirmationModal'));
+
+            deleteLinks.forEach(function (link) {
+                link.addEventListener('click', function (event) {
+                    event.preventDefault(); // Prevent the default link behavior
+                    var deleteUrl = this.getAttribute('href');
+                    confirmDeleteButton.setAttribute('href', deleteUrl);
+                    confirmationModal.show();
+                });
+            });
+        });
+
+        function changePageSize() {
+            $("#searchForm").submit();
+        }
+    </script>
+</div>
