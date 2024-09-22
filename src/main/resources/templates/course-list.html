@@ -21,21 +21,19 @@
     <table class="table table-hover table-responsive-xl">
         <thead class="thead-light">
         <tr>
-            <th th:replace="fragments/sorting :: sorting(field='id',label='#')"></th>
-            <th th:replace="fragments/sorting :: sorting(field='name',label=#{course-list.table.name})"></th>
-            <!--            <th th:replace="fragments/sorting :: sorting('description','Description')"></th>-->
-            <!--            <th th:replace="fragments/sorting :: sorting('level','Level')"></th>-->
-            <!--            <th class="col-1" scope="col" th:text="#{course-list.table.id}"></th>-->
-            <th class="col-3" scope="col" th:text="#{course-list.table.name}"></th>
-            <th class="col-3" scope="col" th:text="#{course-list.table.instructor}"></th>
-            <th class="col-1" scope="col" th:text="#{course-list.table.day-of-week}"></th>
+            <th th:replace="fragments/sorting :: sorting(field='id',label='#',url=${urlMappings.COURSE_LIST})"></th>
+            <th th:replace="fragments/sorting :: sorting(field='gradeLevels',label=#{course-list.table.grade-levels},url=${urlMappings.COURSE_LIST})"></th>
+            <th th:replace="fragments/sorting :: sorting(field='name',label=#{course-list.table.name},url=${urlMappings.COURSE_LIST})"></th>
+            <th th:replace="fragments/sorting :: sorting(field='instructor',label=#{course-list.table.instructor},url=${urlMappings.COURSE_LIST})"></th>
+            <th th:replace="fragments/sorting :: sorting(field='dayOfWeek',label=#{course-list.table.day-of-week},url=${urlMappings.COURSE_LIST})"></th>
             <th class="col-1" scope="col" th:text="#{course-list.table.action}"></th>
         </tr>
         </thead>
         <tbody class="table-group-divider">
         <tr th:each="course : ${courseList}">
             <td th:text="${course.id}"></td>
-            <td>[[${course.gradeLevels}]] - [[${course.name}]]</td>
+            <td th:text="${course.gradeLevels}"></td>
+            <td th:text="${course.name}"></td>
             <td th:text="${course.instructor}"></td>
             <td th:text="${course.dayOfWeek}"></td>
             <td>
@@ -48,37 +46,11 @@
         </tr>
         </tbody>
     </table>
-    <!--    <div class="container ">-->
-    <!--        <a th:href="@{${urlMappings.COURSE_CREATE}}" class="btn btn-primary"-->
-    <!--           th:text="#{course-list.btn.new-course}"></a>-->
-    <!--    </div>-->
 </div>
-<nav aria-label="Pagination" th:if="${totalPages > 0}">
-    <!--<nav aria-label="Pagination" >-->
-    <ul class="pagination justify-content-center">
-        <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled'">
-            <a th:replace="~{fragments/paging :: paging(1, '<<', 'First Page',${urlMappings.COURSE_LIST})}"></a>
-        </li>
-        <li class="page-item font-weight-bold" th:classappend="${currentPage == 1} ? 'disabled'">
-            <a th:replace="~{fragments/paging :: paging(${currentPage - 1}, 'Prev', 'Previous Page',${urlMappings.COURSE_LIST})}"></a>
-        </li>
-        <li class="page-item disabled" th:if="${currentPage - 2 > 1}">
-            <a class="page-link" href="#">...</a>
-        </li>
-        <li class="page-item" th:classappend="${page == currentPage} ? 'active'"
-            th:each="page : ${#numbers.sequence(currentPage > 2 ? currentPage - 2 : 1, currentPage + 2 < totalPages ? currentPage + 2 : totalPages)}">
-            <a th:replace="~{fragments/paging :: paging(${page}, ${page}, 'Page ' + ${page}, ${urlMappings.COURSE_LIST})}"></a>
-        </li>
-        <li class="page-item disabled" th:if="${currentPage + 2 < totalPages}">
-            <a class="page-link" href="#">...</a>
-        </li>
-        <li class="page-item font-weight-bold" th:classappend="${currentPage == totalPages} ? 'disabled'">
-            <a th:replace="~{fragments/paging :: paging(${currentPage + 1},'Next', 'Next Page',${urlMappings.COURSE_LIST})}"></a>
-        </li>
-        <li class="page-item" th:classappend="${currentPage == totalPages} ? 'disabled'">
-            <a th:replace="~{fragments/paging :: paging(${totalPages}, '>>', 'Last Page',${urlMappings.COURSE_LIST})}"></a>
-        </li>
-    </ul>
-</nav>
+<nav th:replace="~{fragments/pagination :: pagination(${currentPage},${totalPages},${urlMappings.COURSE_LIST})}" ></nav>
+    <div class="container ">
+        <a th:href="@{${urlMappings.COURSE_CREATE}}" class="btn btn-primary"
+           th:text="#{course-list.btn.new-course}"></a>
+    </div>
 </body>
 </html>
