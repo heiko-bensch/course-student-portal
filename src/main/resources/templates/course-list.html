@@ -1,83 +1,56 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="de">
-<head th:replace="~{fragments/general :: head}">
+<head>
+    <th:block th:replace="fragments/general :: styles"></th:block>
     <title th:text="#{course-list.title}"></title>
 </head>
 <body>
-<!-- Bootstrap Modal for Confirmation -->
-<div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="confirmationModalLabel"
-                    th:text="#{course-list.delete.confirmation.title}"></h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body" th:text="#{course-list.delete.confirmation.text}">
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-                        th:text="#{course-list.delete.confirmation.btn.cancel}"></button>
-                <a id="confirmDeleteButton" class="btn btn-danger" href="#"
-                   th:text="#{course-list.delete.confirmation.btn.ok}"></a>
-            </div>
-        </div>
-    </div>
-</div>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var deleteLinks = document.querySelectorAll('.delete-link');
-        var confirmDeleteButton = document.getElementById('confirmDeleteButton');
-        var confirmationModal = new bootstrap.Modal(document.getElementById('confirmationModal'));
+<div th:replace="fragments/general :: confirmationModal(#{course-list.delete.confirmation.text})"></div>
 
-        deleteLinks.forEach(function (link) {
-            link.addEventListener('click', function (event) {
-                event.preventDefault(); // Prevent the default link behavior
-                var deleteUrl = this.getAttribute('href');
-                confirmDeleteButton.setAttribute('href', deleteUrl);
-                confirmationModal.show();
-            });
-        });
-    });
-</script>
-
-
-<!-- Normal list-->
+<!-- ----------------------------------------------------------------------- -->
 <div class="container-fluid p-5 bg-primary text-white text-center">
     <h1 class="display-1" th:text="#{course-list.title}"></h1>
 </div>
+<!-- ----------------------------------------------------------------------- -->
+
+<!-- -------Search field---------------------------------------------------- -->
+<div th:replace="fragments/search :: search(${urlMappings.COURSE_LIST})"></div>
+
+<!-- Normal list-->
 <div class="container pt-5 ">
-    <table class="table table-striped ">
-        <thead class="table-primary">
+    <table class="table table-hover table-responsive-xl">
+        <thead class="thead-light">
         <tr>
-            <th class="col-1" scope="col" th:text="#{course-list.table.id}"></th>
-            <th class="col-3" scope="col" th:text="#{course-list.table.name}"></th>
-            <th class="col-3" scope="col" th:text="#{course-list.table.instructor}"></th>
-            <th class="col-1" scope="col" th:text="#{course-list.table.day-of-week}"></th>
-            <th class="col-1" scope="col" th:text="#{course-list.table.class}"></th>
+            <th th:replace="fragments/sorting :: sorting(field='id',label=#{course-list.table.id},url=${urlMappings.COURSE_LIST})"></th>
+            <th th:replace="fragments/sorting :: sorting(field='gradeLevels',label=#{course-list.table.grade-levels},url=${urlMappings.COURSE_LIST})"></th>
+            <th th:replace="fragments/sorting :: sorting(field='name',label=#{course-list.table.name},url=${urlMappings.COURSE_LIST})"></th>
+            <th th:replace="fragments/sorting :: sorting(field='instructor',label=#{course-list.table.instructor},url=${urlMappings.COURSE_LIST})"></th>
+            <th th:replace="fragments/sorting :: sorting(field='dayOfWeek',label=#{course-list.table.day-of-week},url=${urlMappings.COURSE_LIST})"></th>
             <th class="col-1" scope="col" th:text="#{course-list.table.action}"></th>
         </tr>
         </thead>
         <tbody class="table-group-divider">
         <tr th:each="course : ${courseList}">
             <td th:text="${course.id}"></td>
+            <td th:text="${course.gradeLevels}"></td>
             <td th:text="${course.name}"></td>
             <td th:text="${course.instructor}"></td>
             <td th:text="${course.dayOfWeek}"></td>
-            <td th:text="Hallo"></td>
             <td>
-                <a th:href="@{${urlMappings.COURSE_EDIT}(id=${course.id})}" class="bi bi-pen"></a>
-                <a th:href="@{${urlMappings.COURSE_DELETE}(id=${course.id})}"
-                   class="delete-link bi bi-x" style="cursor: pointer;"></a>
+                <a th:href="@{${urlMappings.COURSE_EDIT}(id=${course.id})}" target="_blank"><i
+                        class="fa-solid fa-pen-to-square"></i></a>
+                &nbsp;
+                <a th:href="@{${urlMappings.COURSE_DELETE}(id=${course.id})}" target="_blank" class="delete-link"><i
+                        class="fa-solid fa-trash"></i></a>
             </td>
         </tr>
         </tbody>
     </table>
+</div>
+<nav th:replace="~{fragments/pagination :: pagination(${currentPage},${totalPages},${urlMappings.COURSE_LIST})}" ></nav>
     <div class="container ">
         <a th:href="@{${urlMappings.COURSE_CREATE}}" class="btn btn-primary"
            th:text="#{course-list.btn.new-course}"></a>
     </div>
-</div>
 </body>
 </html>

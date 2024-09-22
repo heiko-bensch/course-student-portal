@@ -1,69 +1,39 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="de">
-<head th:replace="~{fragments/general :: head}">
+<head th:replace="~{fragments/general :: styles}">
     <title th:text="#{student-list.title}"></title>
 </head>
 <body>
-<!-- Bootstrap Modal for Confirmation -->
-<div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="confirmationModalLabel" th:text="#{student-list.delete.confirmation.title}"></h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body" th:text="#{student-list.delete.confirmation.text}">
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" th:text="#{student-list.delete.confirmation.btn.cancel}"></button>
-                <a id="confirmDeleteButton" class="btn btn-danger" href="#" th:text="#{student-list.delete.confirmation.btn.ok}"></a>
-            </div>
-        </div>
-    </div>
-</div>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var deleteLinks = document.querySelectorAll('.delete-link');
-        var confirmDeleteButton = document.getElementById('confirmDeleteButton');
-        var confirmationModal = new bootstrap.Modal(document.getElementById('confirmationModal'));
-
-        deleteLinks.forEach(function(link) {
-            link.addEventListener('click', function(event) {
-                event.preventDefault(); // Prevent the default link behavior
-                var deleteUrl = this.getAttribute('href');
-                confirmDeleteButton.setAttribute('href', deleteUrl);
-                confirmationModal.show();
-            });
-        });
-    });
-</script>
-
-
+<div th:replace="fragments/general :: confirmationModal(#{student-list.delete.confirmation.text})"></div>
 
 <div class="container-fluid p-5 bg-primary text-white text-center">
     <h1 class="display-1" th:text="#{student-list.title}"></h1>
 </div>
+
+<div th:replace="fragments/search :: search(${urlMappings.STUDENT_LIST})"></div>
+
 <div class="container pt-5 ">
     <table class="table table-striped ">
         <thead class="table-primary">
         <tr>
-            <th class="col-1" scope="col" th:text="#{student-list.table.id}"></th>
-            <th class="col-3" scope="col" th:text="#{student-list.table.name}"></th>
-            <th class="col-3" scope="col" th:text="#{student-list.table.class}"></th>
-            <th class="col-1" scope="col"th:text="#{student-list.table.class-name}"></th>
-            <th class="col-1" scope="col" th:text="#{student-list.table.action}"></th>
+            <th th:replace="fragments/sorting :: sorting(field='id',label=#{student-list.table.id},url=${urlMappings.STUDENT_LIST})"></th>
+            <th th:replace="fragments/sorting :: sorting(field='name',label=#{student-list.table.name},url=${urlMappings.STUDENT_LIST})"></th>
+            <th th:replace="fragments/sorting :: sorting(field='gradeLevel',label=#{student-list.table.grade-level},url=${urlMappings.STUDENT_LIST})"></th>
+            <th th:replace="fragments/sorting :: sorting(field='className',label=#{student-list.table.class-name},url=${urlMappings.STUDENT_LIST})"></th>
+            <th scope="col" th:text="#{student-list.table.action}"></th>
         </tr>
         </thead>
         <tbody class="table-group-divider">
         <tr th:each="student : ${studentList}">
             <td th:text="${student.id}"></td>
             <td th:text="${student.name}"></td>
-            <td th:text="${student.clazz}"></td>
+            <td th:text="${student.gradeLevel}"></td>
             <td th:text="${student.className}"></td>
             <td>
-                <a th:href="@{${urlMappings.STUDENT_EDIT}(id=${student.id})}" class="bi bi-pen"></a>
+                <a th:href="@{${urlMappings.STUDENT_EDIT}(id=${student.id})}" target="_blank"><i class="fa-solid fa-pen-to-square"></i></a>
+                &nbsp;
                 <a th:href="@{${urlMappings.STUDENT_DELETE}(id=${student.id})}"
-                   class="delete-link bi bi-x" style="cursor: pointer;"></a>
+                   target="_blank" class="delete-link"><i class="fa-solid fa-trash"></i></a>
             </td>
         </tr>
         </tbody>
@@ -72,5 +42,6 @@
         <a th:href="@{${urlMappings.STUDENT_CREATE}}" class="btn btn-primary" th:text="#{student-list.btn.new-student}"></a>
     </div>
 </div>
+<nav th:replace="~{fragments/pagination :: pagination(${currentPage},${totalPages},${urlMappings.STUDENT_LIST})}" ></nav>
 </body>
 </html>
