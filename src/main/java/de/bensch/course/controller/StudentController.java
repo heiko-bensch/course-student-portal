@@ -1,6 +1,5 @@
 package de.bensch.course.controller;
 
-import de.bensch.course.model.Course;
 import de.bensch.course.model.Student;
 import de.bensch.course.service.StudentService;
 import org.apache.commons.lang3.StringUtils;
@@ -89,12 +88,12 @@ public class StudentController {
     @PostMapping(STUDENT_EDIT)
     public String editStudentSubmit(@PathVariable("id") Long id, @ModelAttribute Student student) {
         studentService.save(student);
-        return "redirect:"+STUDENT_LIST;
+        return "redirect:" + STUDENT_LIST;
     }
 
     @GetMapping(STUDENT_DELETE)
     public String deleteStudent(@PathVariable("id") Long id) {
         studentService.delete(id);
-        return "redirect:"+STUDENT_LIST;
+        return "redirect:" + STUDENT_LIST;
     }
 }
