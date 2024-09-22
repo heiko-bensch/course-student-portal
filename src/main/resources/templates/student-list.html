@@ -16,18 +16,18 @@
     <table class="table table-striped ">
         <thead class="table-primary">
         <tr>
-            <th class="col-1" scope="col" th:text="#{student-list.table.id}"></th>
-            <th class="col-3" scope="col" th:text="#{student-list.table.name}"></th>
-            <th class="col-3" scope="col" th:text="#{student-list.table.class}"></th>
-            <th class="col-1" scope="col"th:text="#{student-list.table.class-name}"></th>
-            <th class="col-1" scope="col" th:text="#{student-list.table.action}"></th>
+            <th th:replace="fragments/sorting :: sorting(field='id',label=#{student-list.table.id},url=${urlMappings.STUDENT_LIST})"></th>
+            <th th:replace="fragments/sorting :: sorting(field='name',label=#{student-list.table.name},url=${urlMappings.STUDENT_LIST})"></th>
+            <th th:replace="fragments/sorting :: sorting(field='gradeLevel',label=#{student-list.table.grade-level},url=${urlMappings.STUDENT_LIST})"></th>
+            <th th:replace="fragments/sorting :: sorting(field='className',label=#{student-list.table.class-name},url=${urlMappings.STUDENT_LIST})"></th>
+            <th scope="col" th:text="#{student-list.table.action}"></th>
         </tr>
         </thead>
         <tbody class="table-group-divider">
         <tr th:each="student : ${studentList}">
             <td th:text="${student.id}"></td>
             <td th:text="${student.name}"></td>
-            <td th:text="${student.clazz}"></td>
+            <td th:text="${student.gradeLevel}"></td>
             <td th:text="${student.className}"></td>
             <td>
                 <a th:href="@{${urlMappings.STUDENT_EDIT}(id=${student.id})}" target="_blank"><i class="fa-solid fa-pen-to-square"></i></a>
@@ -42,5 +42,6 @@
         <a th:href="@{${urlMappings.STUDENT_CREATE}}" class="btn btn-primary" th:text="#{student-list.btn.new-student}"></a>
     </div>
 </div>
+<nav th:replace="~{fragments/pagination :: pagination(${currentPage},${totalPages},${urlMappings.STUDENT_LIST})}" ></nav>
 </body>
 </html>

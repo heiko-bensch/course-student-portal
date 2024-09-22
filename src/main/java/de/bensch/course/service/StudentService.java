@@ -1,51 +1,45 @@
 package de.bensch.course.service;
 
 import de.bensch.course.model.Student;
+import de.bensch.course.repository.StudentRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class StudentService {
-       private final List<Student> students = new ArrayList<>(
-         List.of(
-                 new Student(1L,"name1",1,"klasse1"),
-                 new Student(2L,"name2",2,"klasse2"),
-                 new Student(3L,"name3",1,"klasse1")
-         )
-       );
-    public List<Student> findAll() {
-        return students;
+
+    private final StudentRepository studentRepository;
+
+    public StudentService(StudentRepository studentRepository) {
+        this.studentRepository = studentRepository;
+    }
+
+    public Page<Student> findAll(Pageable pageable) {
+        return studentRepository.findAll(pageable);
     }
 
     public void save(Student student) {
+        studentRepository.save(student);
     }
 
     public Optional<Student> findById(Long id) {
-        return students
-                .stream()
-                .filter(c -> Objects.equals(c.getId(), id))
-                .findFirst();
+        return studentRepository.findById(id);
     }
 
-    public void delete(Student student) {
+    public void delete(Long id) {
+        studentRepository.deleteById(id);
     }
 
     public List<String> getAllClassNames() {
-     return     List.of("klasse1","klasse2");
-    }
-
-    public List<Student> findStudentsByClassNameAndNameContaining(String className, String queryName) {
-       return findAll().stream()
-               .filter(student -> Objects.equals(className,student.getClassName()))
-               .filter(student -> student.getClassName().contains(queryName))
-               .collect(Collectors.toList());
+        return List.of("klasse1", "klasse2");
     }
 
 
-
-    public void assignCourseToStudent(Long studentId, Long courseId) {
-
+    public Page<Student> findByKeyword(Pageable pageable, String keyword) {
+        return studentRepository.findByNameContainingIgnoreCaseOrClassNameContainingIgnoreCase(keyword, keyword, pageable);
     }
 }

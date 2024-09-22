@@ -33,7 +33,7 @@ public class CourseController {
     public String courses(Model model,
                           @RequestParam(required = false) String keyword,
                           @RequestParam(defaultValue = "1") int page,
-                          @RequestParam(defaultValue = "6") int size,
+                          @RequestParam(defaultValue = "10") int size,
                           @RequestParam(defaultValue = "id,asc") String[] sort) {
 
         String sortField = sort[0];

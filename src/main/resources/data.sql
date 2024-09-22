@@ -78,4 +78,36 @@ VALUES (31, 2024, 1, 'Zirkus EmiLe', 'Thursday', 'Frau Poncer','1-4');
 INSERT INTO course (id, year_, half_year, name, day_of_week, instructor,grade_levels)
 VALUES (40, 2024, 1, 'Abholung', 'Thursday', null,null);
 
+-----------------------------------------------
+
+INSERT INTO student (id, name, grade_level, class_name) VALUES (1, 'John Doe', '1', 'Mercury');
+INSERT INTO student (id, name, grade_level, class_name) VALUES (2, 'Jane Smith', '1', 'Venus');
+INSERT INTO student (id, name, grade_level, class_name) VALUES (3, 'Robert Brown', '2', 'Earth');
+INSERT INTO student (id, name, grade_level, class_name) VALUES (4, 'Emily White', '2', 'Mars');
+INSERT INTO student (id, name, grade_level, class_name) VALUES (5, 'Michael Johnson', '3', 'Jupiter');
+INSERT INTO student (id, name, grade_level, class_name) VALUES (6, 'Sarah Wilson', '3', 'Saturn');
+INSERT INTO student (id, name, grade_level, class_name) VALUES (7, 'David Moore', '4', 'Uranus');
+INSERT INTO student (id, name, grade_level, class_name) VALUES (8, 'Emma Taylor', '4', 'Neptune');
+INSERT INTO student (id, name, grade_level, class_name) VALUES (9, 'Daniel Lee', '1', 'Mercury');
+INSERT INTO student (id, name, grade_level, class_name) VALUES (10, 'Sophia Harris', '1', 'Venus');
+INSERT INTO student (id, name, grade_level, class_name) VALUES (11, 'James Clark', '2', 'Earth');
+INSERT INTO student (id, name, grade_level, class_name) VALUES (12, 'Olivia Lewis', '2', 'Mars');
+INSERT INTO student (id, name, grade_level, class_name) VALUES (13, 'Joshua Walker', '3', 'Jupiter');
+INSERT INTO student (id, name, grade_level, class_name) VALUES (14, 'Isabella Hall', '3', 'Saturn');
+INSERT INTO student (id, name, grade_level, class_name) VALUES (15, 'Christopher Allen', '4', 'Uranus');
+INSERT INTO student (id, name, grade_level, class_name) VALUES (16, 'Sophia Wright', '4', 'Neptune');
+INSERT INTO student (id, name, grade_level, class_name) VALUES (17, 'James Turner', '1', 'Mercury');
+INSERT INTO student (id, name, grade_level, class_name) VALUES (18, 'Lily Adams', '1', 'Venus');
+INSERT INTO student (id, name, grade_level, class_name) VALUES (19, 'Matthew Baker', '2', 'Earth');
+INSERT INTO student (id, name, grade_level, class_name) VALUES (20, 'Emma Carter', '2', 'Mars');
+INSERT INTO student (id, name, grade_level, class_name) VALUES (21, 'Jacob Collins', '3', 'Jupiter');
+INSERT INTO student (id, name, grade_level, class_name) VALUES (22, 'Ella Edwards', '3', 'Saturn');
+INSERT INTO student (id, name, grade_level, class_name) VALUES (23, 'Alexander Evans', '4', 'Uranus');
+INSERT INTO student (id, name, grade_level, class_name) VALUES (24, 'Mia Foster', '4', 'Neptune');
+INSERT INTO student (id, name, grade_level, class_name) VALUES (25, 'Oliver Gray', '1', 'Mercury');
+INSERT INTO student (id, name, grade_level, class_name) VALUES (26, 'Amelia Hughes', '1', 'Venus');
+INSERT INTO student (id, name, grade_level, class_name) VALUES (27, 'Lucas Jenkins', '2', 'Earth');
+INSERT INTO student (id, name, grade_level, class_name) VALUES (28, 'Ava Kelly', '2', 'Mars');
+INSERT INTO student (id, name, grade_level, class_name) VALUES (29, 'Ethan King', '3', 'Jupiter');
+INSERT INTO student (id, name, grade_level, class_name) VALUES (30, 'Charlotte Lee', '3', 'Saturn');
 

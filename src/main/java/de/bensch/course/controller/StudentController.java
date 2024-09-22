@@ -1,7 +1,13 @@
 package de.bensch.course.controller;
 
+import de.bensch.course.model.Course;
 import de.bensch.course.model.Student;
 import de.bensch.course.service.StudentService;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -24,8 +30,33 @@ public class StudentController {
     }
 
     @GetMapping(STUDENT_LIST)
-    public String courses(Model model) {
-        model.addAttribute("studentList", studentService.findAll());
+    public String courses(Model model,
+                          @RequestParam(required = false) String keyword,
+                          @RequestParam(defaultValue = "1") int page,
+                          @RequestParam(defaultValue = "10") int size,
+                          @RequestParam(defaultValue = "id,asc") String[] sort) {
+        String sortField = sort[0];
+        String sortDirection = sort[1];
+        Sort.Direction direction = sortDirection.equals("desc") ? Sort.Direction.DESC : Sort.Direction.ASC;
+        Sort.Order order = new Sort.Order(direction, sortField);
+
+        Pageable pageable = PageRequest.of(page - 1, size, Sort.by(order));
+        Page<Student> studentPage;
+        if (StringUtils.isBlank(keyword)) {
+            studentPage = studentService.findAll(pageable);
+
+        } else {
+            studentPage = studentService.findByKeyword(pageable, keyword);
+            model.addAttribute("keyword", keyword);
+        }
+        model.addAttribute("studentList", studentPage.getContent());
+        model.addAttribute("currentPage", studentPage.getNumber() + 1);
+        model.addAttribute("totalItems", studentPage.getTotalElements());
+        model.addAttribute("totalPages", studentPage.getTotalPages());
+        model.addAttribute("pageSize", size);
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("sortDirection", sortDirection);
+        model.addAttribute("reverseSortDirection", sortDirection.equals("asc") ? "desc" : "asc");
         return STUDENT_LIST;
     }
 
@@ -63,9 +94,7 @@ public class StudentController {
 
     @GetMapping(STUDENT_DELETE)
     public String deleteStudent(@PathVariable("id") Long id) {
-        Student student = studentService.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid student ID:" + id));
-        studentService.delete(student);
+        studentService.delete(id);
         return "redirect:"+STUDENT_LIST;
     }
 }

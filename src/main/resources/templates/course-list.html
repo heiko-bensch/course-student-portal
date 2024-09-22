@@ -21,7 +21,7 @@
     <table class="table table-hover table-responsive-xl">
         <thead class="thead-light">
         <tr>
-            <th th:replace="fragments/sorting :: sorting(field='id',label='#',url=${urlMappings.COURSE_LIST})"></th>
+            <th th:replace="fragments/sorting :: sorting(field='id',label=#{course-list.table.id},url=${urlMappings.COURSE_LIST})"></th>
             <th th:replace="fragments/sorting :: sorting(field='gradeLevels',label=#{course-list.table.grade-levels},url=${urlMappings.COURSE_LIST})"></th>
             <th th:replace="fragments/sorting :: sorting(field='name',label=#{course-list.table.name},url=${urlMappings.COURSE_LIST})"></th>
             <th th:replace="fragments/sorting :: sorting(field='instructor',label=#{course-list.table.instructor},url=${urlMappings.COURSE_LIST})"></th>
