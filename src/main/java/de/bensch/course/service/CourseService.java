@@ -2,6 +2,8 @@ package de.bensch.course.service;
 
 import de.bensch.course.model.Course;
 import de.bensch.course.repository.CourseRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -14,8 +16,8 @@ public class CourseService {
         this.courseRepository = courseRepository;
     }
 
-    public Iterable<Course> findAll() {
-        return this.courseRepository.findAll();
+    public Page<Course> findAll(Pageable pageable) {
+        return this.courseRepository.findAll(pageable);
     }
 
     public Course save(Course course) {
@@ -31,7 +33,7 @@ public class CourseService {
         this.courseRepository.deleteById(id);
     }
 
-    public Iterable<Course> findByKeyword(String keyword) {
-        return courseRepository.findByNameContainingIgnoreCaseOrInstructorContainingIgnoreCase(keyword, keyword);
+    public Page<Course> findByKeyword(Pageable pageable, String keyword) {
+        return courseRepository.findByNameContainingIgnoreCaseOrInstructorContainingIgnoreCase(keyword, keyword, pageable);
     }
 }
