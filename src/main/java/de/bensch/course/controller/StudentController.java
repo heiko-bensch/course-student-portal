@@ -2,6 +2,7 @@ package de.bensch.course.controller;
 
 import de.bensch.course.model.Student;
 import de.bensch.course.service.StudentService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import static de.bensch.course.controller.UrlMappings.*;
 
+@Slf4j
 @Controller
 public class StudentController {
 
@@ -61,7 +63,7 @@ public class StudentController {
 
     @GetMapping(STUDENT_CREATE)
     public String createCourse(Model model) {
-        model.addAttribute("student", new Student(null, null, 0, null));
+        model.addAttribute("student", new Student());
         return STUDENT_CREATE;
     }
 
@@ -96,4 +98,5 @@ public class StudentController {
         studentService.delete(id);
         return "redirect:" + STUDENT_LIST;
     }
+
 }

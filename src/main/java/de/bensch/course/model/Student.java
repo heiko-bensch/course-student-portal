@@ -14,14 +14,24 @@ public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    Long id;
+    private Long id;
 
-    @Column(name = "name")
-    String name;
+    @Column(name = "firstname")
+    private String firstName;
+
+    @Column(name = "lastName")
+    private String lastName;
 
     @Column(name = "grade_level")
-    int gradeLevel;
+    private String gradeLevel;
 
     @Column(name = "class_name")
-    String className;
+    private String className;
+
+    @Column(name = "ballot_submitted")
+    private boolean ballotSubmitted;
+
+    public String getName() {
+        return lastName + ", " + firstName;
+    }
 }
