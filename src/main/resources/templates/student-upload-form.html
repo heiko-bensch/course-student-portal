@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <th:block th:replace="fragments/general :: styles"></th:block>
+    <title th:text="#{student-upload-form.title}"></title>
+</head>
+<title th:text="#{student-upload-form.title}">"</title>
+<body>
+
+<div class="container" style="max-width: 500px">
+    <h3 class="mb-3">Thymeleaf File Upload example</h3>
+
+    <form
+            id="uploadForm"
+            method="post"
+            th:action="@{${urlMappings.STUDENT_UPLOAD_FORM}}"
+            enctype="multipart/form-data">
+        <input id="input-file" type="file" name="file"/>
+        <button class="btn btn-sm btn-outline-success float-right" type="submit">
+            Upload
+        </button>
+    </form>
+
+    <div
+            th:if="${message != null}"
+            class="alert alert-secondary alert-dismissible fade show text-center message mt-3"
+            role="alert">
+        [[${message}]]
+        <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        console.log("Bootstrap and jQuery are loaded");
+    });
+</script>
+</body>
+
+</html>

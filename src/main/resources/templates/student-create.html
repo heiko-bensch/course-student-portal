@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="de">
-<head th:replace="~{fragments/general :: head}">
-    <title th:text="#{student-create.title}"></title>
+<head>
+    <th:block th:replace="fragments/general :: styles"></th:block>
+    <title th:text="#{student-upload-form.title}"></title>
 </head>
 <title th:text="#{student-create.title}">"</title>
 <body>
@@ -18,13 +19,19 @@
                   method="post" class="p-4 border rounded">
                 <div class="mb-6 pt-3">
                     <label class="form-label" for="name" th:text="#{student-modify.name}"></label>
-                    <input class="form-control" type="text" id="name" th:field="*{name}" required
+                    <input class="form-control" type="text" id="name" th:field="*{lastName}" required
                            aria-describedby="nameHelp"/>
                     <div id="nameHelp" class="form-text" th:text="#{student-modify.name.help}"></div>
                 </div>
                 <div class="mb-6 pt-3">
+                    <label class="form-label" for="first-name" th:text="#{student-modify.first-name}"></label>
+                    <input class="form-control" type="text" id="first-name" th:field="*{firstName}" required
+                           aria-describedby="nameHelp"/>
+                    <div id="first-name-help" class="form-text" th:text="#{student-modify.first-name.help}"></div>
+                </div>
+                <div class="mb-6 pt-3">
                     <label class="form-label" for="class" th:text="#{student-modify.class}">:</label>
-                    <input class="form-control" type="text" id="class" th:field="*{clazz}" required
+                    <input class="form-control" type="text" id="class" th:field="*{className}" required
                            aria-describedby="classHelp"/>
                     <div id="classHelp" class="form-text" th:text="#{student-modify.class.help}"></div>
                 </div>
@@ -33,6 +40,12 @@
                     <input class="form-control" type="text" id="className" th:field="*{className}" required
                            aria-describedby="classNameHelp"/>
                     <div id="classNameHelp" class="form-text" th:text="#{student-modify.class-name.help}"></div>
+                </div>
+                <div class="mb-6 pt-3">
+                    <label class="form-label" for="gradeLevel" th:text="#{student-modify.grade-level}"></label>
+                    <input class="form-control" type="text" id="gradeLevel" th:field="*{gradeLevel}" required
+                           aria-describedby="gradeLevelHelp"/>
+                    <div id="gradeLevelHelp" class="form-text" th:text="#{student-modify.grade-level.help}"></div>
                 </div>
                 <!--                <div class="mb-6 pt-3">-->
                 <!--                    <label class="form-label" for="year" th:text="#{course-modify.year}"></label>-->

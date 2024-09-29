@@ -34,12 +34,24 @@ public class StudentService {
         studentRepository.deleteById(id);
     }
 
-    public List<String> getAllClassNames() {
-        return List.of("klasse1", "klasse2");
-    }
-
 
     public Page<Student> findByKeyword(Pageable pageable, String keyword) {
-        return studentRepository.findByNameContainingIgnoreCaseOrClassNameContainingIgnoreCase(keyword, keyword, pageable);
+        return studentRepository.findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCaseOrClassNameContainingIgnoreCase(keyword, keyword, keyword, pageable);
+    }
+
+    public void saveAll(Iterable<Student> studentList) {
+        studentRepository.saveAll(studentList);
+    }
+
+    public List<String> findGradeLevel() {
+        return studentRepository.findGradeLevel();
+    }
+
+    public Page<Student> findAll(Pageable pageable, String classFilter) {
+        return studentRepository.findByGradeLevel(classFilter, pageable);
+    }
+
+    public Page<Student> findByKeyword(Pageable pageable, String gradeLevel, String keyword) {
+        return studentRepository.findByGradeLevelWithKeyword(gradeLevel, keyword, pageable);
     }
 }

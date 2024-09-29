@@ -2,6 +2,7 @@ package de.bensch.course.controller;
 
 import de.bensch.course.model.Student;
 import de.bensch.course.service.StudentService;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
@@ -12,11 +13,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Objects;
+
 import static de.bensch.course.controller.UrlMappings.*;
 
 @Slf4j
 @Controller
+@AllArgsConstructor
 public class StudentController {
+
+    // private final ExcelImportService excelImportService;
 
     private final StudentService studentService;
 
@@ -26,13 +33,11 @@ public class StudentController {
         return new UrlMappings();
     }
 
-    public StudentController(StudentService studentService) {
-        this.studentService = studentService;
-    }
 
     @GetMapping(STUDENT_LIST)
     public String courses(Model model,
                           @RequestParam(required = false) String keyword,
+                          @RequestParam(required = false, name = "selectedClass", defaultValue = "all") String classFilter,
                           @RequestParam(defaultValue = "1") int page,
                           @RequestParam(defaultValue = "10") int size,
                           @RequestParam(defaultValue = "id,asc") String[] sort) {
@@ -43,11 +48,23 @@ public class StudentController {
 
         Pageable pageable = PageRequest.of(page - 1, size, Sort.by(order));
         Page<Student> studentPage;
+        List<String> gradeLevels = studentService.findGradeLevel();
         if (StringUtils.isBlank(keyword)) {
-            studentPage = studentService.findAll(pageable);
-
+            if (Objects.equals("all", classFilter)) {
+                studentPage = studentService.findAll(pageable);
+            } else {
+                studentPage = studentService.findAll(pageable, classFilter);
+                model.addAttribute("selectedClass", classFilter);
+            }
         } else {
-            studentPage = studentService.findByKeyword(pageable, keyword);
+            if (Objects.equals("all", classFilter)) {
+                studentPage = studentService.findByKeyword(pageable, keyword);
+
+            } else {
+                studentPage = studentService.findByKeyword(pageable, classFilter, keyword);
+                model.addAttribute("selectedClass", classFilter);
+
+            }
             model.addAttribute("keyword", keyword);
         }
         model.addAttribute("studentList", studentPage.getContent());
@@ -56,6 +73,7 @@ public class StudentController {
         model.addAttribute("totalPages", studentPage.getTotalPages());
         model.addAttribute("pageSize", size);
         model.addAttribute("sortField", sortField);
+        model.addAttribute("gradeLevels", gradeLevels);
         model.addAttribute("sortDirection", sortDirection);
         model.addAttribute("reverseSortDirection", sortDirection.equals("asc") ? "desc" : "asc");
         return STUDENT_LIST;
@@ -98,5 +116,29 @@ public class StudentController {
         studentService.delete(id);
         return "redirect:" + STUDENT_LIST;
     }
+
+//    @PostMapping(STUDENT_UPLOAD)
+//    public String uploadStudents(Model model, @RequestParam("file") MultipartFile file) {
+//        String message = "";
+//        try {
+//            if (file.isEmpty()) {
+//                message = "Please select a file to upload";
+//            } else {
+//                List<Student> studentList = excelImportService.readExcelContent(file.getBytes());
+//                if (studentList.isEmpty()) {
+//                    message = "No data was found in the Excel spreadsheet.";
+//                } else {
+//                    message = "Data imported.";
+//                }
+//            }
+//        } catch (Exception e) {
+//            log.error("Error uploading file.", e);
+//            message = "Could not upload the file: " + file.getOriginalFilename() + ". Error: " + e.getMessage();
+//        }
+//        model.addAttribute("message", message);
+//
+//        return UrlMappings.STUDENT_LIST;
+//
+//    }
 
 }

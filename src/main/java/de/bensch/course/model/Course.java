@@ -12,26 +12,26 @@ public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    Long id;
+    private Long id;
 
     @Column(name = "name")
-    String name;
+    private String name;
 
     @Column(name = "half_year")
-    Integer halfYear;
+    private Integer halfYear;
 
     @Column(name = "year_")
-    Integer year;
+    private Integer year;
 
     @Column(name = "instructor")
-    String instructor;
+    private String instructor;
 
     @Column(name = "day_of_week")
     @Enumerated(EnumType.STRING)
-    WeekDay dayOfWeek;
+    private WeekDay dayOfWeek;
 
     @Column(name = "grade_levels")
-    String gradeLevels;
+    private String gradeLevels;
 
 }
 

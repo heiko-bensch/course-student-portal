@@ -1,9 +1,9 @@
 package de.bensch.course.controller;
 
-import de.bensch.course.model.Course;
 import de.bensch.course.model.Student;
-import de.bensch.course.service.CourseService;
 import de.bensch.course.service.StudentService;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,20 +11,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
 import java.util.Optional;
 
 @Controller
+@AllArgsConstructor
+@Slf4j
 public class StudentCourseController {
 
     private final StudentService studentService;
 
-    private final CourseService courseService;
-
-    public StudentCourseController(StudentService studentService, CourseService courseService) {
-        this.studentService = studentService;
-        this.courseService = courseService;
-    }
 
     @GetMapping("/search")
     public String searchStudents(@RequestParam String className, @RequestParam String query, Model model) {
@@ -61,4 +56,6 @@ public class StudentCourseController {
 //        studentService.assignCourseToStudent(studentId, courseId); // Implement this method in your service
         return "redirect:/search"; // Redirect to search results or wherever needed
     }
+
+
 }

@@ -10,54 +10,142 @@
     <h1 class="display-1" th:text="#{student-list.title}"></h1>
 </div>
 
-<div th:replace="fragments/search :: search(${urlMappings.STUDENT_LIST})"></div>
+<div class="container">
+    <form th:action="@{${urlMappings.STUDENT_LIST}}" id="searchForm">
+        <div class="row d-flex mt-3">
+            <!-- search field -->
+            <div class="col-md-3">
+                <div class="search">
+                    <i class="fa fa-search"></i>
+                    <input id="keyword" type="search" name="keyword" th:value="${keyword}" class="form-control"
+                           placeholder="Enter keyword">
+                    <button type="submit" class="btn btn-secondary">Search</button>
+                </div>
+            </div>
+            <!-- ---- -->
+            <!-- grade level filter -->
+            <div class="col-md-1">
+                <select id="grade-level-filter" name="selectedClass" class="form-select"
+                        aria-label="Default select example"
+                        onchange="this.form.submit()">
+                    <option value="all" th:selected="${selectedClass == 'all'}">All</option>
+                    <option th:each="level : ${gradeLevels}" th:value="${level}" th:text="${level}"
+                            th:selected="${level == selectedClass}"></option>
+                </select>
+            </div>
+            <!-- ----- -->
+            <!-- Clear Btn -->
+            <div class="col-md-1">
+                <button id="btnClear" class="btn btn-info">Clear</button>
+            </div>
+            <!-- ----- -->
+            <!-- Buttons -->
+            <div class="col-md-7 row d-flex justify-content-end">
+                <div class="col-md-3">
+                    <a th:href="@{${urlMappings.STUDENT_CREATE}}" class="btn btn-primary btn-sm"
+                       th:text="#{student-list.btn.new-student}"></a>
+                </div>
+                <div class="col-md-3">
+                    <a th:href="@{${urlMappings.STUDENT_UPLOAD_FORM}}" class="btn btn-primary btn-sm"
+                       th:text="#{student-list.btn.import-students}"></a>
+                </div>
+            </div>
+            <!-- -------- -->
+        </div>
+    </form>
 
-<div class="container pt-5 ">
-    <table class="table table-striped ">
-        <thead class="table-primary">
-        <tr>
-            <th th:replace="fragments/sorting :: sorting(field='id',label=#{student-list.table.id},url=${urlMappings.STUDENT_LIST})"></th>
-            <th th:replace="fragments/sorting :: sorting(field='name',label=#{student-list.table.name},url=${urlMappings.STUDENT_LIST})"></th>
-            <th th:replace="fragments/sorting :: sorting(field='gradeLevel',label=#{student-list.table.grade-level},url=${urlMappings.STUDENT_LIST})"></th>
-            <th th:replace="fragments/sorting :: sorting(field='className',label=#{student-list.table.class-name},url=${urlMappings.STUDENT_LIST})"></th>
-            <th scope="col" th:text="#{student-list.table.action}"></th>
-        </tr>
-        </thead>
-        <tbody class="table-group-divider">
-        <tr th:each="student : ${studentList}">
-            <td th:text="${student.id}"></td>
-            <td th:text="${student.name}"></td>
-            <td th:text="${student.gradeLevel}"></td>
-            <td th:text="${student.className}"></td>
-            <td>
-                <a th:href="@{${urlMappings.STUDENT_EDIT}(id=${student.id})}" target="_blank"><i
-                        class="fa-solid fa-pen-to-square"></i></a>
-                &nbsp;
-                <a th:href="@{${urlMappings.STUDENT_DELETE}(id=${student.id})}"
-                   target="_blank" class="delete-link"><i class="fa-solid fa-trash"></i></a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-    <div class="container mt-md-3">
-        <div class="row gx-5">
-            <div class="col">
-                <a th:href="@{${urlMappings.STUDENT_CREATE}}" class="btn btn-primary btn-sm"
-                   th:text="#{student-list.btn.new-student}"></a>
-            </div>
-            <div class="col">
-                <form th:action="@{${urlMappings.STUDENT_UPLOAD}}" method="post" enctype="multipart/form-data">
-                    <div class="input-group mb-3">
-                        <button class="btn btn-primary btn-sm" type="submit">Upload</button>
-                        <input class="form-control col-3" type="file" id="formFile" name="file">
-                    </div>
-                </form>
-            </div>
+    <!-- students table -->
+    <div class="row mt-3">
+        <div class="col-12">
+            <table class="table table-striped ">
+                <thead class="table-primary">
+                <tr>
+                    <th th:replace="fragments/sorting :: sorting(field='id',label=#{student-list.table.id},url=${urlMappings.STUDENT_LIST})"></th>
+                    <th th:replace="fragments/sorting :: sorting(field='name',label=#{student-list.table.name},url=${urlMappings.STUDENT_LIST})"></th>
+                    <th th:replace="fragments/sorting :: sorting(field='gradeLevel',label=#{student-list.table.grade-level},url=${urlMappings.STUDENT_LIST})"></th>
+                    <th th:replace="fragments/sorting :: sorting(field='className',label=#{student-list.table.class-name},url=${urlMappings.STUDENT_LIST})"></th>
+                    <th scope="col" th:text="#{student-list.table.action}"></th>
+                </tr>
+                </thead>
+                <tbody class="table-group-divider">
+                <tr th:each="student : ${studentList}">
+                    <td th:text="${student.id}"></td>
+                    <td th:text="${student.name}"></td>
+                    <td th:text="${student.gradeLevel}"></td>
+                    <td th:text="${student.className}"></td>
+                    <td>
+                        <a th:href="@{${urlMappings.STUDENT_EDIT}(id=${student.id})}" target="_blank"><i
+                                class="fa-solid fa-pen-to-square"></i></a>
+                        &nbsp;
+                        <a th:href="@{${urlMappings.STUDENT_DELETE}(id=${student.id})}"
+                           target="_blank" class="delete-link"><i class="fa-solid fa-trash"></i></a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
+    <!-- ---- -->
+
+    <!-- pagination -->
+    <div class="row">
+        <div class="col-6">
+            <div class="row d-flex mt-2">
+                <div class="col-md-3 input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="pageSize">Items per page:</label>
+                    </div>
+                    <select form="searchForm" name="size" th:value="${pageSize}" onchange="changePageSize()"
+                            class="size-select"
+                            id="pageSize">
+                        <option th:each="s : ${ {5, 10, 20} }" th:value="${s}" th:text="${s}"
+                                th:selected="${s == pageSize}"></option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 d-flex justify-content-end">
+            <nav th:replace="~{fragments/pagination :: pagination(${currentPage},${totalPages},${urlMappings.STUDENT_LIST})}"></nav>
+        </div>
+    </div>
+    <!-- ---- -->
 </div>
-<div class="container mt-md-3  mb-md-5">
-    <nav th:replace="~{fragments/pagination :: pagination(${currentPage},${totalPages},${urlMappings.STUDENT_LIST})}"></nav>
+<!--<div class="container mt-md-3">-->
+<!--    <div class="row gx-5">-->
+<!--        <div class="col">-->
+<!--            <a th:href="@{${urlMappings.STUDENT_CREATE}}" class="btn btn-primary btn-sm"-->
+<!--               th:text="#{student-list.btn.new-student}"></a>-->
+<!--        </div>-->
+<!--        <div class="col">-->
+<!--            <form id="uploadForm" th:action="@{${urlMappings.STUDENT_UPLOAD}}" method="post"-->
+<!--                  enctype="multipart/form-data">-->
+<!--                <div class="input-group mb-3">-->
+<!--                    <button class="btn btn-primary btn-sm" type="submit">Upload</button>-->
+<!--                    <input class="form-control col-3" type="file" id="formFile" name="file">-->
+<!--                </div>-->
+<!--            </form>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    </div>-->
+
+<div th:if="${message != null}"
+     class="alert alert-secondary alert-dismissible fade show text-center message mt-3"
+     role="alert">
+    [[${message}]]
+    <button type="button" class="close btn-sm" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
 </div>
+<script>
+    $(document).ready(function () {
+        $("#btnClear").on("click", function (e) {
+            e.preventDefault();
+            $("#keyword").val("");
+            var dropdown = $("#grade-level-filter");
+            dropdown.val("all")
+            dropdown.closest("form").submit();
+        });
+    });
+</script>
 </body>
 </html>
