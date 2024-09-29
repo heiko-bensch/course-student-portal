@@ -3,7 +3,10 @@
 <head th:replace="~{fragments/general :: styles}">
     <title th:text="#{student-list.title}"></title>
 </head>
-<body>
+<body th:with="baseUrl=${urlMappings.STUDENT_LIST} + '?'
+            + (${keyword != null and keyword != '' ? 'keyword=' + keyword + '&' : ''})
+            + (${selectedGradeLevel != null and selectedGradeLevel != 'all' ? 'selectedGradeLevel=' + selectedGradeLevel + '&' : ''})">
+
 <div th:replace="fragments/general :: confirmationModal(#{student-list.delete.confirmation.text})"></div>
 
 <div class="container-fluid p-5 bg-primary text-white text-center">
@@ -25,12 +28,12 @@
             <!-- ---- -->
             <!-- grade level filter -->
             <div class="col-md-1">
-                <select id="grade-level-filter" name="selectedClass" class="form-select"
+                <select id="grade-level-filter" name="selectedGradeLevel" class="form-select"
                         aria-label="Default select example"
                         onchange="this.form.submit()">
-                    <option value="all" th:selected="${selectedClass == 'all'}">All</option>
+                    <option value="all" th:selected="${selectedGradeLevel == 'all'}">All</option>
                     <option th:each="level : ${gradeLevels}" th:value="${level}" th:text="${level}"
-                            th:selected="${level == selectedClass}"></option>
+                            th:selected="${level == selectedGradeLevel}"></option>
                 </select>
             </div>
             <!-- ----- -->
@@ -60,17 +63,19 @@
             <table class="table table-striped ">
                 <thead class="table-primary">
                 <tr>
-                    <th th:replace="fragments/sorting :: sorting(field='id',label=#{student-list.table.id},url=${urlMappings.STUDENT_LIST})"></th>
-                    <th th:replace="fragments/sorting :: sorting(field='name',label=#{student-list.table.name},url=${urlMappings.STUDENT_LIST})"></th>
-                    <th th:replace="fragments/sorting :: sorting(field='gradeLevel',label=#{student-list.table.grade-level},url=${urlMappings.STUDENT_LIST})"></th>
-                    <th th:replace="fragments/sorting :: sorting(field='className',label=#{student-list.table.class-name},url=${urlMappings.STUDENT_LIST})"></th>
+                    <th th:replace="fragments/sorting :: sorting(field='id',label=#{student-list.table.id},url=${baseUrl})"></th>
+                    <th th:replace="fragments/sorting :: sorting(field='lastName',label=#{student-list.table.last-name},url=${baseUrl})"></th>
+                    <th th:replace="fragments/sorting :: sorting(field='firstName',label=#{student-list.table.first-name},url=${baseUrl})"></th>
+                    <th th:replace="fragments/sorting :: sorting(field='gradeLevel',label=#{student-list.table.grade-level},url=${baseUrl})"></th>
+                    <th th:replace="fragments/sorting :: sorting(field='className',label=#{student-list.table.class-name},url=${baseUrl})"></th>
                     <th scope="col" th:text="#{student-list.table.action}"></th>
                 </tr>
                 </thead>
                 <tbody class="table-group-divider">
                 <tr th:each="student : ${studentList}">
                     <td th:text="${student.id}"></td>
-                    <td th:text="${student.name}"></td>
+                    <td th:text="${student.lastName}"></td>
+                    <td th:text="${student.firstName}"></td>
                     <td th:text="${student.gradeLevel}"></td>
                     <td th:text="${student.className}"></td>
                     <td>
@@ -105,28 +110,13 @@
             </div>
         </div>
         <div class="col-6 d-flex justify-content-end">
-            <nav th:replace="~{fragments/pagination :: pagination(${currentPage},${totalPages},${urlMappings.STUDENT_LIST})}"></nav>
+            <nav th:replace="~{fragments/pagination :: pagination(${currentPage},${totalPages},
+                ${baseUrl}
+            )}"></nav>
         </div>
     </div>
     <!-- ---- -->
 </div>
-<!--<div class="container mt-md-3">-->
-<!--    <div class="row gx-5">-->
-<!--        <div class="col">-->
-<!--            <a th:href="@{${urlMappings.STUDENT_CREATE}}" class="btn btn-primary btn-sm"-->
-<!--               th:text="#{student-list.btn.new-student}"></a>-->
-<!--        </div>-->
-<!--        <div class="col">-->
-<!--            <form id="uploadForm" th:action="@{${urlMappings.STUDENT_UPLOAD}}" method="post"-->
-<!--                  enctype="multipart/form-data">-->
-<!--                <div class="input-group mb-3">-->
-<!--                    <button class="btn btn-primary btn-sm" type="submit">Upload</button>-->
-<!--                    <input class="form-control col-3" type="file" id="formFile" name="file">-->
-<!--                </div>-->
-<!--            </form>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--    </div>-->
 
 <div th:if="${message != null}"
      class="alert alert-secondary alert-dismissible fade show text-center message mt-3"
@@ -146,6 +136,10 @@
             dropdown.closest("form").submit();
         });
     });
+
+    function changePageSize() {
+        $("#searchForm").submit();
+    }
 </script>
 </body>
 </html>

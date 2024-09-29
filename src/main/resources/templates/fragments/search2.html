@@ -1,7 +1,7 @@
 <div th:fragment="search(searchUrl)" class="container my-3">
     <form th:action="@{${searchUrl}}" id="searchForm">
-        <div class="row d-flex mt-2">
-            <div class="col-md-6">
+        <div class="row d-flex">
+            <div class="col-md-6 mt-2">
                 <div class="search">
                     <i class="fa fa-search"></i>
                     <input id="keyword" type="search" name="keyword" th:value="${keyword}" required class="form-control"
@@ -9,17 +9,7 @@
                     <button type="submit" class="btn btn-secondary">Search</button>
                 </div>
             </div>
-            <div class="col-md-5">
-                <select class="form-select" aria-label="Default select example">
-                    <option selected>Open this select menu</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                </select>
-            </div>
-        </div>
-        <div class="row d-flex mt-2">
-            <div class="col-md-3 input-group">
+            <div class="col-md-3 input-group mt-2">
                 <div class="input-group-prepend">
                     <label class="input-group-text" for="pageSize">Items per page:</label>
                 </div>
@@ -30,9 +20,7 @@
                             th:selected="${s == pageSize}"></option>
                 </select>
             </div>
-        </div>
-        <div class="row d-flex mt-2">
-            <div class="col-md-1">
+            <div class="col-md-1 mt-2">
                 <button id="btnClear" class="btn btn-info">Clear</button>
             </div>
         </div>

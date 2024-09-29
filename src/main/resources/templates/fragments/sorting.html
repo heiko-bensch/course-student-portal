@@ -1,6 +1,5 @@
 <th scope="col" th:fragment="sorting(field, label,url)">
-    <a th:href="@{${url} + '?'
-                + ${keyword!=null && keyword!=''? 'keyword=' + keyword + '&' : ''}
+    <a th:href="@{${url}
                 + 'page=' + ${currentPage} + '&size=' + ${pageSize}
                 + ${sortField!=null ? '&sort=' + field + ',' + (sortField == field ? reverseSortDirection : sortDirection) : ''}}">
         [[${label}]] </a>

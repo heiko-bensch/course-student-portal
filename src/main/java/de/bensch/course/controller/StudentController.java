@@ -37,7 +37,7 @@ public class StudentController {
     @GetMapping(STUDENT_LIST)
     public String courses(Model model,
                           @RequestParam(required = false) String keyword,
-                          @RequestParam(required = false, name = "selectedClass", defaultValue = "all") String classFilter,
+                          @RequestParam(required = false, defaultValue = "all") String selectedGradeLevel,
                           @RequestParam(defaultValue = "1") int page,
                           @RequestParam(defaultValue = "10") int size,
                           @RequestParam(defaultValue = "id,asc") String[] sort) {
@@ -50,19 +50,19 @@ public class StudentController {
         Page<Student> studentPage;
         List<String> gradeLevels = studentService.findGradeLevel();
         if (StringUtils.isBlank(keyword)) {
-            if (Objects.equals("all", classFilter)) {
+            if (Objects.equals("all", selectedGradeLevel)) {
                 studentPage = studentService.findAll(pageable);
             } else {
-                studentPage = studentService.findAll(pageable, classFilter);
-                model.addAttribute("selectedClass", classFilter);
+                studentPage = studentService.findAll(pageable, selectedGradeLevel);
+                model.addAttribute("selectedGradeLevel", selectedGradeLevel);
             }
         } else {
-            if (Objects.equals("all", classFilter)) {
+            if (Objects.equals("all", selectedGradeLevel)) {
                 studentPage = studentService.findByKeyword(pageable, keyword);
 
             } else {
-                studentPage = studentService.findByKeyword(pageable, classFilter, keyword);
-                model.addAttribute("selectedClass", classFilter);
+                studentPage = studentService.findByKeyword(pageable, selectedGradeLevel, keyword);
+                model.addAttribute("selectedGradeLevel", selectedGradeLevel);
 
             }
             model.addAttribute("keyword", keyword);

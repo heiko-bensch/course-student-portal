@@ -4,7 +4,8 @@
     <th:block th:replace="fragments/general :: styles"></th:block>
     <title th:text="#{course-list.title}"></title>
 </head>
-<body>
+<body th:with="baseUrl=${urlMappings.COURSE_LIST} + '?'
+            + (${keyword != null and keyword != '' ? 'keyword=' + keyword + '&' : ''})">
 <div th:replace="fragments/general :: confirmationModal(#{course-list.delete.confirmation.text})"></div>
 
 <!-- ----------------------------------------------------------------------- -->
@@ -14,18 +15,18 @@
 <!-- ----------------------------------------------------------------------- -->
 
 <!-- -------Search field---------------------------------------------------- -->
-<div th:replace="fragments/search :: search(${urlMappings.COURSE_LIST})"></div>
+<div th:replace="fragments/search2 :: search(${urlMappings.COURSE_LIST})"></div>
 
 <!-- Normal list-->
 <div class="container pt-5 ">
     <table class="table table-hover table-responsive-xl">
         <thead class="thead-light">
         <tr>
-            <th th:replace="fragments/sorting :: sorting(field='id',label=#{course-list.table.id},url=${urlMappings.COURSE_LIST})"></th>
-            <th th:replace="fragments/sorting :: sorting(field='gradeLevels',label=#{course-list.table.grade-levels},url=${urlMappings.COURSE_LIST})"></th>
-            <th th:replace="fragments/sorting :: sorting(field='name',label=#{course-list.table.name},url=${urlMappings.COURSE_LIST})"></th>
-            <th th:replace="fragments/sorting :: sorting(field='instructor',label=#{course-list.table.instructor},url=${urlMappings.COURSE_LIST})"></th>
-            <th th:replace="fragments/sorting :: sorting(field='dayOfWeek',label=#{course-list.table.day-of-week},url=${urlMappings.COURSE_LIST})"></th>
+            <th th:replace="fragments/sorting :: sorting(field='id',label=#{course-list.table.id},url=${baseUrl})"></th>
+            <th th:replace="fragments/sorting :: sorting(field='gradeLevels',label=#{course-list.table.grade-levels},url=${baseUrl})"></th>
+            <th th:replace="fragments/sorting :: sorting(field='name',label=#{course-list.table.name},url=${baseUrl})"></th>
+            <th th:replace="fragments/sorting :: sorting(field='instructor',label=#{course-list.table.instructor},url=${baseUrl})"></th>
+            <th th:replace="fragments/sorting :: sorting(field='dayOfWeek',label=#{course-list.table.day-of-week},url=${baseUrl})"></th>
             <th class="col-1" scope="col" th:text="#{course-list.table.action}"></th>
         </tr>
         </thead>
@@ -47,10 +48,10 @@
         </tbody>
     </table>
 </div>
-<nav th:replace="~{fragments/pagination :: pagination(${currentPage},${totalPages},${urlMappings.COURSE_LIST})}" ></nav>
-    <div class="container ">
-        <a th:href="@{${urlMappings.COURSE_CREATE}}" class="btn btn-primary"
-           th:text="#{course-list.btn.new-course}"></a>
-    </div>
+<nav th:replace="~{fragments/pagination :: pagination(${currentPage},${totalPages},${baseUrl})}"></nav>
+<div class="container ">
+    <a th:href="@{${baseUrl}}" class="btn btn-primary"
+       th:text="#{course-list.btn.new-course}"></a>
+</div>
 </body>
 </html>
