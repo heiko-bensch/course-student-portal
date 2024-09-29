@@ -81,65 +81,64 @@ VALUES (40, 2024, 1, 'Abholung', 'Thursday', null, null);
 
 -----------------------------------------------
 
-INSERT INTO student (id, firstname, lastname, grade_level, class_name, ballot_submitted)
-VALUES (1, 'John', 'Doe', '1', 'Mercury', TRUE);
-INSERT INTO student (id, firstname, lastname, grade_level, class_name, ballot_submitted)
-VALUES (2, 'Jane', 'Smith', '1', 'Venus', TRUE);
-INSERT INTO student (id, firstname, lastname, grade_level, class_name, ballot_submitted)
-VALUES (3, 'Robert', 'Brown', '2', 'Earth', TRUE);
-INSERT INTO student (id, firstname, lastname, grade_level, class_name, ballot_submitted)
-VALUES (4, 'Emily', 'White', '2', 'Mars', TRUE);
-INSERT INTO student (id, firstname, lastname, grade_level, class_name, ballot_submitted)
-VALUES (5, 'Michael', 'Johnson', '3', 'Jupiter', TRUE);
-INSERT INTO student (id, firstname, lastname, grade_level, class_name, ballot_submitted)
-VALUES (6, 'Sarah', 'Wilson', '3', 'Saturn', TRUE);
-INSERT INTO student (id, firstname, lastname, grade_level, class_name, ballot_submitted)
-VALUES (7, 'David', 'Moore', '4', 'Uranus', TRUE);
-INSERT INTO student (id, firstname, lastname, grade_level, class_name, ballot_submitted)
-VALUES (8, 'Emma', 'Taylor', '4', 'Neptune', TRUE);
-INSERT INTO student (id, firstname, lastname, grade_level, class_name, ballot_submitted)
-VALUES (9, 'Daniel', 'Lee', '1', 'Mercury', TRUE);
-INSERT INTO student (id, firstname, lastname, grade_level, class_name, ballot_submitted)
-VALUES (10, 'Sophia', 'Harris', '1', 'Venus', TRUE);
-INSERT INTO student (id, firstname, lastname, grade_level, class_name, ballot_submitted)
-VALUES (11, 'James', 'Clark', '2', 'Earth', TRUE);
-INSERT INTO student (id, firstname, lastname, grade_level, class_name, ballot_submitted)
-VALUES (12, 'Olivia', 'Lewis', '2', 'Mars', TRUE);
-INSERT INTO student (id, firstname, lastname, grade_level, class_name, ballot_submitted)
-VALUES (13, 'Joshua', 'Walker', '3', 'Jupiter', TRUE);
-INSERT INTO student (id, firstname, lastname, grade_level, class_name, ballot_submitted)
-VALUES (14, 'Isabella', 'Hall', '3', 'Saturn', TRUE);
-INSERT INTO student (id, firstname, lastname, grade_level, class_name, ballot_submitted)
-VALUES (15, 'Christopher', 'Allen', '4', 'Uranus', TRUE);
-INSERT INTO student (id, firstname, lastname, grade_level, class_name, ballot_submitted)
-VALUES (16, 'Sophia', 'Wright', '4', 'Neptune', TRUE);
-INSERT INTO student (id, firstname, lastname, grade_level, class_name, ballot_submitted)
-VALUES (17, 'James', 'Turner', '1', 'Mercury', TRUE);
-INSERT INTO student (id, firstname, lastname, grade_level, class_name, ballot_submitted)
-VALUES (18, 'Lily', 'Adams', '1', 'Venus', TRUE);
-INSERT INTO student (id, firstname, lastname, grade_level, class_name, ballot_submitted)
-VALUES (19, 'Matthew', 'Baker', '2', 'Earth', TRUE);
-INSERT INTO student (id, firstname, lastname, grade_level, class_name, ballot_submitted)
-VALUES (20, 'Emma', 'Carter', '2', 'Mars', TRUE);
-INSERT INTO student (id, firstname, lastname, grade_level, class_name, ballot_submitted)
-VALUES (21, 'Jacob', 'Collins', '3', 'Jupiter', TRUE);
-INSERT INTO student (id, firstname, lastname, grade_level, class_name, ballot_submitted)
-VALUES (22, 'Ella', 'Edwards', '3', 'Saturn', TRUE);
-INSERT INTO student (id, firstname, lastname, grade_level, class_name, ballot_submitted)
-VALUES (23, 'Alexander', 'Evans', '4', 'Uranus', TRUE);
-INSERT INTO student (id, firstname, lastname, grade_level, class_name, ballot_submitted)
-VALUES (24, 'Mia', 'Foster', '4', 'Neptune', TRUE);
-INSERT INTO student (id, firstname, lastname, grade_level, class_name, ballot_submitted)
-VALUES (25, 'Oliver', 'Gray', '1', 'Mercury', TRUE);
-INSERT INTO student (id, firstname, lastname, grade_level, class_name, ballot_submitted)
-VALUES (26, 'Amelia', 'Hughes', '1', 'Venus', TRUE);
-INSERT INTO student (id, firstname, lastname, grade_level, class_name, ballot_submitted)
-VALUES (27, 'Lucas', 'Jenkins', '2', 'Earth', TRUE);
-INSERT INTO student (id, firstname, lastname, grade_level, class_name, ballot_submitted)
-VALUES (28, 'Ava', 'Kelly', '2', 'Mars', TRUE);
-INSERT INTO student (id, firstname, lastname, grade_level, class_name, ballot_submitted)
-VALUES (29, 'Ethan', 'King', '3', 'Jupiter', TRUE);
-INSERT INTO student (id, firstname, lastname, grade_level, class_name, ballot_submitted)
-VALUES (30, 'Charlotte', 'Lee', '3', 'Saturn', TRUE);
-
+INSERT INTO student (firstname, lastname, grade_level, class_name, ballot_submitted)
+VALUES ('John', 'Doe', '1', 'Mercury', TRUE);
+INSERT INTO student (firstname, lastname, grade_level, class_name, ballot_submitted)
+VALUES ('Jane', 'Smith', '1', 'Venus', TRUE);
+INSERT INTO student (firstname, lastname, grade_level, class_name, ballot_submitted)
+VALUES ('Robert', 'Brown', '2', 'Earth', TRUE);
+INSERT INTO student (firstname, lastname, grade_level, class_name, ballot_submitted)
+VALUES ('Emily', 'White', '2', 'Mars', TRUE);
+INSERT INTO student (firstname, lastname, grade_level, class_name, ballot_submitted)
+VALUES ('Michael', 'Johnson', '3', 'Jupiter', TRUE);
+INSERT INTO student (firstname, lastname, grade_level, class_name, ballot_submitted)
+VALUES ('Sarah', 'Wilson', '3', 'Saturn', TRUE);
+INSERT INTO student (firstname, lastname, grade_level, class_name, ballot_submitted)
+VALUES ('David', 'Moore', '4', 'Uranus', TRUE);
+INSERT INTO student (firstname, lastname, grade_level, class_name, ballot_submitted)
+VALUES ('Emma', 'Taylor', '4', 'Neptune', TRUE);
+INSERT INTO student (firstname, lastname, grade_level, class_name, ballot_submitted)
+VALUES ('Daniel', 'Lee', '1', 'Mercury', TRUE);
+INSERT INTO student (firstname, lastname, grade_level, class_name, ballot_submitted)
+VALUES ('Sophia', 'Harris', '1', 'Venus', TRUE);
+INSERT INTO student (firstname, lastname, grade_level, class_name, ballot_submitted)
+VALUES ('James', 'Clark', '2', 'Earth', TRUE);
+INSERT INTO student (firstname, lastname, grade_level, class_name, ballot_submitted)
+VALUES ('Olivia', 'Lewis', '2', 'Mars', TRUE);
+INSERT INTO student (firstname, lastname, grade_level, class_name, ballot_submitted)
+VALUES ('Joshua', 'Walker', '3', 'Jupiter', TRUE);
+INSERT INTO student (firstname, lastname, grade_level, class_name, ballot_submitted)
+VALUES ('Isabella', 'Hall', '3', 'Saturn', TRUE);
+INSERT INTO student (firstname, lastname, grade_level, class_name, ballot_submitted)
+VALUES ('Christopher', 'Allen', '4', 'Uranus', TRUE);
+INSERT INTO student (firstname, lastname, grade_level, class_name, ballot_submitted)
+VALUES ('Sophia', 'Wright', '4', 'Neptune', TRUE);
+INSERT INTO student (firstname, lastname, grade_level, class_name, ballot_submitted)
+VALUES ('James', 'Turner', '1', 'Mercury', TRUE);
+INSERT INTO student (firstname, lastname, grade_level, class_name, ballot_submitted)
+VALUES ('Lily', 'Adams', '1', 'Venus', TRUE);
+INSERT INTO student (firstname, lastname, grade_level, class_name, ballot_submitted)
+VALUES ('Matthew', 'Baker', '2', 'Earth', TRUE);
+INSERT INTO student (firstname, lastname, grade_level, class_name, ballot_submitted)
+VALUES ('Emma', 'Carter', '2', 'Mars', TRUE);
+INSERT INTO student (firstname, lastname, grade_level, class_name, ballot_submitted)
+VALUES ('Jacob', 'Collins', '3', 'Jupiter', TRUE);
+INSERT INTO student (firstname, lastname, grade_level, class_name, ballot_submitted)
+VALUES ('Ella', 'Edwards', '3', 'Saturn', TRUE);
+INSERT INTO student (firstname, lastname, grade_level, class_name, ballot_submitted)
+VALUES ('Alexander', 'Evans', '4', 'Uranus', TRUE);
+INSERT INTO student (firstname, lastname, grade_level, class_name, ballot_submitted)
+VALUES ('Mia', 'Foster', '4', 'Neptune', TRUE);
+INSERT INTO student (firstname, lastname, grade_level, class_name, ballot_submitted)
+VALUES ('Oliver', 'Gray', '1', 'Mercury', TRUE);
+INSERT INTO student (firstname, lastname, grade_level, class_name, ballot_submitted)
+VALUES ('Amelia', 'Hughes', '1', 'Venus', TRUE);
+INSERT INTO student (firstname, lastname, grade_level, class_name, ballot_submitted)
+VALUES ('Lucas', 'Jenkins', '2', 'Earth', TRUE);
+INSERT INTO student (firstname, lastname, grade_level, class_name, ballot_submitted)
+VALUES ('Ava', 'Kelly', '2', 'Mars', TRUE);
+INSERT INTO student (firstname, lastname, grade_level, class_name, ballot_submitted)
+VALUES ('Ethan', 'King', '3', 'Jupiter', TRUE);
+INSERT INTO student (firstname, lastname, grade_level, class_name, ballot_submitted)
+VALUES ('Charlotte', 'Lee', '3', 'Saturn', TRUE);
 
