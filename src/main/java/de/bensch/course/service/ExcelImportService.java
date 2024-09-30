@@ -19,15 +19,20 @@ import java.util.Optional;
 @Slf4j
 public class ExcelImportService {
 
-    public List<Student> readExcelContent(byte[] content) throws IOException {
-        Workbook workbook = new XSSFWorkbook(new ByteArrayInputStream(content));
-        Sheet wahlzetteleingang = workbook.getSheet("Wahlzetteleingang");
-        HeaderDetector headerDetector = new HeaderDetector();
-        Optional<Header> header = headerDetector.detectHeader(wahlzetteleingang);
+    public List<Student> readExcelContent(byte[] content) throws ExcelImportException {
+        Workbook workbook = null;
+        try {
+            workbook = new XSSFWorkbook(new ByteArrayInputStream(content));
+            Sheet wahlzetteleingang = workbook.getSheet("Wahlzetteleingang");
+            HeaderDetector headerDetector = new HeaderDetector();
+            Optional<Header> header = headerDetector.detectHeader(wahlzetteleingang);
 
-        return header
-                .map(h -> readStudents(wahlzetteleingang, h))
-                .orElse(new ArrayList<>());
+            return header
+                    .map(h -> readStudents(wahlzetteleingang, h))
+                    .orElse(new ArrayList<>());
+        } catch (IOException e) {
+            throw new ExcelImportException("Error importing an Excel sheet.\n" + e.getMessage(), e);
+        }
     }
 
     private List<Student> readStudents(Sheet sheet, Header header) {

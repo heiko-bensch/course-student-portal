@@ -17,7 +17,7 @@ class ExcelImportServiceTest {
 
 
     @Test
-    void shouldReadExcelContentAndParseExcelFileIntoStudentList1() throws IOException {
+    void shouldReadExcelContentAndParseExcelFileIntoStudentList1() throws ExcelImportException, IOException {
         byte[] bytes = Files.readAllBytes(Path.of("src", "test", "resources", "Excel_Import_File1.xlsx"));
         List<Student> expectedResult = List.of(
                 new Student(null, "Name 1", "Nachname 1", "1", "Jupiter", true),

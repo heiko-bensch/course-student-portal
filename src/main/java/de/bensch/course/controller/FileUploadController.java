@@ -1,13 +1,13 @@
 package de.bensch.course.controller;
 
 import de.bensch.course.model.Student;
+import de.bensch.course.service.ExcelImportException;
 import de.bensch.course.service.ExcelImportService;
 import de.bensch.course.service.StudentService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,7 +33,7 @@ public class FileUploadController {
     }
 
     @PostMapping(STUDENT_UPLOAD_FORM)
-    public String uploadStudents(Model model, @RequestParam("file") MultipartFile file) {
+    public String uploadStudents(Model model, @RequestParam("file") MultipartFile file) throws ExcelImportException {
         String message = "";
         try {
             if (file.isEmpty()) {
@@ -41,7 +41,7 @@ public class FileUploadController {
             } else {
                 List<Student> studentList = excelImportService.readExcelContent(file.getBytes());
                 if (studentList.isEmpty()) {
-                    message = "No data was found in the Excel spreadsheet.";
+                    message = "No data found in the Excel spreadsheet.";
                 } else {
                     studentService.saveAll(studentList);
                     return "redirect:" + STUDENT_LIST;
@@ -49,18 +49,12 @@ public class FileUploadController {
             }
         } catch (Exception e) {
             log.error("Error uploading file.", e);
-            message = "Could not upload the file: " + file.getOriginalFilename() + ". Error: " + e.getMessage();
+            message = "Could not upload the file. " + e.getMessage();
+
         }
         model.addAttribute("message", message);
-
-        return STUDENT_UPLOAD_FORM;
-
+        return STUDENT_LIST;
     }
 
-    @GetMapping(STUDENT_UPLOAD_FORM)
-    public String uploadStudents(Model model) {
-
-        return STUDENT_UPLOAD_FORM;
-    }
 
 }
