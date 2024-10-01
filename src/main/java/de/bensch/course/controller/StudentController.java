@@ -22,9 +22,6 @@ import static de.bensch.course.controller.UrlMappings.*;
 @Controller
 @AllArgsConstructor
 public class StudentController {
-
-    // private final ExcelImportService excelImportService;
-
     private final StudentService studentService;
 
     @ModelAttribute("urlMappings")
@@ -116,29 +113,4 @@ public class StudentController {
         studentService.delete(id);
         return "redirect:" + STUDENT_LIST;
     }
-
-//    @PostMapping(STUDENT_UPLOAD)
-//    public String uploadStudents(Model model, @RequestParam("file") MultipartFile file) {
-//        String message = "";
-//        try {
-//            if (file.isEmpty()) {
-//                message = "Please select a file to upload";
-//            } else {
-//                List<Student> studentList = excelImportService.readExcelContent(file.getBytes());
-//                if (studentList.isEmpty()) {
-//                    message = "No data was found in the Excel spreadsheet.";
-//                } else {
-//                    message = "Data imported.";
-//                }
-//            }
-//        } catch (Exception e) {
-//            log.error("Error uploading file.", e);
-//            message = "Could not upload the file: " + file.getOriginalFilename() + ". Error: " + e.getMessage();
-//        }
-//        model.addAttribute("message", message);
-//
-//        return UrlMappings.STUDENT_LIST;
-//
-//    }
-
 }

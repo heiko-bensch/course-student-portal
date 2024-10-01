@@ -11,12 +11,13 @@ import java.util.List;
 
 public interface StudentRepository extends JpaRepository<Student, Long> {
     Page<Student> findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCaseOrClassNameContainingIgnoreCase(String firstName, String lastName, String className, Pageable pageable);
-
-
-    @Query("SELECT s FROM Student s WHERE s.gradeLevel = :gradeLevel " +
-            "AND (LOWER(s.firstName) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
-            "OR LOWER(s.lastName) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
-            "OR LOWER(s.className) LIKE LOWER(CONCAT('%', :keyword, '%')))")
+    
+    @Query("""
+            SELECT s FROM Student s WHERE s.gradeLevel = :gradeLevel
+                AND (LOWER(s.firstName) LIKE LOWER(CONCAT('%', :keyword, '%'))
+                    OR LOWER(s.lastName) LIKE LOWER(CONCAT('%', :keyword, '%'))
+                    OR LOWER(s.className) LIKE LOWER(CONCAT('%', :keyword, '%')))
+            """)
     Page<Student> findByGradeLevelWithKeyword(
             @Param("gradeLevel") String gradeLevel,
             @Param("keyword") String keyword,
