@@ -1,6 +1,4 @@
-/*.navbar {*/
-/*    padding: 0 10px;*/
-/*}*/
+
 .bg-darken {
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8));
 }
@@ -15,7 +13,6 @@
 
 .nav-item.active .nav-link {
     font-weight: bold;
-    /*color: #007bff;*/
 }
 
 *.icon-dark {
