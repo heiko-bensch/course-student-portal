@@ -1,50 +1,66 @@
-.navbar {
-  padding: 0 10px;
+/*.navbar {*/
+/*    padding: 0 10px;*/
+/*}*/
+.bg-darken {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8));
+}
+
+.navbar-light-text .navbar-nav .nav-link {
+    color: #f8f9fa; /* Helleres Weiß für Text */
+}
+
+.navbar-light-text .navbar-nav .nav-link:hover {
+    color: #ffffff; /* Noch heller beim Hover */
+}
+
+.nav-item.active .nav-link {
+    font-weight: bold;
+    /*color: #007bff;*/
 }
 
 *.icon-dark {
-  color: grey;
+    color: grey;
 }
 
 .message {
-  position: absolute;
-  top: 40px;
-  right:5px;
+    position: absolute;
+    top: 40px;
+    right: 5px;
 }
 
 .search {
-  position: relative;
+    position: relative;
 }
 
 .search input {
-  text-indent: 25px;
-  border: 2px solid #d6d4d4;
+    text-indent: 25px;
+    border: 2px solid #d6d4d4;
 }
 
 .search input:focus {
-  box-shadow: none;
-  border: 1px solid grey;
+    box-shadow: none;
+    border: 1px solid grey;
 }
 
 .search .fa-search {
-  position: absolute;
-  top: 12px;
-  left: 10px;
+    position: absolute;
+    top: 12px;
+    left: 10px;
 }
 
 .search button {
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  width: 80px;
-  background: grey;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width: 80px;
+    background: grey;
 }
 
 .size-select {
-  width: 60px;
-  color: #495057;
-  vertical-align: middle;
-  padding: 6px 12px;
-  border: 1px solid #ced4da;
-  border-radius: 0.25rem;
+    width: 60px;
+    color: #495057;
+    vertical-align: middle;
+    padding: 6px 12px;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
 }

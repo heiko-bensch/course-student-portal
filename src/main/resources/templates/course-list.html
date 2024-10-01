@@ -4,14 +4,19 @@
     <th:block th:replace="fragments/general :: styles"></th:block>
     <title th:text="#{course-list.title}"></title>
 </head>
+
 <body th:with="baseUrl=${urlMappings.COURSE_LIST} + '?'
             + (${keyword != null and keyword != '' ? 'keyword=' + keyword + '&' : ''})">
+
+<!-- Nav bar -->
+<div th:replace="fragments/general :: navbar"></div>
+
 <div th:replace="fragments/general :: confirmationModal(#{course-list.delete.confirmation.text})"></div>
 
 <!-- ----------------------------------------------------------------------- -->
-<div class="container-fluid p-5 bg-primary text-white text-center">
-    <h1 class="display-1" th:text="#{course-list.title}"></h1>
-</div>
+<!--<div class="container-fluid p-5 bg-primary text-white text-center">-->
+<!--    <h1 class="display-6" th:text="#{course-list.title}"></h1>-->
+<!--</div>-->
 <!-- ----------------------------------------------------------------------- -->
 
 <!-- -------Search field---------------------------------------------------- -->
