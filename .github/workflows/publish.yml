@@ -2,7 +2,7 @@ name: Publish package to GitHub Packages
 
 on:
   release:
-    types: [created]
+    types: [ created ]
 
 jobs:
   build:
@@ -22,16 +22,16 @@ jobs:
           distribution: 'temurin'
           cache: 'gradle'
 
-#      - name: Publish JAR
-#        run: ./gradlew publish -Prelease.useLastTag=true
-#        env:
-#          USERNAME: ${{ secrets.USERNAME }}
-#          TOKEN: ${{ secrets.TOKEN }}
+      #      - name: Publish JAR
+      #        run: ./gradlew publish -Prelease.useLastTag=true
+      #        env:
+      #          USERNAME: ${{ secrets.USERNAME }}
+      #          TOKEN: ${{ secrets.TOKEN }}
 
       - name: Publish Docker
         run: |
           echo $GH_TOKEN
           echo ./gradlew -Prelease.useLastTag=true -Djib.to.auth.username=${{ github.actor }} -Djib.to.auth.password=$GH_TOKEN jib -x check
-          ./gradlew -Prelease.useLastTag=true -Djib.to.auth.username=${{ github.actor }} -Djib.to.auth.password=$GH_TOKEN jib -x check --stacktrace
+          ./gradlew -Prelease.useLastTag=true -Djib.to.auth.username=${{ github.actor }} -Djib.to.auth.password=$GH_TOKEN jib -x check --stacktrace --build-cache
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
