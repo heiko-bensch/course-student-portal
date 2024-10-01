@@ -7,11 +7,10 @@
 <title th:text="#{student-create.title}">"</title>
 <body>
 
-<div class="container-fluid p-5 bg-primary text-white text-center">
-    <h1 th:if="${student.id == null}" th:text="#{student-create.title}"></h1>
-    <h1 th:if="${student.id != null}" th:text="#{student-modify.title}"></h1>
-</div>
-<div class="container pt-5">
+<!-- Nav bar -->
+<div th:replace="fragments/general :: navbar"></div>
+
+<div class="container">
     <div class="row justify-content-center">
         <div class="col-lg-6">
             <form th:action="@{${student.id == null ? urlMappings.STUDENT_CREATE : urlMappings.getStudentEditUrl(student.id)}}"

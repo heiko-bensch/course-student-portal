@@ -4,54 +4,104 @@
     <th:block th:replace="fragments/general :: styles"></th:block>
     <title th:text="#{course-list.title}"></title>
 </head>
+
 <body th:with="baseUrl=${urlMappings.COURSE_LIST} + '?'
             + (${keyword != null and keyword != '' ? 'keyword=' + keyword + '&' : ''})">
+
+<!-- Nav bar -->
+<div th:replace="fragments/general :: navbar"></div>
+
 <div th:replace="fragments/general :: confirmationModal(#{course-list.delete.confirmation.text})"></div>
 
 <!-- ----------------------------------------------------------------------- -->
-<div class="container-fluid p-5 bg-primary text-white text-center">
-    <h1 class="display-1" th:text="#{course-list.title}"></h1>
-</div>
-<!-- ----------------------------------------------------------------------- -->
+<div class="container">
+    <!-- -------Search field---------------------------------------------------- -->
+    <form class="col-6" th:action="@{${urlMappings.COURSE_LIST}}" id="searchForm">
+        <div class="row form-group">
+            <!-- search field -->
+            <div class="col-md-5">
+                <div class="search">
+                    <i class="fa fa-search"></i>
+                    <input id="keyword" type="search" name="keyword" th:value="${keyword}" class="form-control"
+                           placeholder="Enter keyword">
+                    <button type="submit" class="btn btn-secondary">Search</button>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <button id="btnClear" class="btn btn-info">Clear</button>
+            </div>
+            <!-- ---- -->
+        </div>
+    </form>
 
-<!-- -------Search field---------------------------------------------------- -->
-<div th:replace="fragments/search2 :: search(${urlMappings.COURSE_LIST})"></div>
+    <!-- Normal list-->
+    <div class="row mt-3">
+        <table class="table table-hover table-responsive-xl col-12">
+            <thead class="thead-light">
+            <tr>
+                <th th:replace="fragments/sorting :: sorting(field='id',label=#{course-list.table.id},url=${baseUrl})"></th>
+                <th th:replace="fragments/sorting :: sorting(field='gradeLevels',label=#{course-list.table.grade-levels},url=${baseUrl})"></th>
+                <th th:replace="fragments/sorting :: sorting(field='name',label=#{course-list.table.name},url=${baseUrl})"></th>
+                <th th:replace="fragments/sorting :: sorting(field='instructor',label=#{course-list.table.instructor},url=${baseUrl})"></th>
+                <th th:replace="fragments/sorting :: sorting(field='dayOfWeek',label=#{course-list.table.day-of-week},url=${baseUrl})"></th>
+                <th class="col-1" scope="col" th:text="#{course-list.table.action}"></th>
+            </tr>
+            </thead>
+            <tbody class="table-group-divider">
+            <tr th:each="course : ${courseList}">
+                <td th:text="${course.id}"></td>
+                <td th:text="${course.gradeLevels}"></td>
+                <td th:text="${course.name}"></td>
+                <td th:text="${course.instructor}"></td>
+                <td th:text="${course.dayOfWeek}"></td>
+                <td>
+                    <a th:href="@{${urlMappings.COURSE_EDIT}(id=${course.id})}" target="_blank"><i
+                            class="fa-solid fa-pen-to-square"></i></a>
+                    &nbsp;
+                    <a th:href="@{${urlMappings.COURSE_DELETE}(id=${course.id})}" target="_blank" class="delete-link"><i
+                            class="fa-solid fa-trash"></i></a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- pagination -->
+    <div class="row">
+        <div class="col-6">
+            <div class="row d-flex mt-2">
+                <div class="col-md-3 input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="pageSize">Items per page:</label>
+                    </div>
+                    <select form="searchForm" name="size" th:value="${pageSize}" onchange="changePageSize()"
+                            class="size-select"
+                            id="pageSize">
+                        <option th:each="s : ${ {5, 10, 20} }" th:value="${s}" th:text="${s}"
+                                th:selected="${s == pageSize}"></option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 d-flex justify-content-end">
+            <nav th:replace="~{fragments/pagination :: pagination(${currentPage},${totalPages},
+                ${baseUrl}
+            )}"></nav>
+        </div>
+    </div>
+</div>
+<!-- ---- -->
+<script>
+    $(document).ready(function () {
+        $("#btnClear").on("click", function (e) {
+            e.preventDefault();
+            $("#keyword").val("");
+            $("#searchForm").submit();
+        });
+    });
 
-<!-- Normal list-->
-<div class="container pt-5 ">
-    <table class="table table-hover table-responsive-xl">
-        <thead class="thead-light">
-        <tr>
-            <th th:replace="fragments/sorting :: sorting(field='id',label=#{course-list.table.id},url=${baseUrl})"></th>
-            <th th:replace="fragments/sorting :: sorting(field='gradeLevels',label=#{course-list.table.grade-levels},url=${baseUrl})"></th>
-            <th th:replace="fragments/sorting :: sorting(field='name',label=#{course-list.table.name},url=${baseUrl})"></th>
-            <th th:replace="fragments/sorting :: sorting(field='instructor',label=#{course-list.table.instructor},url=${baseUrl})"></th>
-            <th th:replace="fragments/sorting :: sorting(field='dayOfWeek',label=#{course-list.table.day-of-week},url=${baseUrl})"></th>
-            <th class="col-1" scope="col" th:text="#{course-list.table.action}"></th>
-        </tr>
-        </thead>
-        <tbody class="table-group-divider">
-        <tr th:each="course : ${courseList}">
-            <td th:text="${course.id}"></td>
-            <td th:text="${course.gradeLevels}"></td>
-            <td th:text="${course.name}"></td>
-            <td th:text="${course.instructor}"></td>
-            <td th:text="${course.dayOfWeek}"></td>
-            <td>
-                <a th:href="@{${urlMappings.COURSE_EDIT}(id=${course.id})}" target="_blank"><i
-                        class="fa-solid fa-pen-to-square"></i></a>
-                &nbsp;
-                <a th:href="@{${urlMappings.COURSE_DELETE}(id=${course.id})}" target="_blank" class="delete-link"><i
-                        class="fa-solid fa-trash"></i></a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-</div>
-<nav th:replace="~{fragments/pagination :: pagination(${currentPage},${totalPages},${baseUrl})}"></nav>
-<div class="container ">
-    <a th:href="@{${baseUrl}}" class="btn btn-primary"
-       th:text="#{course-list.btn.new-course}"></a>
-</div>
+    function changePageSize() {
+        $("#searchForm").submit();
+    }
+</script>
 </body>
 </html>

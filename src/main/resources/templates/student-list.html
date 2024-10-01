@@ -7,11 +7,10 @@
             + (${keyword != null and keyword != '' ? 'keyword=' + keyword + '&' : ''})
             + (${selectedGradeLevel != null and selectedGradeLevel != 'all' ? 'selectedGradeLevel=' + selectedGradeLevel + '&' : ''})">
 
-<div th:replace="fragments/general :: confirmationModal(#{student-list.delete.confirmation.text})"></div>
+<!-- Nav bar -->
+<div th:replace="fragments/general :: navbar"></div>
 
-<div class="container-fluid p-5 bg-primary text-white text-center">
-    <h1 class="display-1" th:text="#{student-list.title}"></h1>
-</div>
+<div th:replace="fragments/general :: confirmationModal(#{student-list.delete.confirmation.text})"></div>
 
 <div class="container">
     <div class="row d-flex mt-3">
@@ -42,19 +41,6 @@
                 <div class="col-md-2">
                     <button id="btnClear" class="btn btn-info">Clear</button>
                 </div>
-                <!-- ----- -->
-                <!-- Buttons -->
-                <!--                <div class="col-md-6 row d-flex justify-content-end">-->
-                <div class="col-md-3">
-                    <a th:href="@{${urlMappings.STUDENT_CREATE}}" class="btn btn-primary btn-sm"
-                       th:text="#{student-list.btn.new-student}"></a>
-                </div>
-                <!--                    <div class="col-md-3">-->
-                <!--                        <a th:href="@{${urlMappings.STUDENT_UPLOAD_FORM}}" class="btn btn-primary btn-sm"-->
-                <!--                           th:text="#{student-list.btn.import-students}"></a>-->
-                <!--                    </div>-->
-                <!--                </div>-->
-                <!-- -------- -->
             </div>
         </form>
         <form class="col-6" id="uploadForm" method="post" th:action="@{${urlMappings.STUDENT_UPLOAD_FORM}}"
