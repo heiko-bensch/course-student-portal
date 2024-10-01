@@ -2,6 +2,8 @@ package de.bensch.course.controller;
 
 import de.bensch.course.model.Student;
 import de.bensch.course.service.StudentService;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -11,11 +13,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Objects;
+
 import static de.bensch.course.controller.UrlMappings.*;
 
+@Slf4j
 @Controller
+@AllArgsConstructor
 public class StudentController {
-
     private final StudentService studentService;
 
     @ModelAttribute("urlMappings")
@@ -24,13 +30,11 @@ public class StudentController {
         return new UrlMappings();
     }
 
-    public StudentController(StudentService studentService) {
-        this.studentService = studentService;
-    }
 
     @GetMapping(STUDENT_LIST)
     public String courses(Model model,
                           @RequestParam(required = false) String keyword,
+                          @RequestParam(required = false, defaultValue = "all") String selectedGradeLevel,
                           @RequestParam(defaultValue = "1") int page,
                           @RequestParam(defaultValue = "10") int size,
                           @RequestParam(defaultValue = "id,asc") String[] sort) {
@@ -41,11 +45,23 @@ public class StudentController {
 
         Pageable pageable = PageRequest.of(page - 1, size, Sort.by(order));
         Page<Student> studentPage;
+        List<String> gradeLevels = studentService.findGradeLevel();
         if (StringUtils.isBlank(keyword)) {
-            studentPage = studentService.findAll(pageable);
-
+            if (Objects.equals("all", selectedGradeLevel)) {
+                studentPage = studentService.findAll(pageable);
+            } else {
+                studentPage = studentService.findAll(pageable, selectedGradeLevel);
+                model.addAttribute("selectedGradeLevel", selectedGradeLevel);
+            }
         } else {
-            studentPage = studentService.findByKeyword(pageable, keyword);
+            if (Objects.equals("all", selectedGradeLevel)) {
+                studentPage = studentService.findByKeyword(pageable, keyword);
+
+            } else {
+                studentPage = studentService.findByKeyword(pageable, selectedGradeLevel, keyword);
+                model.addAttribute("selectedGradeLevel", selectedGradeLevel);
+
+            }
             model.addAttribute("keyword", keyword);
         }
         model.addAttribute("studentList", studentPage.getContent());
@@ -54,6 +70,7 @@ public class StudentController {
         model.addAttribute("totalPages", studentPage.getTotalPages());
         model.addAttribute("pageSize", size);
         model.addAttribute("sortField", sortField);
+        model.addAttribute("gradeLevels", gradeLevels);
         model.addAttribute("sortDirection", sortDirection);
         model.addAttribute("reverseSortDirection", sortDirection.equals("asc") ? "desc" : "asc");
         return STUDENT_LIST;
@@ -61,7 +78,7 @@ public class StudentController {
 
     @GetMapping(STUDENT_CREATE)
     public String createCourse(Model model) {
-        model.addAttribute("student", new Student(null, null, 0, null));
+        model.addAttribute("student", new Student());
         return STUDENT_CREATE;
     }
 
