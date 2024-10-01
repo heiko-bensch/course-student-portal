@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="de">
-<head th:replace="~{fragments/general :: head}">
+<head>
+    <th:block th:replace="fragments/general :: styles"></th:block>
     <title>#{course-create.title}</title>
 </head>
 <title>#{course-create.title}</title>
@@ -9,11 +10,7 @@
 <!-- Nav bar -->
 <div th:replace="fragments/general :: navbar"></div>
 
-<div class="container-fluid p-5 bg-primary text-white text-center">
-    <h1 th:if="${course.id == null}" th:text="#{course-create.title}"></h1>
-    <h1 th:if="${course.id != null}" th:text="#{course-modify.title}"></h1>
-</div>
-<div class="container pt-5">
+<div class="container">
     <div class="row justify-content-center">
         <div class="col-lg-6">
             <form th:action="@{${course.id == null ? urlMappings.COURSE_CREATE : urlMappings.getCourseEditUrl(course.id)}}"
