@@ -96,6 +96,7 @@ spotbugsMain {
 
 jacocoTestReport {
     reports {
+        xml.required = true
         xml.outputLocation = file("${layout.buildDirectory.get().asFile}/reports/jacoco/jacoco.xml")
         html.outputLocation = file("${layout.buildDirectory.get().asFile}/reports/jacoco/html")
     }
