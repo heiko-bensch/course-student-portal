@@ -75,7 +75,7 @@ jib {
 }
 
 spotbugs {
-    ignoreFailures = true
+    ignoreFailures = false
     showStackTraces = false
     showProgress = true
 }
@@ -84,17 +84,19 @@ spotbugsMain {
     reports.create("html") {
         required = true
 
-        outputLocation = file("${layout.buildDirectory.get().asFile}/reports/spotbugs.html")
+        outputLocation = file("${layout.buildDirectory.get().asFile}/reports/spotbugs/spotbugs.html")
         setStylesheet("fancy-hist.xsl")
     }
     reports.create("xml") {
         required = true
-        outputLocation = file("${layout.buildDirectory.get().asFile}/reports/spotbugs.xml")
+        outputLocation = file("${layout.buildDirectory.get().asFile}/reports/spotbugs/spotbugs.xml")
     }
+    excludeFilter = file('config/spotbugs/excludeFilter.xml')
 }
 
 jacocoTestReport {
     reports {
+        xml.required = true
         xml.outputLocation = file("${layout.buildDirectory.get().asFile}/reports/jacoco/jacoco.xml")
         html.outputLocation = file("${layout.buildDirectory.get().asFile}/reports/jacoco/html")
     }

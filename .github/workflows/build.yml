@@ -1,6 +1,10 @@
 name: Java CI with Gradle
 
 on:
+  push:
+    branches:
+      - master
+
   pull_request:
     branches:
       - '**'
@@ -26,27 +30,30 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      # Configure Gradle for optimal use in GitHub Actions, including caching of downloaded dependencies.
-      # See: https://github.com/gradle/actions/blob/main/setup-gradle/README.md
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@af1da67850ed9a4cedd57bfd976089dd991e2582 # v4.0.0
+        uses: gradle/actions/setup-gradle@v4  # v4.0.0
+        with:
+          add-job-summary: 'always'
 
       - name: Build with Gradle Wrapper
-        run: ./gradlew check
+        run: ./gradlew check --build-cache
 
       - name: Add coverage to PR
         id: jacoco
-        uses: madrapps/jacoco-report@v1.7.0
+        uses: madrapps/jacoco-report@v1.7.1
         with:
           paths: |
             ${{ github.workspace }}/**/build/reports/jacoco/jacoco.xml
           token: ${{ secrets.GITHUB_TOKEN }}
           min-coverage-overall: 40
           min-coverage-changed-files: 60
+          update-comment: 'true'
+          title: 'Coverage Report'
+          pass-emoji: ':green_apple:'
 
       - uses: lcollins/spotbugs-github-action@v3.1.0
         with:
-          path: '**/spotbugs.xml'
+          path: 'build/reports/spotbugs/spotbugs.xml'
 
       - name: Publish Test Results
         uses: EnricoMi/publish-unit-test-result-action@v2.6.1
