@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      packages: admin
+      packages: write
       attestations: write
       id-token: write
       checks: write
@@ -30,8 +30,7 @@ jobs:
 
       - name: Publish Docker
         run: |
-          echo $GH_TOKEN
-          echo ./gradlew -Prelease.useLastTag=true -Djib.to.auth.username=${{ github.actor }} -Djib.to.auth.password=$GH_TOKEN jib -x check
-          ./gradlew -Prelease.useLastTag=true -Djib.to.auth.username=${{ github.actor }} -Djib.to.auth.password=$GH_TOKEN jib -x check --stacktrace --build-cache
+          echo ./gradlew -Prelease.useLastTag=true -Djib.to.auth.username="${{ github.actor }}" -Djib.to.auth.password="$GH_TOKEN" jib -x check
+          ./gradlew -Prelease.useLastTag=true -Djib.to.auth.username="${{ github.actor }}" -Djib.to.auth.password="$GH_TOKEN" jib -x check --stacktrace --build-cache
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

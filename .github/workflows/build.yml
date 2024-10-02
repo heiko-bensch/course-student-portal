@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - master
-      
+
   pull_request:
     branches:
       - '**'
@@ -36,7 +36,7 @@ jobs:
           add-job-summary: 'always'
 
       - name: Build with Gradle Wrapper
-        run: ./gradlew check--build-cache
+        run: ./gradlew check --build-cache
 
       - name: Add coverage to PR
         id: jacoco
