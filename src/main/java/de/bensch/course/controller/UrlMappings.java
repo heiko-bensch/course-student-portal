@@ -20,6 +20,8 @@ public class UrlMappings {
 
     public static final String STUDENT_UPLOAD_FORM = "/student-upload-form";
 
+    public static final String STUDENT_COURSE_ASSIGNMENT = "/student-course-assignment";
+
     public String getCourseEditUrl(String id) {
         return COURSE_EDIT.replace("{id}", id);
     }

@@ -1,6 +1,7 @@
 package de.bensch.course.service;
 
 import de.bensch.course.model.Course;
+import de.bensch.course.model.WeekDay;
 import de.bensch.course.repository.CourseRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -35,5 +36,9 @@ public class CourseService {
 
     public Page<Course> findByKeyword(Pageable pageable, String keyword) {
         return courseRepository.findByNameContainingIgnoreCaseOrInstructorContainingIgnoreCase(keyword, keyword, pageable);
+    }
+
+    public Iterable<Course> findByDayOfWeekday(WeekDay weekDay) {
+        return courseRepository.findByDayOfWeek(weekDay);
     }
 }

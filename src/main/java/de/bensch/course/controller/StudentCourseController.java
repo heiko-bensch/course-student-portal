@@ -1,6 +1,10 @@
 package de.bensch.course.controller;
 
+import de.bensch.course.model.Course;
 import de.bensch.course.model.Student;
+import de.bensch.course.model.WeekDay;
+import de.bensch.course.service.CourseService;
+import de.bensch.course.service.StudenCourseService;
 import de.bensch.course.service.StudentService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,9 +24,25 @@ public class StudentCourseController {
 
     private final StudentService studentService;
 
+    private final StudenCourseService studenCourseService;
 
-    @GetMapping("/search")
-    public String searchStudents(@RequestParam String className, @RequestParam String query, Model model) {
+    private final CourseService courseService;
+
+
+    @GetMapping(UrlMappings.STUDENT_COURSE_ASSIGNMENT)
+    public String searchStudents(Model model) {
+
+        Iterable<Course> monday = courseService.findByDayOfWeekday(WeekDay.Monday);
+        Iterable<Course> tuesday = courseService.findByDayOfWeekday(WeekDay.Tuesday);
+        Iterable<Course> wednesday = courseService.findByDayOfWeekday(WeekDay.Wednesday);
+        Iterable<Course> thursday = courseService.findByDayOfWeekday(WeekDay.Thursday);
+        Optional<Student> student = studentService.findById(1L);
+        model.addAttribute("student", student.get());
+        model.addAttribute("mondayCourseList", monday);
+        model.addAttribute("tuesdayCourseList", tuesday);
+        model.addAttribute("wednesdayCourseList", wednesday);
+        model.addAttribute("thursdayCourseList", thursday);
+
 //        List<Student> students = studentService.findStudentsByClassNameAndNameContaining(className, query);
 //        List<String> classNames = studentService.getAllClassNames(); // Fetch all class names
 //       // Iterable<Course> courses = courseService.findAll(pageable); // Fetch all courses for dropdown
@@ -32,7 +52,7 @@ public class StudentCourseController {
 //        model.addAttribute("selectedStudent", null); // Clear selected student
 //      //  model.addAttribute("courses", courses);
 
-        return "student-list";
+        return UrlMappings.STUDENT_COURSE_ASSIGNMENT;
     }
 
     @GetMapping("/student/details/{id}")
