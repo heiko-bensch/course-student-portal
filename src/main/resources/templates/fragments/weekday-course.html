@@ -1,11 +1,15 @@
-<div th:fragment="cardFragment(title, courseList)">
+<!DOCTYPE html>
+<div th:fragment="cardFragment(title, courseList, courseSelection)">
     <div class="card">
         <h5 class="card-header" th:text="${title}">Titel</h5>
         <div class="card-body">
             <div class="d-flex align-items-center">
                 <label th:for="${title + 'Prio1Id'}" class="form-label me-2">1.</label>
                 <!-- Dropdown (Select) -->
-                <select th:id="${title} + 'Prio1Id'" class="form-select me-4" style="width: 250px;">
+                <!--                <select th:id="${title} + 'Prio1Id'" th:field="${studentCourse.courseSelectionMonday.coursePrio1.courseID}"-->
+                <select th:id="${title} + 'Prio1Id'" th:field="*{__${courseSelection}__.coursePrio1.courseID}"
+                        class="form-select me-4"
+                        style="width: 250px;">
                     <option value="">Bitte wählen</option>
                     <!-- Option für jeden Kurs -->
                     <option th:each="course : ${courseList}"
@@ -13,13 +17,18 @@
                             th:text="${course.name}">
                     </option>
                 </select>
-                <input type="text" th:attr="id=${title + 'Prio1Text'}" class="form-control" placeholder="Anmerkung"
+                <input type="text" th:attr="id=${title + 'Prio1Text'}"
+                       th:field="*{__${courseSelection}__.coursePrio1.comment}"
+                       class="form-control"
+                       placeholder="Anmerkung"
                        style="flex-grow: 1;">
             </div>
             <div class="d-flex align-items-center mt-2">
                 <label th:for="${title + 'Prio2Id'}" class="form-label me-2">2.</label>
                 <!-- Dropdown (Select) -->
-                <select th:id="${title} + 'Prio2Id'" class="form-select me-4" style="width: 250px;">
+                <select th:id="${title} + 'Prio2Id'"
+                        th:field="*{__${courseSelection}__.coursePrio2.courseID}"
+                        class="form-select me-4" style="width: 250px;">
                     <option value="">Bitte wählen</option>
                     <!-- Option für jeden Kurs -->
                     <option th:each="course : ${courseList}"
@@ -27,13 +36,18 @@
                             th:text="${course.name}">
                     </option>
                 </select>
-                <input type="text" th:attr="id=${title + 'Prio2Text'}" class="form-control" placeholder="Anmerkung"
+                <input type="text"
+                       th:attr="id=${title + 'Prio2Text'}"
+                       th:field="*{__${courseSelection}__.coursePrio2.comment}"
+                       class="form-control" placeholder="Anmerkung"
                        style="flex-grow: 1;">
             </div>
             <div class="d-flex align-items-center mt-2">
                 <label th:for="${title + 'Prio3Id'}" class="form-label me-2">3.</label>
                 <!-- Dropdown (Select) -->
-                <select th:id="${title} + 'Prio3Id'" class="form-select me-4" style="width: 250px;">
+                <select th:id="${title} + 'Prio3Id'"
+                        th:field="*{__${courseSelection}__.coursePrio3.courseID}"
+                        class="form-select me-4" style="width: 250px;">
                     <option value="">Bitte wählen</option>
                     <!-- Option für jeden Kurs -->
                     <option th:each="course : ${courseList}"
@@ -41,7 +55,10 @@
                             th:text="${course.name}">
                     </option>
                 </select>
-                <input type="text" th:attr="id=${title + 'Prio3Text'}" class="form-control" placeholder="Anmerkung"
+                <input type="text"
+                       th:attr="id=${title + 'Prio3Text'}"
+                       th:field="*{__${courseSelection}__.coursePrio3.comment}"
+                       class="form-control" placeholder="Anmerkung"
                        style="flex-grow: 1;">
             </div>
         </div>

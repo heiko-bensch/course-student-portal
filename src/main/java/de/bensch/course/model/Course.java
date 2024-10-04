@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @Entity
@@ -32,6 +35,15 @@ public class Course {
 
     @Column(name = "grade_levels")
     private String gradeLevels;
+
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+    private List<StudentCourseSelection> courseSelections = new ArrayList<>();
+
+
+    public void addStudentCourseSelection(StudentCourseSelection courseSelection) {
+        courseSelections.add(courseSelection);
+        courseSelection.setCourse(this); // Bidirektionale Verknüpfung
+    }
 
 }
 

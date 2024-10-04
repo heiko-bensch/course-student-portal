@@ -2,63 +2,66 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="de">
 <head>
     <th:block th:replace="fragments/general :: styles"></th:block>
-    <title th:text="#{course-list.title}"></title>
+    <title th:text="#{course-list.title}">Title</title>
 </head>
 
 <body>
 
 <!-- Nav bar -->
 <div th:replace="fragments/general :: navbar"></div>
-<div class="container mt-4">
-    <div class="card shadow-sm border-0">
-        <div class="card-header bg-darken text-white">
-            <h5 class="mb-0">Schülerinformation</h5>
-        </div>
-        <div class="card-body">
-            <div class="row g-3 align-items-center">
-                <!-- Nachname -->
-                <div class="col-md-2">
-                    <label for="studentLastname" class="form-label">Nachname</label>
-                </div>
-                <div class="col-md-4">
-                    <input id="studentLastname" class="form-control bg-light" type="text" th:value="${student.lastName}"
-                           disabled>
-                </div>
-
-                <!-- Name -->
-                <div class="col-md-2">
-                    <label for="studentName" class="form-label">Vorname</label>
-                </div>
-                <div class="col-md-4">
-                    <input id="studentName" class="form-control bg-light" type="text" th:value="${student.name}"
-                           disabled>
-                </div>
+<form th:action="@{${urlMappings.STUDENT_COURSE_ASSIGNMENT}}" th:object="${studentCourse}" method="post">
+    <input type="hidden" th:field="*{student.id}">
+    <div class="container mt-4">
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-darken text-white">
+                <h5 class="mb-0">Schülerinformation</h5>
             </div>
+            <div class="card-body">
+                <div class="row g-3 align-items-center">
+                    <!-- Nachname -->
+                    <div class="col-md-2">
+                        <label for="studentLastname" class="form-label">Nachname</label>
+                    </div>
+                    <div class="col-md-4">
+                        <input id="studentLastname" class="form-control bg-light" type="text"
+                               th:value="${studentCourse.student.lastName}"
+                               disabled>
+                    </div>
 
-            <div class="row g-3 align-items-center mt-3">
-                <!-- Klasse -->
-                <div class="col-md-2">
-                    <label for="studentClassname" class="form-label">Klassenname</label>
-                </div>
-                <div class="col-md-4">
-                    <input id="studentClassname" class="form-control bg-light" type="text"
-                           th:value="${student.className}" disabled>
+                    <!-- Name -->
+                    <div class="col-md-2">
+                        <label for="studentName" class="form-label">Vorname</label>
+                    </div>
+                    <div class="col-md-4">
+                        <input id="studentName" class="form-control bg-light" type="text"
+                               th:value="${studentCourse.student.firstName}"
+                               disabled>
+                    </div>
                 </div>
 
-                <!-- Klassenstufe -->
-                <div class="col-md-2">
-                    <label for="studentGradeLevel" class="form-label">Klassenstufe</label>
-                </div>
-                <div class="col-md-4">
-                    <input id="studentGradeLevel" class="form-control bg-light" type="text"
-                           th:value="${student.gradeLevel}" disabled>
+                <div class="row g-3 align-items-center mt-3">
+                    <!-- Klasse -->
+                    <div class="col-md-2">
+                        <label for="studentClassname" class="form-label">Klassenname</label>
+                    </div>
+                    <div class="col-md-4">
+                        <input id="studentClassname" class="form-control bg-light" type="text"
+                               th:value="${studentCourse.student.className}" disabled>
+                    </div>
+
+                    <!-- Klassenstufe -->
+                    <div class="col-md-2">
+                        <label for="studentGradeLevel" class="form-label">Klassenstufe</label>
+                    </div>
+                    <div class="col-md-4">
+                        <input id="studentGradeLevel" class="form-control bg-light" type="text"
+                               th:value="${studentCourse.student.gradeLevel}" disabled>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<form th:action="@{/save}" method="post">
     <div class="container mt-5">
         <div class="card shadow-sm border-0">
             <div class="card-header bg-darken text-white">
@@ -68,18 +71,18 @@
                 <!-- Card 1 -->
                 <div class="row">
                     <div class="col-6">
-                        <div th:replace="fragments/weekday-course :: cardFragment('Montag',${mondayCourseList})"></div>
+                        <div th:replace="fragments/weekday-course :: cardFragment('Montag', ${mondayCourseList},'courseSelectionMonday')"></div>
                     </div>
                     <div class="col-6">
-                        <div th:replace="fragments/weekday-course :: cardFragment('Dienstag',${tuesdayCourseList})"></div>
+                        <div th:replace="fragments/weekday-course :: cardFragment('Dienstag',${tuesdayCourseList},'courseSelectionTuesday')"></div>
                     </div>
                 </div>
                 <div class="row mt-5">
                     <div class="col-6">
-                        <div th:replace="fragments/weekday-course :: cardFragment('Mittwoch',${wednesdayCourseList})"></div>
+                        <div th:replace="fragments/weekday-course :: cardFragment('Mittwoch',${wednesdayCourseList},'courseSelectionWednesday')"></div>
                     </div>
                     <div class="col-6">
-                        <div th:replace="fragments/weekday-course :: cardFragment('Donnerstag',${thursdayCourseList})"></div>
+                        <div th:replace="fragments/weekday-course :: cardFragment('Donnerstag',${thursdayCourseList},'courseSelectionThursday')"></div>
                     </div>
                 </div>
 

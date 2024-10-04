@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="de">
 <head th:replace="~{fragments/general :: styles}">
-    <title th:text="#{student-list.title}"></title>
+    <title th:text="#{student-list.title}">Title</title>
 </head>
 <body th:with="baseUrl=${urlMappings.STUDENT_LIST} + '?'
             + (${keyword != null and keyword != '' ? 'keyword=' + keyword + '&' : ''})

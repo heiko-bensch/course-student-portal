@@ -3,17 +3,15 @@ package de.bensch.course.controller;
 import de.bensch.course.model.Course;
 import de.bensch.course.model.Student;
 import de.bensch.course.model.WeekDay;
+import de.bensch.course.model.dto.StudentCourseSelectionDTO;
 import de.bensch.course.service.CourseService;
-import de.bensch.course.service.StudenCourseService;
+import de.bensch.course.service.StudentCourseSelectionService;
 import de.bensch.course.service.StudentService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -24,34 +22,38 @@ public class StudentCourseController {
 
     private final StudentService studentService;
 
-    private final StudenCourseService studenCourseService;
+    private final StudentCourseSelectionService studentCourseSelectionService;
 
     private final CourseService courseService;
 
 
     @GetMapping(UrlMappings.STUDENT_COURSE_ASSIGNMENT)
-    public String searchStudents(Model model) {
+    public String searchStudents(Model model, @RequestParam(defaultValue = "1") Long id) {
 
         Iterable<Course> monday = courseService.findByDayOfWeekday(WeekDay.Monday);
         Iterable<Course> tuesday = courseService.findByDayOfWeekday(WeekDay.Tuesday);
         Iterable<Course> wednesday = courseService.findByDayOfWeekday(WeekDay.Wednesday);
         Iterable<Course> thursday = courseService.findByDayOfWeekday(WeekDay.Thursday);
-        Optional<Student> student = studentService.findById(1L);
-        model.addAttribute("student", student.get());
+        Optional<StudentCourseSelectionDTO> courseSelection = studentCourseSelectionService.findbyStudentId(id);
+
+
+        if (courseSelection.isPresent()) {
+            model.addAttribute("studentCourse", courseSelection.get());
+        } else {
+            model.addAttribute("studentCourse", new StudentCourseSelectionDTO());
+        }
+
         model.addAttribute("mondayCourseList", monday);
         model.addAttribute("tuesdayCourseList", tuesday);
         model.addAttribute("wednesdayCourseList", wednesday);
         model.addAttribute("thursdayCourseList", thursday);
 
-//        List<Student> students = studentService.findStudentsByClassNameAndNameContaining(className, query);
-//        List<String> classNames = studentService.getAllClassNames(); // Fetch all class names
-//       // Iterable<Course> courses = courseService.findAll(pageable); // Fetch all courses for dropdown
-//
-//        model.addAttribute("students", students);
-//        model.addAttribute("classNames", classNames);
-//        model.addAttribute("selectedStudent", null); // Clear selected student
-//      //  model.addAttribute("courses", courses);
+        return UrlMappings.STUDENT_COURSE_ASSIGNMENT;
+    }
 
+    @PostMapping(UrlMappings.STUDENT_COURSE_ASSIGNMENT)
+    public String torte(@ModelAttribute StudentCourseSelectionDTO courseSelection) {
+        System.out.println(courseSelection);
         return UrlMappings.STUDENT_COURSE_ASSIGNMENT;
     }
 
@@ -68,7 +70,7 @@ public class StudentCourseController {
 //                .getClassName(), ""));
 //        model.addAttribute("classNames", studentService.getAllClassNames());
 
-        return "student-list";
+        return UrlMappings.STUDENT_COURSE_ASSIGNMENT;
     }
 
     @PostMapping("/assignCourse")
