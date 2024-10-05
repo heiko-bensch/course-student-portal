@@ -1,7 +1,12 @@
 <!DOCTYPE html>
 <div th:fragment="cardFragment(title, courseList, courseSelection)">
     <div class="card">
-        <h5 class="card-header" th:text="${title}">Titel</h5>
+        <h5 class="card-header d-flex justify-content-between align-items-center">
+            <span th:text="${title}">Titel</span>
+            <!-- Icon, das beim Klick das Formular leert -->
+            <i class="fas fa-trash-alt" th:attr="data-title=${title}" style="cursor: pointer;"
+               onclick="clearData(this)"></i>
+        </h5>
         <input type="hidden" th:field="*{__${courseSelection}__.coursePrio1.id}">
         <input type="hidden" th:field="*{__${courseSelection}__.coursePrio2.id}">
         <input type="hidden" th:field="*{__${courseSelection}__.coursePrio3.id}">
@@ -72,6 +77,16 @@
             var buttonId = element.getAttribute('data-id');  // Hole die ID vom data-id-Attribut
             var button = document.getElementById(buttonId);
             button.textContent = element.textContent;  // Aktualisiere den Button-Text
+        }
+
+        function clearData(element) {
+            let title = element.getAttribute("data-title");
+            document.getElementById(title + "Prio1Id").value = ""
+            document.getElementById(title + "Prio1Text").value = ""
+            document.getElementById(title + "Prio2Id").value = ""
+            document.getElementById(title + "Prio2Text").value = ""
+            document.getElementById(title + "Prio3Id").value = ""
+            document.getElementById(title + "Prio3Text").value = ""
         }
     </script>
 </div>
