@@ -2,6 +2,9 @@
 <div th:fragment="cardFragment(title, courseList, courseSelection)">
     <div class="card">
         <h5 class="card-header" th:text="${title}">Titel</h5>
+        <input type="hidden" th:field="*{__${courseSelection}__.coursePrio1.id}">
+        <input type="hidden" th:field="*{__${courseSelection}__.coursePrio2.id}">
+        <input type="hidden" th:field="*{__${courseSelection}__.coursePrio3.id}">
         <div class="card-body">
             <div class="d-flex align-items-center">
                 <label th:for="${title + 'Prio1Id'}" class="form-label me-2">1.</label>

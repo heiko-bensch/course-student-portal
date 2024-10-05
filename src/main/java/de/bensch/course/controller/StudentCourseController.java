@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
+import static de.bensch.course.controller.UrlMappings.COURSE_LIST;
+
 @Controller
 @AllArgsConstructor
 @Slf4j
@@ -53,8 +55,9 @@ public class StudentCourseController {
 
     @PostMapping(UrlMappings.STUDENT_COURSE_ASSIGNMENT)
     public String torte(@ModelAttribute StudentCourseSelectionDTO courseSelection) {
-        System.out.println(courseSelection);
-        return UrlMappings.STUDENT_COURSE_ASSIGNMENT;
+        studentCourseSelectionService.saveStudentCourseSelection(courseSelection);
+        //return UrlMappings.STUDENT_COURSE_ASSIGNMENT;
+        return "redirect:" + COURSE_LIST;
     }
 
     @GetMapping("/student/details/{id}")
@@ -75,7 +78,6 @@ public class StudentCourseController {
 
     @PostMapping("/assignCourse")
     public String assignCourse(@RequestParam Long studentId, @RequestParam Long courseId, Model model) {
-//        studentService.assignCourseToStudent(studentId, courseId); // Implement this method in your service
         return "redirect:/search"; // Redirect to search results or wherever needed
     }
 

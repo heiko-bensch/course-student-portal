@@ -8,7 +8,7 @@ import de.bensch.course.model.dto.StudentDTO;
 
 import java.util.List;
 
-public class Mapper {
+public class StudentCourseSelectionMapper {
     StudentCourseSelectionDTO studentCourseSelectionDTO;
 
     public StudentCourseSelectionDTO toDTO(Student student) {
@@ -51,6 +51,7 @@ public class Mapper {
             default -> throw new IllegalArgumentException("Unknown Prio");
 
         };
+        dto.setId(courseSelection.getId());
         dto.setComment(courseSelection.getComment());
         dto.setCourseID(courseSelection.getCourse().getId());
     }
