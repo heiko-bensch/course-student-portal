@@ -1,6 +1,6 @@
 package de.bensch.course.controller;
 
-import de.bensch.course.model.Student;
+import de.bensch.course.model.entity.Student;
 import de.bensch.course.service.ExcelImportException;
 import de.bensch.course.service.ExcelImportService;
 import de.bensch.course.service.StudentService;

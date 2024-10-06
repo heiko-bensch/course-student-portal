@@ -1,4 +1,4 @@
-package de.bensch.course.model;
+package de.bensch.course.model.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

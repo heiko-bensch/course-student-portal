@@ -1,6 +1,6 @@
 package de.bensch.course.service;
 
-import de.bensch.course.model.Student;
+import de.bensch.course.model.entity.Student;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;

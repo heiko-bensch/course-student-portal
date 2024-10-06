@@ -1,5 +1,6 @@
-package de.bensch.course.model;
+package de.bensch.course.model.entity;
 
+import de.bensch.course.model.WeekDay;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;

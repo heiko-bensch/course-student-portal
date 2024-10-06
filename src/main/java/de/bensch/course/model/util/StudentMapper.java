@@ -1,13 +1,13 @@
 package de.bensch.course.model.util;
 
-import de.bensch.course.model.Course;
-import de.bensch.course.model.Student;
-import de.bensch.course.model.StudentCourseSelection;
 import de.bensch.course.model.WeekDay;
 import de.bensch.course.model.dto.CourseSelectionDTO;
 import de.bensch.course.model.dto.StudentCourseSelectionDTO;
 import de.bensch.course.model.dto.StudentCourseWeekdayDTO;
 import de.bensch.course.model.dto.StudentDTO;
+import de.bensch.course.model.entity.Course;
+import de.bensch.course.model.entity.Student;
+import de.bensch.course.model.entity.StudentCourseSelection;
 import org.apache.logging.log4j.util.Strings;
 import org.mapstruct.*;
 

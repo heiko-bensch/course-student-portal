@@ -1,7 +1,7 @@
 package de.bensch.course.controller;
 
-import de.bensch.course.model.Course;
 import de.bensch.course.model.WeekDay;
+import de.bensch.course.model.entity.Course;
 import de.bensch.course.service.CourseService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;

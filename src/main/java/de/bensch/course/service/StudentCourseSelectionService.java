@@ -1,9 +1,9 @@
 package de.bensch.course.service;
 
-import de.bensch.course.model.Course;
-import de.bensch.course.model.Student;
-import de.bensch.course.model.StudentCourseSelection;
 import de.bensch.course.model.dto.StudentCourseSelectionDTO;
+import de.bensch.course.model.entity.Course;
+import de.bensch.course.model.entity.Student;
+import de.bensch.course.model.entity.StudentCourseSelection;
 import de.bensch.course.model.util.EntityLoader;
 import de.bensch.course.model.util.StudentMapper;
 import de.bensch.course.repository.CourseRepository;

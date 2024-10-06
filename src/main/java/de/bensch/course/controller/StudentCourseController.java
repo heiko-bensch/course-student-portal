@@ -1,9 +1,9 @@
 package de.bensch.course.controller;
 
-import de.bensch.course.model.Course;
-import de.bensch.course.model.Student;
 import de.bensch.course.model.WeekDay;
 import de.bensch.course.model.dto.StudentCourseSelectionDTO;
+import de.bensch.course.model.entity.Course;
+import de.bensch.course.model.entity.Student;
 import de.bensch.course.service.CourseService;
 import de.bensch.course.service.StudentCourseSelectionService;
 import de.bensch.course.service.StudentService;

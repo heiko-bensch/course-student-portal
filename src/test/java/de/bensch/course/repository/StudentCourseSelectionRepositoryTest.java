@@ -1,7 +1,7 @@
 package de.bensch.course.repository;
 
-import de.bensch.course.model.StudentCourseSelection;
 import de.bensch.course.model.WeekDay;
+import de.bensch.course.model.entity.StudentCourseSelection;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
