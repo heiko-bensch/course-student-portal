@@ -36,7 +36,7 @@ public class StudentCourseController {
         Iterable<Course> tuesday = courseService.findByDayOfWeekday(WeekDay.Tuesday);
         Iterable<Course> wednesday = courseService.findByDayOfWeekday(WeekDay.Wednesday);
         Iterable<Course> thursday = courseService.findByDayOfWeekday(WeekDay.Thursday);
-        Optional<StudentCourseSelectionDTO> courseSelection = studentCourseSelectionService.findbyStudentId(id);
+        Optional<StudentCourseSelectionDTO> courseSelection = studentCourseSelectionService.findByStudentId(id);
 
 
         if (courseSelection.isPresent()) {

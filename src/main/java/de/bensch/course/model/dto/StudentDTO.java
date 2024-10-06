@@ -4,13 +4,13 @@ import lombok.Data;
 
 @Data
 public class StudentDTO {
-    Long id;
+    private Long id;
 
-    String firstName;
+    private String firstName;
 
-    String lastName;
+    private String lastName;
 
-    String className;
+    private String className;
 
-    String gradeLevel;
+    private String gradeLevel;
 }

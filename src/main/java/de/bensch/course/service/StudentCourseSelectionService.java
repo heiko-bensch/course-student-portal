@@ -5,7 +5,6 @@ import de.bensch.course.model.Student;
 import de.bensch.course.model.StudentCourseSelection;
 import de.bensch.course.model.dto.StudentCourseSelectionDTO;
 import de.bensch.course.model.util.EntityLoader;
-import de.bensch.course.model.util.StudentCourseSelectionMapper;
 import de.bensch.course.model.util.StudentMapper;
 import de.bensch.course.repository.CourseRepository;
 import de.bensch.course.repository.StudentCourseSelectionRepository;
@@ -31,8 +30,7 @@ public class StudentCourseSelectionService {
     private final StudentMapper studentMapper;
 
 
-    public Optional<StudentCourseSelectionDTO> findbyStudentId(Long id) {
-        StudentCourseSelectionMapper mapper = new StudentCourseSelectionMapper();
+    public Optional<StudentCourseSelectionDTO> findByStudentId(Long id) {
         Optional<Student> student = studentRepository.findById(id);
 
         return student.map(studentMapper::studentToStudentCourseSelectionDTO);
@@ -60,6 +58,5 @@ public class StudentCourseSelectionService {
         }
 
     }
-
 
 }

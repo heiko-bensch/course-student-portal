@@ -38,6 +38,11 @@ jobs:
       - name: Build with Gradle Wrapper
         run: ./gradlew check --build-cache
 
+      - uses: lcollins/spotbugs-github-action@v3.1.0
+        if: always()
+        with:
+          path: 'build/reports/spotbugs/spotbugs.xml'
+          
       - name: Add coverage to PR
         id: jacoco
         uses: madrapps/jacoco-report@v1.7.1
@@ -51,9 +56,6 @@ jobs:
           title: 'Coverage Report'
           pass-emoji: ':green_apple:'
 
-      - uses: lcollins/spotbugs-github-action@v3.1.0
-        with:
-          path: 'build/reports/spotbugs/spotbugs.xml'
 
       - name: Publish Test Results
         uses: EnricoMi/publish-unit-test-result-action@v2.6.1
