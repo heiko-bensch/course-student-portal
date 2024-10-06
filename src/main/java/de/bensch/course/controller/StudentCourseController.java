@@ -1,17 +1,21 @@
 package de.bensch.course.controller;
 
+import de.bensch.course.model.Course;
 import de.bensch.course.model.Student;
+import de.bensch.course.model.WeekDay;
+import de.bensch.course.model.dto.StudentCourseSelectionDTO;
+import de.bensch.course.service.CourseService;
+import de.bensch.course.service.StudentCourseSelectionService;
 import de.bensch.course.service.StudentService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
+
+import static de.bensch.course.controller.UrlMappings.COURSE_LIST;
 
 @Controller
 @AllArgsConstructor
@@ -20,19 +24,40 @@ public class StudentCourseController {
 
     private final StudentService studentService;
 
+    private final StudentCourseSelectionService studentCourseSelectionService;
 
-    @GetMapping("/search")
-    public String searchStudents(@RequestParam String className, @RequestParam String query, Model model) {
-//        List<Student> students = studentService.findStudentsByClassNameAndNameContaining(className, query);
-//        List<String> classNames = studentService.getAllClassNames(); // Fetch all class names
-//       // Iterable<Course> courses = courseService.findAll(pageable); // Fetch all courses for dropdown
-//
-//        model.addAttribute("students", students);
-//        model.addAttribute("classNames", classNames);
-//        model.addAttribute("selectedStudent", null); // Clear selected student
-//      //  model.addAttribute("courses", courses);
+    private final CourseService courseService;
 
-        return "student-list";
+
+    @GetMapping(UrlMappings.STUDENT_COURSE_ASSIGNMENT)
+    public String searchStudents(Model model, @RequestParam(defaultValue = "1") Long id) {
+
+        Iterable<Course> monday = courseService.findByDayOfWeekday(WeekDay.Monday);
+        Iterable<Course> tuesday = courseService.findByDayOfWeekday(WeekDay.Tuesday);
+        Iterable<Course> wednesday = courseService.findByDayOfWeekday(WeekDay.Wednesday);
+        Iterable<Course> thursday = courseService.findByDayOfWeekday(WeekDay.Thursday);
+        Optional<StudentCourseSelectionDTO> courseSelection = studentCourseSelectionService.findByStudentId(id);
+
+
+        if (courseSelection.isPresent()) {
+            model.addAttribute("studentCourse", courseSelection.get());
+        } else {
+            model.addAttribute("studentCourse", new StudentCourseSelectionDTO());
+        }
+
+        model.addAttribute("mondayCourseList", monday);
+        model.addAttribute("tuesdayCourseList", tuesday);
+        model.addAttribute("wednesdayCourseList", wednesday);
+        model.addAttribute("thursdayCourseList", thursday);
+
+        return UrlMappings.STUDENT_COURSE_ASSIGNMENT;
+    }
+
+    @PostMapping(UrlMappings.STUDENT_COURSE_ASSIGNMENT)
+    public String torte(@ModelAttribute StudentCourseSelectionDTO courseSelection) {
+        studentCourseSelectionService.saveStudentCourseSelection(courseSelection);
+        //return UrlMappings.STUDENT_COURSE_ASSIGNMENT;
+        return "redirect:" + COURSE_LIST;
     }
 
     @GetMapping("/student/details/{id}")
@@ -48,12 +73,11 @@ public class StudentCourseController {
 //                .getClassName(), ""));
 //        model.addAttribute("classNames", studentService.getAllClassNames());
 
-        return "student-list";
+        return UrlMappings.STUDENT_COURSE_ASSIGNMENT;
     }
 
     @PostMapping("/assignCourse")
     public String assignCourse(@RequestParam Long studentId, @RequestParam Long courseId, Model model) {
-//        studentService.assignCourseToStudent(studentId, courseId); // Implement this method in your service
         return "redirect:/search"; // Redirect to search results or wherever needed
     }
 

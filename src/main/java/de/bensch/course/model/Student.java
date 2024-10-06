@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 @Entity
 @NoArgsConstructor
@@ -31,7 +34,15 @@ public class Student {
     @Column(name = "ballot_submitted")
     private boolean ballotSubmitted;
 
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
+    private List<StudentCourseSelection> courseSelections = new ArrayList<>();
+
     public String getName() {
         return lastName + ", " + firstName;
+    }
+
+    public void addStudentCourseSelection(StudentCourseSelection courseSelection) {
+        courseSelections.add(courseSelection);
+        courseSelection.setStudent(this); // Bidirektionale Verknüpfung
     }
 }

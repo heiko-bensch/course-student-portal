@@ -11,5 +11,7 @@ public class GlobalModelAttributes {
     @ModelAttribute
     public void addAttributes(Model model, HttpServletRequest request) {
         model.addAttribute("requestURI", request.getRequestURI());
+        model.addAttribute("urlMappings", new UrlMappings());
+
     }
 }

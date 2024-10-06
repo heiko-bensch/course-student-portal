@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FindBugsFilter>
-    <!-- Ignoriert alle Warnungen vom Typ "SE_BAD_FIELD" -->
+
     <Match>
         <Bug pattern="EI_EXPOSE_REP2"/>
+    </Match>
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP"/>
+    </Match>
+    <Match>
+        <Class name="de.bensch.course.model.util.StudentMapperImpl"/>
     </Match>
 
     <!--    &lt;!&ndash; Ignoriert alle Warnungen in einer bestimmten Klasse &ndash;&gt;-->
