@@ -6,11 +6,14 @@ import de.bensch.course.model.entity.Student;
 import de.bensch.course.model.entity.StudentCourseSelection;
 import de.bensch.course.model.util.EntityLoader;
 import de.bensch.course.model.util.StudentMapper;
+import de.bensch.course.model.view.StudentCourseSelectionView;
 import de.bensch.course.repository.CourseRepository;
 import de.bensch.course.repository.StudentCourseSelectionRepository;
 import de.bensch.course.repository.StudentRepository;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -59,4 +62,11 @@ public class StudentCourseSelectionService {
 
     }
 
+    public Page<StudentCourseSelectionView> findAllByStudentCourseCountByDayOfWeek(Pageable pageable) {
+        return studentCourseSelectionRepository.findAllByStudentCourseCountByDayOfWeek(pageable);
+    }
+
+    public Page<StudentCourseSelectionView> findAllByStudentCourseCountByDayOfWeek(Pageable pageable, String selectedGradeLevel) {
+        return studentCourseSelectionRepository.findAllByStudentCourseCountByDayOfWeek(pageable, selectedGradeLevel);
+    }
 }

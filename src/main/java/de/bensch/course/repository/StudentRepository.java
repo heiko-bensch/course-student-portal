@@ -27,4 +27,6 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
     List<String> findGradeLevel();
 
     Page<Student> findByGradeLevel(String gradeLevel, Pageable pageable);
+
+
 }
