@@ -31,4 +31,8 @@ public class UrlMappings {
     public String getStudentEditUrl(String id) {
         return STUDENT_EDIT.replace("{id}", id);
     }
+
+//    public String getStudentCourseAssignment(String id) {
+//        return STUDENT_COURSE_ASSIGNMENT.replace("{id}", id);
+//    }
 }

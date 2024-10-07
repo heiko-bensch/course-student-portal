@@ -54,8 +54,8 @@
                     <td th:text="${student.className}"></td>
                     <td th:text="'M'+${student.courseCountMonday+',D'+student.courseCountTuesday+', M'+student.courseCountWednesday+', D'+student.courseCountThursday}"></td>
                     <td>
-                        <a th:href="@{${urlMappings.STUDENT_EDIT}(id=${student.id})}" target="_blank"><i
-                                class="fa-solid fa-pen-to-square"></i></a>
+                        <a th:href="@{|${urlMappings.STUDENT_COURSE_ASSIGNMENT}/${student.id}|(selectedGradeLevel=${selectedGradeLevel})}">
+                            <i class="fa-solid fa-pen-to-square"></i></a>
                     </td>
                 </tr>
                 </tbody>

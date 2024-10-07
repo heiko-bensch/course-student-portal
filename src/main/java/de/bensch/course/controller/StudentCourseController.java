@@ -14,10 +14,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.Objects;
@@ -36,14 +34,20 @@ public class StudentCourseController {
 
     private final CourseService courseService;
 
+    @ModelAttribute("urlMappings")
+    public UrlMappings urlMappings() {
+        //noinspection InstantiationOfUtilityClass
+        return new UrlMappings();
+    }
 
-    @GetMapping(UrlMappings.STUDENT_COURSE_ASSIGNMENT)
-    public String searchStudents(Model model, @RequestParam(defaultValue = "1") Long id) {
+    @GetMapping(UrlMappings.STUDENT_COURSE_ASSIGNMENT + "/{id}")
+    public String searchStudents(@PathVariable("id") Long id, @RequestParam(required = false, defaultValue = "all") String selectedGradeLevel, Model model) {
 
         Iterable<Course> monday = courseService.findByDayOfWeekday(WeekDay.Monday);
         Iterable<Course> tuesday = courseService.findByDayOfWeekday(WeekDay.Tuesday);
         Iterable<Course> wednesday = courseService.findByDayOfWeekday(WeekDay.Wednesday);
         Iterable<Course> thursday = courseService.findByDayOfWeekday(WeekDay.Thursday);
+
         Optional<StudentCourseSelectionDTO> courseSelection = studentCourseSelectionService.findByStudentId(id);
 
 
@@ -57,15 +61,27 @@ public class StudentCourseController {
         model.addAttribute("tuesdayCourseList", tuesday);
         model.addAttribute("wednesdayCourseList", wednesday);
         model.addAttribute("thursdayCourseList", thursday);
+        model.addAttribute("selectedGradeLevel", selectedGradeLevel);
 
         return UrlMappings.STUDENT_COURSE_ASSIGNMENT;
     }
 
     @PostMapping(UrlMappings.STUDENT_COURSE_ASSIGNMENT)
-    public String torte(@ModelAttribute StudentCourseSelectionDTO courseSelection) {
+    public String torte(@ModelAttribute StudentCourseSelectionDTO courseSelection,
+                        @RequestParam(name = "selectedGradeLevel", defaultValue = "all", required = false) String selectedGradeLevel,
+                        RedirectAttributes redirectAttributes) {
         studentCourseSelectionService.saveStudentCourseSelection(courseSelection);
-        //return UrlMappings.STUDENT_COURSE_ASSIGNMENT;
-        return "redirect:" + STUDENT_COURSE_LIST;
+        // Zum nächsten Eintrag weiterleiten
+        Optional<StudentCourseSelectionView> nextEntry = studentCourseSelectionService
+                .findNextEntry(courseSelection.getStudent().getId(), selectedGradeLevel);
+        redirectAttributes.addAttribute("selectedGradeLevel", selectedGradeLevel);
+        if (nextEntry.isPresent()) {
+            redirectAttributes.addAttribute("id", nextEntry.get().getId());
+            return "redirect:" + UrlMappings.STUDENT_COURSE_ASSIGNMENT + "/{id}?selectedGradeLevel={selectedGradeLevel}";
+        } else {
+            return "redirect:" + STUDENT_COURSE_LIST + "?selectedGradeLevel={selectedGradeLevel}";
+        }
+
     }
 
 

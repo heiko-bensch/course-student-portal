@@ -55,10 +55,10 @@
                 <td th:text="${course.instructor}"></td>
                 <td th:text="${course.dayOfWeek}"></td>
                 <td>
-                    <a th:href="@{${urlMappings.COURSE_EDIT}(id=${course.id})}" target="_blank"><i
+                    <a th:href="@{${urlMappings.COURSE_EDIT}(id=${course.id})}"><i
                             class="fa-solid fa-pen-to-square"></i></a>
                     &nbsp;
-                    <a th:href="@{${urlMappings.COURSE_DELETE}(id=${course.id})}" target="_blank" class="delete-link"><i
+                    <a th:href="@{${urlMappings.COURSE_DELETE}(id=${course.id})}" class="delete-link"><i
                             class="fa-solid fa-trash"></i></a>
                 </td>
             </tr>
