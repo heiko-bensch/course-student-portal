@@ -66,8 +66,8 @@
     <!-- students table -->
     <div class="row mt-3">
         <div class="col-12">
-            <table class="table table-striped ">
-                <thead class="table-primary">
+            <table class="table table-hover table-responsive-xl " data-sticky-header="true">
+                <thead class="custom-header">
                 <tr>
                     <th th:replace="fragments/sorting :: sorting(field='id',label=#{student-list.table.id},url=${baseUrl})"></th>
                     <th th:replace="fragments/sorting :: sorting(field='lastName',label=#{student-list.table.last-name},url=${baseUrl})"></th>
@@ -86,10 +86,10 @@
                     <td th:text="${student.className}"></td>
                     <td>
                         <a th:href="@{${urlMappings.STUDENT_EDIT}(id=${student.id})}"><i
-                                class="fa-solid fa-pen-to-square"></i></a>
+                                class="fa-solid fa-pen-to-square black-link"></i></a>
                         &nbsp;
                         <a th:href="@{${urlMappings.STUDENT_DELETE}(id=${student.id})}"
-                           class="delete-link"><i class="fa-solid fa-trash"></i></a>
+                           class="delete-link"><i class="fa-solid fa-trash black-link"></i></a>
                     </td>
                 </tr>
                 </tbody>

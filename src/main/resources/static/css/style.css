@@ -61,3 +61,27 @@
     border: 1px solid #ced4da;
     border-radius: 0.25rem;
 }
+
+.custom-header th {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8));
+    color: #f8f9fa;
+    font-weight: bold; /* Fettdruck */
+}
+
+.custom-header th a {
+    color: #f8f9fa; /* Gleiche Farbe wie der Header-Text */
+    text-decoration: none; /* Entfernt die Unterstreichung */
+}
+
+.custom-header th a:hover {
+    color: #e2e6ea; /* Optionale Hover-Farbe für die Links */
+}
+
+.black-link {
+    color: #000; /* Schwarze Farbe */
+    text-decoration: none; /* Optional: entfernt die Unterstreichung */
+}
+
+.black-link:hover {
+    color: #333; /* Optional: Hover-Farbe */
+}

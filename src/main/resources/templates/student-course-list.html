@@ -33,8 +33,8 @@
     <!-- students table -->
     <div class="row mt-3">
         <div class="col-12">
-            <table class="table table-striped ">
-                <thead class="table-primary">
+            <table class="table table-hover table-responsive-xl">
+                <thead class="custom-header">
                 <tr>
                     <th th:text="#{student-course-list.last-name}"></th>
                     <th th:text="#{student-course-list.last-name}"></th>
@@ -55,7 +55,7 @@
                     <td th:text="'M'+${student.courseCountMonday+',D'+student.courseCountTuesday+', M'+student.courseCountWednesday+', D'+student.courseCountThursday}"></td>
                     <td>
                         <a th:href="@{|${urlMappings.STUDENT_COURSE_ASSIGNMENT}/${student.id}|(selectedGradeLevel=${selectedGradeLevel})}">
-                            <i class="fa-solid fa-pen-to-square"></i></a>
+                            <i class="fa-solid fa-pen-to-square black-link"></i></a>
                     </td>
                 </tr>
                 </tbody>
