@@ -1,21 +1,27 @@
 package de.bensch.course.controller;
 
-import de.bensch.course.model.Course;
-import de.bensch.course.model.Student;
 import de.bensch.course.model.WeekDay;
 import de.bensch.course.model.dto.StudentCourseSelectionDTO;
+import de.bensch.course.model.entity.Course;
+import de.bensch.course.model.view.StudentCourseSelectionView;
 import de.bensch.course.service.CourseService;
 import de.bensch.course.service.StudentCourseSelectionService;
 import de.bensch.course.service.StudentService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
-import static de.bensch.course.controller.UrlMappings.COURSE_LIST;
+import static de.bensch.course.controller.UrlMappings.STUDENT_COURSE_LIST;
 
 @Controller
 @AllArgsConstructor
@@ -28,14 +34,20 @@ public class StudentCourseController {
 
     private final CourseService courseService;
 
+    @ModelAttribute("urlMappings")
+    public UrlMappings urlMappings() {
+        //noinspection InstantiationOfUtilityClass
+        return new UrlMappings();
+    }
 
-    @GetMapping(UrlMappings.STUDENT_COURSE_ASSIGNMENT)
-    public String searchStudents(Model model, @RequestParam(defaultValue = "1") Long id) {
+    @GetMapping(UrlMappings.STUDENT_COURSE_ASSIGNMENT + "/{id}")
+    public String searchStudents(@PathVariable("id") Long id, @RequestParam(required = false, defaultValue = "all") String selectedGradeLevel, Model model) {
 
         Iterable<Course> monday = courseService.findByDayOfWeekday(WeekDay.Monday);
         Iterable<Course> tuesday = courseService.findByDayOfWeekday(WeekDay.Tuesday);
         Iterable<Course> wednesday = courseService.findByDayOfWeekday(WeekDay.Wednesday);
         Iterable<Course> thursday = courseService.findByDayOfWeekday(WeekDay.Thursday);
+
         Optional<StudentCourseSelectionDTO> courseSelection = studentCourseSelectionService.findByStudentId(id);
 
 
@@ -49,36 +61,56 @@ public class StudentCourseController {
         model.addAttribute("tuesdayCourseList", tuesday);
         model.addAttribute("wednesdayCourseList", wednesday);
         model.addAttribute("thursdayCourseList", thursday);
+        model.addAttribute("selectedGradeLevel", selectedGradeLevel);
 
         return UrlMappings.STUDENT_COURSE_ASSIGNMENT;
     }
 
     @PostMapping(UrlMappings.STUDENT_COURSE_ASSIGNMENT)
-    public String torte(@ModelAttribute StudentCourseSelectionDTO courseSelection) {
+    public String torte(@ModelAttribute StudentCourseSelectionDTO courseSelection,
+                        @RequestParam(name = "selectedGradeLevel", defaultValue = "all", required = false) String selectedGradeLevel,
+                        RedirectAttributes redirectAttributes) {
         studentCourseSelectionService.saveStudentCourseSelection(courseSelection);
-        //return UrlMappings.STUDENT_COURSE_ASSIGNMENT;
-        return "redirect:" + COURSE_LIST;
+        // Zum nächsten Eintrag weiterleiten
+        Optional<StudentCourseSelectionView> nextEntry = studentCourseSelectionService
+                .findNextEntry(courseSelection.getStudent().getId(), selectedGradeLevel);
+        redirectAttributes.addAttribute("selectedGradeLevel", selectedGradeLevel);
+        if (nextEntry.isPresent()) {
+            redirectAttributes.addAttribute("id", nextEntry.get().getId());
+            return "redirect:" + UrlMappings.STUDENT_COURSE_ASSIGNMENT + "/{id}?selectedGradeLevel={selectedGradeLevel}";
+        } else {
+            return "redirect:" + STUDENT_COURSE_LIST + "?selectedGradeLevel={selectedGradeLevel}";
+        }
+
     }
 
-    @GetMapping("/student/details/{id}")
-    public String viewStudentDetails(@PathVariable Long id, Model model) {
-        Optional<Student> student = studentService.findById(id);
-        //Iterable<Course> courses = courseService.findAll(pageable); // Fetch all courses for dropdown
 
-        model.addAttribute("selectedStudent", student.get());
-        //model.addAttribute("courses", courses);
+    @GetMapping(STUDENT_COURSE_LIST)
+    public String studentCourseList(Model model,
+                                    @RequestParam(required = false, defaultValue = "all") String selectedGradeLevel,
+                                    @RequestParam(defaultValue = "1") int page,
+                                    @RequestParam(defaultValue = "10") int size) {
 
-//        // Reuse classNames and search results to maintain state
-//        model.addAttribute("students", studentService.findStudentsByClassNameAndNameContaining(student.get()
-//                .getClassName(), ""));
-//        model.addAttribute("classNames", studentService.getAllClassNames());
 
-        return UrlMappings.STUDENT_COURSE_ASSIGNMENT;
-    }
+        List<String> gradeLevels = studentService.findGradeLevel();
 
-    @PostMapping("/assignCourse")
-    public String assignCourse(@RequestParam Long studentId, @RequestParam Long courseId, Model model) {
-        return "redirect:/search"; // Redirect to search results or wherever needed
+        Pageable pageable = PageRequest.of(page - 1, size);
+        Page<StudentCourseSelectionView> studentCourseSelectionView;
+        if (Objects.equals("all", selectedGradeLevel)) {
+            studentCourseSelectionView = studentCourseSelectionService.findAllByStudentCourseCountByDayOfWeek(pageable);
+        } else {
+            studentCourseSelectionView = studentCourseSelectionService.findAllByStudentCourseCountByDayOfWeek(pageable, selectedGradeLevel);
+            model.addAttribute("selectedGradeLevel", selectedGradeLevel);
+        }
+
+
+        model.addAttribute("studentList", studentCourseSelectionView);
+        model.addAttribute("currentPage", studentCourseSelectionView.getNumber() + 1);
+        model.addAttribute("totalItems", studentCourseSelectionView.getTotalElements());
+        model.addAttribute("totalPages", studentCourseSelectionView.getTotalPages());
+        model.addAttribute("pageSize", size);
+        model.addAttribute("gradeLevels", gradeLevels);
+        return STUDENT_COURSE_LIST;
     }
 
 

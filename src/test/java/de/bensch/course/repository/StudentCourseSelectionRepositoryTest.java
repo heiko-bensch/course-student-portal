@@ -1,7 +1,7 @@
 package de.bensch.course.repository;
 
-import de.bensch.course.model.StudentCourseSelection;
 import de.bensch.course.model.WeekDay;
+import de.bensch.course.model.entity.StudentCourseSelection;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
@@ -16,6 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
 class StudentCourseSelectionRepositoryTest {
 
+
     @Autowired
     private StudentCourseSelectionRepository courseSelectionRepository;
 
@@ -27,7 +28,7 @@ class StudentCourseSelectionRepositoryTest {
 
 
     @Test
-    public void testSaveAndFindUser() {
+    void testSaveAndFindUser() {
         var course = courseRepository.findById(1L);
         var student = studentRepository.findById(1L);
         assertThat(course).isNotEmpty();
@@ -50,5 +51,21 @@ class StudentCourseSelectionRepositoryTest {
             assertThat(courseSelection.getStudent()).isNotNull();
         }
     }
+
+    @Test
+    void testFindSummary() {
+//        List<StudentCourseSelectionView> all = courseSelectionRepository.findAllByStudentCourseCountByDayOfWeek();
+//        System.out.println("------" + all.size());
+//        Optional<StudentCourseSelectionView> first = all.stream().filter(s -> s.getId() == 1L).findFirst();
+//        if (first.isPresent()) {
+//            System.out.println(first.get().getCourseCountMonday());
+//            System.out.println(first.get().getCourseCountTuesday());
+//            System.out.println(first.get().getCourseCountWednesday());
+//            System.out.println(first.get().getCourseCountThursday());
+//            System.out.println(first.get().getLastName());
+//        }
+
+    }
+
 
 }

@@ -1,7 +1,7 @@
 package de.bensch.course.repository;
 
-import de.bensch.course.model.Course;
 import de.bensch.course.model.WeekDay;
+import de.bensch.course.model.entity.Course;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

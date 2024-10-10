@@ -65,19 +65,20 @@
 
         <ul class="nav navbar-nav ">
             <li class="nav-item" th:classappend="${requestURI == urlMappings.COURSE_LIST} ? 'active'">
-                <a class="nav-link" th:href="@{${urlMappings.COURSE_LIST}}">[[#{nav.course-list}]]</a>
+                <a class="nav-link" th:href="@{${urlMappings.COURSE_LIST}}" th:text="#{nav.course-list}"></a>
             </li>
             <li class="nav-item" th:classappend="${requestURI == urlMappings.COURSE_CREATE} ? 'active'">
-                <a class="nav-link" th:href="@{${urlMappings.COURSE_CREATE}}">[[#{nav.course-create}]]</a>
+                <a class="nav-link" th:href="@{${urlMappings.COURSE_CREATE}}" th:text="#{nav.course-create}"></a>
             </li>
             <li class="nav-item" th:classappend="${requestURI == urlMappings.STUDENT_LIST} ? 'active'">
-                <a class="nav-link" th:href="@{${urlMappings.STUDENT_LIST}}">[[#{nav.student-list}]]</a>
+                <a class="nav-link" th:href="@{${urlMappings.STUDENT_LIST}}" th:text="#{nav.student-list}"></a>
             </li>
             <li class="nav-item" th:classappend="${requestURI == urlMappings.STUDENT_CREATE} ? 'active'">
-                <a class="nav-link" th:href="@{${urlMappings.STUDENT_CREATE}}">[[#{nav.student-create}]]</a>
+                <a class="nav-link" th:href="@{${urlMappings.STUDENT_CREATE}}" th:text="#{nav.student-create}"></a>
             </li>
-            <li class="nav-item" th:classappend="${requestURI == urlMappings.STUDENT_COURSE_ASSIGNMENT} ? 'active'">
-                <a class="nav-link" th:href="@{${urlMappings.STUDENT_COURSE_ASSIGNMENT}}">[[#{nav.student-course-assignment}]]</a>
+            <li class="nav-item" th:classappend="${requestURI == urlMappings.STUDENT_COURSE_LIST} ? 'active'">
+                <a class="nav-link" th:href="@{${urlMappings.STUDENT_COURSE_LIST}}"
+                   th:text="#{nav.student-course-list}"></a>
             </li>
         </ul>
     </div>

@@ -61,3 +61,48 @@
     border: 1px solid #ced4da;
     border-radius: 0.25rem;
 }
+
+.custom-header th {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8));
+    color: #f8f9fa;
+    font-weight: bold; /* Fettdruck */
+}
+
+.custom-header th a {
+    color: #f8f9fa; /* Gleiche Farbe wie der Header-Text */
+    text-decoration: none; /* Entfernt die Unterstreichung */
+}
+
+.custom-header th a:hover {
+    color: #e2e6ea; /* Optionale Hover-Farbe für die Links */
+}
+
+.black-link {
+    color: #000; /* Schwarze Farbe */
+    text-decoration: none; /* Optional: entfernt die Unterstreichung */
+}
+
+.black-link:hover {
+    color: #333; /* Optional: Hover-Farbe */
+}
+
+/* Für die Seitenlinks */
+.custom-pagination .page-link {
+    color: #6c757d; /* Dunkleres Grau */
+    background-color: transparent; /* Kein Hintergrund */
+    border-color: #6c757d; /* Dunklere Randfarbe */
+}
+
+/* Optional: Ändert die Farbe der Links beim Hover */
+.custom-pagination .page-link:hover {
+    color: #495057; /* Noch dunkleres Grau */
+    background-color: #e9ecef; /* Leicht grauer Hintergrund beim Hover */
+    border-color: #6c757d;
+}
+
+/* Für die aktive Seite */
+.custom-pagination .page-item.active .page-link {
+    color: #fff; /* Weißer Text */
+    background-color: #343a40; /* Dunkelgrauer Hintergrund */
+    border-color: #343a40; /* Gleiche Randfarbe wie Hintergrund */
+}

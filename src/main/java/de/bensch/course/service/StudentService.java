@@ -1,6 +1,6 @@
 package de.bensch.course.service;
 
-import de.bensch.course.model.Student;
+import de.bensch.course.model.entity.Student;
 import de.bensch.course.repository.StudentRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

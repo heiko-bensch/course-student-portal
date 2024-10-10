@@ -1,6 +1,6 @@
 package de.bensch.course.service;
 
-import de.bensch.course.model.Student;
+import de.bensch.course.model.entity.Student;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;

@@ -28,7 +28,7 @@
                 </div>
             </div>
             <div class="col-md-2">
-                <button id="btnClear" class="btn btn-info">Clear</button>
+                <button id="btnClear" class="btn btn-secondary">Clear</button>
             </div>
             <!-- ---- -->
         </div>
@@ -37,7 +37,7 @@
     <!-- Normal list-->
     <div class="row mt-3">
         <table class="table table-hover table-responsive-xl col-12">
-            <thead class="thead-light">
+            <thead class="custom-header">
             <tr>
                 <th th:replace="fragments/sorting :: sorting(field='id',label=#{course-list.table.id},url=${baseUrl})"></th>
                 <th th:replace="fragments/sorting :: sorting(field='gradeLevels',label=#{course-list.table.grade-levels},url=${baseUrl})"></th>
@@ -55,10 +55,10 @@
                 <td th:text="${course.instructor}"></td>
                 <td th:text="${course.dayOfWeek}"></td>
                 <td>
-                    <a th:href="@{${urlMappings.COURSE_EDIT}(id=${course.id})}" target="_blank"><i
+                    <a th:href="@{${urlMappings.COURSE_EDIT}(id=${course.id})}" class="black-link"><i
                             class="fa-solid fa-pen-to-square"></i></a>
                     &nbsp;
-                    <a th:href="@{${urlMappings.COURSE_DELETE}(id=${course.id})}" target="_blank" class="delete-link"><i
+                    <a th:href="@{${urlMappings.COURSE_DELETE}(id=${course.id})}" class="delete-link black-link"><i
                             class="fa-solid fa-trash"></i></a>
                 </td>
             </tr>

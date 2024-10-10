@@ -1,6 +1,6 @@
 package de.bensch.course.controller;
 
-import de.bensch.course.model.Student;
+import de.bensch.course.model.entity.Student;
 import de.bensch.course.service.StudentService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

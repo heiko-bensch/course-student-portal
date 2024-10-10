@@ -22,6 +22,8 @@ public class UrlMappings {
 
     public static final String STUDENT_COURSE_ASSIGNMENT = "/student-course-assignment";
 
+    public static final String STUDENT_COURSE_LIST = "/student-course-list";
+
     public String getCourseEditUrl(String id) {
         return COURSE_EDIT.replace("{id}", id);
     }
@@ -29,4 +31,8 @@ public class UrlMappings {
     public String getStudentEditUrl(String id) {
         return STUDENT_EDIT.replace("{id}", id);
     }
+
+//    public String getStudentCourseAssignment(String id) {
+//        return STUDENT_COURSE_ASSIGNMENT.replace("{id}", id);
+//    }
 }
