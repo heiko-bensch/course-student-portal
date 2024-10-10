@@ -85,3 +85,24 @@
 .black-link:hover {
     color: #333; /* Optional: Hover-Farbe */
 }
+
+/* Für die Seitenlinks */
+.custom-pagination .page-link {
+    color: #6c757d; /* Dunkleres Grau */
+    background-color: transparent; /* Kein Hintergrund */
+    border-color: #6c757d; /* Dunklere Randfarbe */
+}
+
+/* Optional: Ändert die Farbe der Links beim Hover */
+.custom-pagination .page-link:hover {
+    color: #495057; /* Noch dunkleres Grau */
+    background-color: #e9ecef; /* Leicht grauer Hintergrund beim Hover */
+    border-color: #6c757d;
+}
+
+/* Für die aktive Seite */
+.custom-pagination .page-item.active .page-link {
+    color: #fff; /* Weißer Text */
+    background-color: #343a40; /* Dunkelgrauer Hintergrund */
+    border-color: #343a40; /* Gleiche Randfarbe wie Hintergrund */
+}
