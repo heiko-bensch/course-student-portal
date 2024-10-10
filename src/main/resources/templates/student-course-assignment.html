@@ -89,9 +89,16 @@
                         <div th:replace="fragments/weekday-course :: cardFragment(#{student-course-assignment.thursday-card},${thursdayCourseList},'courseSelectionThursday')"></div>
                     </div>
                 </div>
-
-                <button type="submit" class="btn btn-dark mt-3"
-                        th:text="#{student-course-assignment.btn-save}"></button>
+                <div class="row mt-3">
+                    <div class="col-6 d-flex justify-content-start">
+                        <a th:href="@{${urlMappings.STUDENT_COURSE_LIST}}" class="btn btn-dark"
+                           th:text="#{student-course-assignment.btn-close}"></a>
+                    </div>
+                    <div class="col-6 d-flex justify-content-end">
+                        <button type="submit" class="btn btn-dark"
+                                th:text="#{student-course-assignment.btn-save}"></button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

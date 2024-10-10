@@ -51,13 +51,17 @@
                            aria-describedby="halfYearHelp"/>
                     <div id="halfYearHelp" class="form-text" th:text="#{course-modify.half-year.help}"></div>
                 </div>
-                <div class="pt-5">
-                    <button th:if="${course.id == null}" type="submit" class="btn btn-secondary col-lg-3"
-                            th:text="#{course-modify.button.create}"></button>
-                    <button th:if="${course.id != null}" type="submit" class="btn btn-secondary col-lg-3"
-                            th:text="#{course-modify.button.modify}"></button>
-                    <a th:href="@{${urlMappings.COURSE_LIST}}" class="btn btn-secondary col-lg-4"
-                       th:text="#{course-modify.link.back}"></a>
+                <div class="row mt-3">
+                    <div class="col-6 d-flex justify-content-start">
+                        <a th:href="@{${urlMappings.COURSE_LIST}}" class="btn btn-dark"
+                           th:text="#{course-modify.link.back}"></a>
+                    </div>
+                    <div class="col-6 d-flex justify-content-end">
+                        <button th:if="${course.id == null}" type="submit" class="btn btn-dark"
+                                th:text="#{course-modify.button.create}"></button>
+                        <button th:if="${course.id != null}" type="submit" class="btn btn-dark"
+                                th:text="#{course-modify.button.modify}"></button>
+                    </div>
                 </div>
             </form>
         </div>

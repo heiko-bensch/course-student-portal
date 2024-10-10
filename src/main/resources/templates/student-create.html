@@ -46,25 +46,17 @@
                            aria-describedby="gradeLevelHelp"/>
                     <div id="gradeLevelHelp" class="form-text" th:text="#{student-modify.grade-level.help}"></div>
                 </div>
-                <!--                <div class="mb-6 pt-3">-->
-                <!--                    <label class="form-label" for="year" th:text="#{course-modify.year}"></label>-->
-                <!--                    <input class="form-control" type="text" id="year" th:field="*{year}" required-->
-                <!--                           aria-describedby="yearHelp"/>-->
-                <!--                    <div id="yearHelp" class="form-text" th:text="#{course-modify.year.help}"></div>-->
-                <!--                </div>-->
-                <!--                <div class="mb-6 pt-3">-->
-                <!--                    <label class="form-label" for="halfYear" th:text="#{course-modify.half-year}"></label>-->
-                <!--                    <input class="form-control" type="number" id="halfYear" th:field="*{halfYear}" required-->
-                <!--                           aria-describedby="halfYearHelp"/>-->
-                <!--                    <div id="halfYearHelp" class="form-text" th:text="#{course-modify.half-year.help}"></div>-->
-                <!--                </div>-->
-                <div class="pt-5">
-                    <button th:if="${student.id == null}" type="submit" class="btn btn-secondary col-lg-3"
-                            th:text="#{student-modify.button.create}"></button>
-                    <button th:if="${student.id != null}" type="submit" class="btn btn-secondary col-lg-3"
-                            th:text="#{student-modify.button.modify}"></button>
-                    <a th:href="@{${urlMappings.STUDENT_LIST}}" class="btn btn-secondary col-lg-4"
-                       th:text="#{student-modify.link.back}"></a>
+                <div class="row pt-5">
+                    <div class="col-6 d-flex justify-content-start">
+                        <a th:href="@{${urlMappings.STUDENT_LIST}}" class="btn btn-dark"
+                           th:text="#{student-modify.link.back}"></a>
+                    </div>
+                    <div class="col-6 d-flex justify-content-end">
+                        <button th:if="${student.id == null}" type="submit" class="btn btn-dark"
+                                th:text="#{student-modify.button.create}"></button>
+                        <button th:if="${student.id != null}" type="submit" class="btn btn-dark"
+                                th:text="#{student-modify.button.modify}"></button>
+                    </div>
                 </div>
             </form>
         </div>
