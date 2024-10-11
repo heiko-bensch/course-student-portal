@@ -8,7 +8,6 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,11 +25,6 @@ public class FileUploadController {
     private final ExcelImportService excelImportService;
 
     private final StudentService studentService;
-
-    @ModelAttribute("urlMappings")
-    public UrlMappings urlMappings() {
-        return new UrlMappings();
-    }
 
     @PostMapping(STUDENT_UPLOAD_FORM)
     public String uploadStudents(Model model, @RequestParam("file") MultipartFile file) throws ExcelImportException {

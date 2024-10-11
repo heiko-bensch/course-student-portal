@@ -22,13 +22,6 @@ public class CourseController {
         this.courseService = courseService;
     }
 
-
-    @ModelAttribute("urlMappings")
-    public UrlMappings urlMappings() {
-        //noinspection
-        return new UrlMappings();
-    }
-
     @GetMapping(COURSE_LIST)
     public String courses(Model model,
                           @RequestParam(required = false) String keyword,

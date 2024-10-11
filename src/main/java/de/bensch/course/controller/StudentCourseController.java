@@ -44,11 +44,6 @@ public class StudentCourseController {
 
     private final CourseService courseService;
 
-    @ModelAttribute("urlMappings")
-    public UrlMappings urlMappings() {
-        //noinspection
-        return new UrlMappings();
-    }
 
     @GetMapping(UrlMappings.STUDENT_COURSE_ASSIGNMENT + "/{id}")
     public String searchStudents(@PathVariable("id") Long id, @RequestParam(required = false, defaultValue = "all") String selectedGradeLevel, Model model) {

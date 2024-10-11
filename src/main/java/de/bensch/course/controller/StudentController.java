@@ -24,13 +24,6 @@ import static de.bensch.course.controller.UrlMappings.*;
 public class StudentController {
     private final StudentService studentService;
 
-    @ModelAttribute("urlMappings")
-    public UrlMappings urlMappings() {
-        //noinspection InstantiationOfUtilityClass
-        return new UrlMappings();
-    }
-
-
     @GetMapping(STUDENT_LIST)
     public String courses(Model model,
                           @RequestParam(required = false) String keyword,
