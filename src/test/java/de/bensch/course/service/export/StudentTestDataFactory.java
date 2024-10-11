@@ -33,15 +33,15 @@ public class StudentTestDataFactory {
         return course;
     }
 
-    public Collection<StudentCourseSelection> createCourseSelections(WeekDay weekDay, String gradeLevel, int nofStudents) {
-        Course course = createCourse(weekDay, gradeLevel);
+    public Collection<StudentCourseSelection> createCourseSelections(WeekDay weekDay, int nofStudents) {
+        Course course = createCourse(weekDay, "1-4");
         for (int i = 0; i < nofStudents; i++) {
             StudentCourseSelection sel = new StudentCourseSelection();
             sel.setId(dataFacker.number().randomNumber());
             sel.setWeekDay(weekDay);
-            sel.setPriority(dataFacker.number().numberBetween(1, 3));
+            sel.setPriority(dataFacker.number().numberBetween(1, 4));
             sel.setComment(dataFacker.hipster().word());
-            sel.setStudent(createStudent(gradeLevel));
+            sel.setStudent(createStudent("" + dataFacker.number().numberBetween(1, 5)));
             course.addStudentCourseSelection(sel);
         }
         return course.getCourseSelections();

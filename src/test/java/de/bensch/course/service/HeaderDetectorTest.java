@@ -1,5 +1,8 @@
 package de.bensch.course.service;
 
+import de.bensch.course.service.poi.studentimport.Colum;
+import de.bensch.course.service.poi.studentimport.Header;
+import de.bensch.course.service.poi.studentimport.HeaderDetector;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;

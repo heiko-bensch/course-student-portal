@@ -1,4 +1,4 @@
-package de.bensch.course.service;
+package de.bensch.course.service.poi.studentimport;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;

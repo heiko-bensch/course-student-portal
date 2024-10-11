@@ -1,17 +1,18 @@
-package de.bensch.course.service.export;
+package de.bensch.course.service;
 
 import de.bensch.course.model.entity.StudentCourseSelection;
+import de.bensch.course.service.poi.export.POIContext;
+import de.bensch.course.service.poi.export.POIWeekDay;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Collection;
 
-public class CourseStudentExport {
+public class CourseStudentExportService {
 
 
     public byte[] export(Collection<StudentCourseSelection> studentCourseSelection) throws IOException {
-
 
         try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
              var workbook = new XSSFWorkbook()) {
