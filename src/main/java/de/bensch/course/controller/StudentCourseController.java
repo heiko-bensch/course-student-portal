@@ -3,8 +3,10 @@ package de.bensch.course.controller;
 import de.bensch.course.model.WeekDay;
 import de.bensch.course.model.dto.StudentCourseSelectionDTO;
 import de.bensch.course.model.entity.Course;
+import de.bensch.course.model.entity.StudentCourseSelection;
 import de.bensch.course.model.view.StudentCourseSelectionView;
 import de.bensch.course.service.CourseService;
+import de.bensch.course.service.CourseStudentExcelExportService;
 import de.bensch.course.service.StudentCourseSelectionService;
 import de.bensch.course.service.StudentService;
 import lombok.AllArgsConstructor;
@@ -12,15 +14,21 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import static de.bensch.course.controller.UrlMappings.STUDENT_COURSE_EXPORT;
 import static de.bensch.course.controller.UrlMappings.STUDENT_COURSE_LIST;
 
 @Controller
@@ -32,11 +40,13 @@ public class StudentCourseController {
 
     private final StudentCourseSelectionService studentCourseSelectionService;
 
+    private final CourseStudentExcelExportService exportService;
+
     private final CourseService courseService;
 
     @ModelAttribute("urlMappings")
     public UrlMappings urlMappings() {
-        //noinspection InstantiationOfUtilityClass
+        //noinspection
         return new UrlMappings();
     }
 
@@ -111,6 +121,17 @@ public class StudentCourseController {
         model.addAttribute("pageSize", size);
         model.addAttribute("gradeLevels", gradeLevels);
         return STUDENT_COURSE_LIST;
+    }
+
+    @GetMapping(STUDENT_COURSE_EXPORT)
+    public ResponseEntity<byte[]> exportExcel() throws IOException {
+        Collection<StudentCourseSelection> selectionList = studentCourseSelectionService.findAll();
+        byte[] data = exportService.export(selectionList);
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=export.xlsx")
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .body(data);
     }
 
 

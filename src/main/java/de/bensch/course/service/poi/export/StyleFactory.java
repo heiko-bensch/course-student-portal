@@ -1,6 +1,9 @@
 package de.bensch.course.service.poi.export;
 
-import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.usermodel.BorderStyle;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.util.HashMap;
@@ -142,8 +145,6 @@ public class StyleFactory {
             Font font = createFont(workbook, true, (short) 12, Font.U_NONE);
             CellStyle style = workbook.createCellStyle();
             style.setFont(font);
-            style.setFillForegroundColor(IndexedColors.LIGHT_GREEN.getIndex());
-            style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
             style.setAlignment(HorizontalAlignment.CENTER);
             return style;
         });

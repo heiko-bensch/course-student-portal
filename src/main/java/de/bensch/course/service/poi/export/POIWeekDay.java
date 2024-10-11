@@ -7,6 +7,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 
 import static java.util.stream.Collectors.groupingBy;
@@ -61,6 +62,7 @@ public class POIWeekDay {
                 .entrySet()
                 .stream()
                 .map((e) -> new POIWeekDay(e.getKey(), POICourse.createPOICourse(e.getValue())))
+                .sorted(Comparator.comparing(s -> s.weekDay))
                 .toList();
     }
 

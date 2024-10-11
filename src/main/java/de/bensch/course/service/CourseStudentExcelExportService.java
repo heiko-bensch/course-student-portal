@@ -4,13 +4,14 @@ import de.bensch.course.model.entity.StudentCourseSelection;
 import de.bensch.course.service.poi.export.POIContext;
 import de.bensch.course.service.poi.export.POIWeekDay;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Collection;
 
+@Service
 public class CourseStudentExcelExportService {
-
 
     public byte[] export(Collection<StudentCourseSelection> studentCourseSelection) throws IOException {
 

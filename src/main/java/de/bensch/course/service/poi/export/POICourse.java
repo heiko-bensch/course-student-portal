@@ -1,11 +1,10 @@
 package de.bensch.course.service.poi.export;
 
+import de.bensch.course.model.WeekDay;
 import de.bensch.course.model.entity.Course;
 import de.bensch.course.model.entity.StudentCourseSelection;
 import lombok.Getter;
-import org.apache.poi.ss.usermodel.BorderStyle;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.RegionUtil;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 
@@ -26,6 +25,8 @@ public class POICourse {
 
     private final Course course;
 
+    private final WeekDay weekDay;
+
     /**
      * Constructs a POICourse instance with the specified course and associated student course selections.
      *
@@ -35,6 +36,11 @@ public class POICourse {
     public POICourse(Course course, List<StudentCourseSelection> courseSelections) {
         this.course = course;
         this.studentList = courseSelections;
+        if (!courseSelections.isEmpty()) {
+            this.weekDay = courseSelections.get(0).getWeekDay();
+        } else {
+            this.weekDay = WeekDay.Monday;
+        }
     }
 
     /**
@@ -136,7 +142,12 @@ public class POICourse {
      */
     private int writeCourseHeader(POIContext context, XSSFSheet sheet, int rowIndex, int columnIndex) {
         var currentRowIndex = rowIndex;
-        CellStyle cellStyle = context.getStyleFactory().getCellStyle(CourseHeader);
+        CellStyle cellStyle = context.getWorkbook().createCellStyle();
+        cellStyle.cloneStyleFrom(context.getStyleFactory().getCellStyle(CourseHeader));
+
+        IndexedColors color = POIUtil.getColorForWeekday(course.getDayOfWeek());
+        cellStyle.setFillForegroundColor(color.getIndex());
+        cellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 
         // Merging cells for the course header and writing the course details
         POIUtil.createMergedCell(sheet, ++currentRowIndex, columnIndex, cellStyle, course.getName(),

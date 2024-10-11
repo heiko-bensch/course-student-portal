@@ -1,5 +1,6 @@
 package de.bensch.course.service.poi.export;
 
+import de.bensch.course.model.WeekDay;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.ss.util.RegionUtil;
@@ -103,6 +104,23 @@ public class POIUtil {
         Cell cell = addCell(sheet, rowIndex, columnIndex);
         cell.setCellStyle(borderLeft);
         cell.setCellValue(value);
+    }
+
+    /**
+     * Returns a color from the {@link IndexedColors} enum that corresponds to the given weekday.
+     * Each weekday is mapped to a specific color.
+     *
+     * @param dayOfWeek the {@link WeekDay} representing the day of the week for which the color is needed
+     * @return the {@link IndexedColors} value representing the color associated with the given weekday
+     * or a default color if the weekday is not explicitly mapped
+     */
+    public static IndexedColors getColorForWeekday(WeekDay dayOfWeek) {
+        return switch (dayOfWeek) {
+            case Thursday -> IndexedColors.LIGHT_GREEN;
+            case Monday -> IndexedColors.LIGHT_CORNFLOWER_BLUE;
+            case Tuesday -> IndexedColors.LEMON_CHIFFON;
+            case Wednesday -> IndexedColors.LIGHT_TURQUOISE;
+        };
     }
 }
 

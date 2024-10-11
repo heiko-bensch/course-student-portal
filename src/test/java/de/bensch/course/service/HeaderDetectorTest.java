@@ -45,9 +45,7 @@ class HeaderDetectorTest {
 
             Optional<Header> header = headerDetector.detectHeader(sheet);
             assertThat(header).isNotEmpty();
-            assertAll("header", () -> {
-                        assertThat(header.get().isEmpty()).isFalse();
-                    },
+            assertAll("header", () -> assertThat(header.get().isEmpty()).isFalse(),
                     () -> {
                         var firstName = header.get().getIndex(Colum.FirstName);
                         assertThat(firstName).isNotEmpty();
