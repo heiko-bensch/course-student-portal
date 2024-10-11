@@ -3,6 +3,7 @@ package de.bensch.course.model.entity;
 import de.bensch.course.model.WeekDay;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
@@ -38,12 +39,13 @@ public class Course {
     private String gradeLevels;
 
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude
     private List<StudentCourseSelection> courseSelections = new ArrayList<>();
 
 
     public void addStudentCourseSelection(StudentCourseSelection courseSelection) {
-        courseSelections.add(courseSelection);
         courseSelection.setCourse(this); // Bidirektionale Verknüpfung
+        this.courseSelections.add(courseSelection);
     }
 
 }

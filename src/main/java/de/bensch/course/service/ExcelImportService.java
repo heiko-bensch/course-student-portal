@@ -1,6 +1,10 @@
 package de.bensch.course.service;
 
 import de.bensch.course.model.entity.Student;
+import de.bensch.course.service.poi.studentimport.CellUtil;
+import de.bensch.course.service.poi.studentimport.Colum;
+import de.bensch.course.service.poi.studentimport.Header;
+import de.bensch.course.service.poi.studentimport.HeaderDetector;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -31,9 +35,9 @@ public class ExcelImportService {
      * @throws ExcelImportException if an error occurs while reading the Excel file.
      */
     public List<Student> readExcelContent(byte[] content) throws ExcelImportException {
-        Workbook workbook = null;
+
         try {
-            workbook = new XSSFWorkbook(new ByteArrayInputStream(content));
+            Workbook workbook = new XSSFWorkbook(new ByteArrayInputStream(content));
             Sheet wahlzetteleingang = workbook.getSheet("Wahlzetteleingang");
             HeaderDetector headerDetector = new HeaderDetector();
             Optional<Header> header = headerDetector.detectHeader(wahlzetteleingang);

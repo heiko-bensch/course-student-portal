@@ -24,6 +24,8 @@ public class UrlMappings {
 
     public static final String STUDENT_COURSE_LIST = "/student-course-list";
 
+    public static final String STUDENT_COURSE_EXPORT = "/student-course-export";
+
     public String getCourseEditUrl(String id) {
         return COURSE_EDIT.replace("{id}", id);
     }

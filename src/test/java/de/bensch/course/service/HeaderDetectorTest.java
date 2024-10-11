@@ -1,5 +1,8 @@
 package de.bensch.course.service;
 
+import de.bensch.course.service.poi.studentimport.Colum;
+import de.bensch.course.service.poi.studentimport.Header;
+import de.bensch.course.service.poi.studentimport.HeaderDetector;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -42,9 +45,7 @@ class HeaderDetectorTest {
 
             Optional<Header> header = headerDetector.detectHeader(sheet);
             assertThat(header).isNotEmpty();
-            assertAll("header", () -> {
-                        assertThat(header.get().isEmpty()).isFalse();
-                    },
+            assertAll("header", () -> assertThat(header.get().isEmpty()).isFalse(),
                     () -> {
                         var firstName = header.get().getIndex(Colum.FirstName);
                         assertThat(firstName).isNotEmpty();

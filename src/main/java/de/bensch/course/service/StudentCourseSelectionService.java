@@ -92,4 +92,8 @@ public class StudentCourseSelectionService {
             return Optional.empty(); // Falls kein nächster Eintrag vorhanden ist
         }
     }
+
+    public List<StudentCourseSelection> findAll() {
+        return studentCourseSelectionRepository.findAll();
+    }
 }
