@@ -2,7 +2,8 @@ package de.bensch.course.service.export;
 
 import de.bensch.course.model.WeekDay;
 import de.bensch.course.model.entity.StudentCourseSelection;
-import de.bensch.course.service.CourseStudentExportService;
+import de.bensch.course.service.CourseStudentExcelExportService;
+import lombok.extern.slf4j.Slf4j;
 import net.datafaker.Faker;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,6 +16,7 @@ import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 class CourseStudentExportTest {
     private final StudentTestDataFactory testDataFactory = new StudentTestDataFactory();
 
@@ -23,12 +25,13 @@ class CourseStudentExportTest {
     @BeforeEach
     void setup() {
         File file = Path.of("torte.xlsx").toFile();
-        file.delete();
+        boolean delete = file.delete();
+        log.info("File {} delete {}", file, delete);
     }
 
     @Test
     void torte() throws IOException {
-        CourseStudentExportService export = new CourseStudentExportService();
+        CourseStudentExcelExportService export = new CourseStudentExcelExportService();
         List<StudentCourseSelection> all = new ArrayList<>();
         all.addAll(getCourseSelection(WeekDay.Monday));
         all.addAll(getCourseSelection(WeekDay.Wednesday));

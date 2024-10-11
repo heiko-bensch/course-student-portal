@@ -9,7 +9,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Collection;
 
-public class CourseStudentExportService {
+public class CourseStudentExcelExportService {
 
 
     public byte[] export(Collection<StudentCourseSelection> studentCourseSelection) throws IOException {
