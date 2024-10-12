@@ -22,12 +22,6 @@ public class Course {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "half_year")
-    private Integer halfYear;
-
-    @Column(name = "year_")
-    private Integer year;
-
     @Column(name = "instructor")
     private String instructor;
 

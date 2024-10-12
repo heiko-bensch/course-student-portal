@@ -119,12 +119,10 @@ class StudentMapperTest {
 
         Course course = new Course();
         course.setId(43L);
-        course.setYear(2021);
         course.setGradeLevels("1222");
         course.setName("Course 1");
         course.setDayOfWeek(WeekDay.Monday);
         course.setInstructor("Instructor");
-        course.setHalfYear(1);
 
         StudentCourseSelection selection;
         selection = new StudentCourseSelection();
