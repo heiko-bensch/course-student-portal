@@ -16,6 +16,6 @@ public class GlobalModelAttributes {
     public void addAttributes(Model model, HttpServletRequest request) {
         model.addAttribute("requestURI", request.getRequestURI());
         model.addAttribute("urlMappings", new UrlMappings());
-        model.addAttribute("semesterList", semesterService.findAll());
+        model.addAttribute("semesterList", semesterService.findAllSemester());
     }
 }

@@ -16,7 +16,6 @@ import static de.bensch.course.config.constants.SessionConstants.SEMESTER;
 @AllArgsConstructor
 public class SemesterController {
 
-
     // Auswahl und Speicherung des Mandanten in der Session
     @GetMapping("/selectSemester")
     public String selectedSemester(Model model, @RequestParam(SEMESTER) String semester,
@@ -25,17 +24,5 @@ public class SemesterController {
         return referer != null ? "redirect:" + referer : "redirect:/";
     }
 
-//    // Methode zum Abrufen des ausgewählten Mandanten für alle Templates
-//    @ModelAttribute("selectedSemester")
-//    public String getSelectedMandant(HttpSession session) {
-//        String selectedSemester = (String) session.getAttribute(SEMESTER);
-//        return selectedSemester != null ? selectedSemester : "Kein Semester ausgewählt";
-//    }
-
-//    // Methode zum Abrufen der dynamischen Liste der Mandanten für alle Seiten
-//    @ModelAttribute("semesterList")
-//    public List<String> getSemesters() {
-//        return semesterService.findAll();
-//    }
 }
 
