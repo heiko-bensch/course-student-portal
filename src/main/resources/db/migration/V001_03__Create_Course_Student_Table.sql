@@ -6,6 +6,7 @@ CREATE TABLE course_selection
     day_of_week VARCHAR(100) not null,
     priority    INTEGER      not null,
     comment     VARCHAR(50),
+    semester    varchar(10)  not null,
     FOREIGN KEY (student_id) REFERENCES student (id),
     FOREIGN KEY (course_id) REFERENCES course (id)
 );

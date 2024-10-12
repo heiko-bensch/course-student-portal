@@ -1,5 +1,6 @@
 package de.bensch.course.controller;
 
+import de.bensch.course.config.constants.SessionConstants;
 import de.bensch.course.model.entity.Student;
 import de.bensch.course.service.StudentService;
 import lombok.AllArgsConstructor;
@@ -21,6 +22,7 @@ import static de.bensch.course.controller.UrlMappings.*;
 @Slf4j
 @Controller
 @AllArgsConstructor
+@SessionAttributes(SessionConstants.SEMESTER)
 public class StudentController {
     private final StudentService studentService;
 
@@ -31,6 +33,7 @@ public class StudentController {
                           @RequestParam(defaultValue = "1") int page,
                           @RequestParam(defaultValue = "10") int size,
                           @RequestParam(defaultValue = "id,asc") String[] sort) {
+        String semester = (String) model.getAttribute(SessionConstants.SEMESTER);
         String sortField = sort[0];
         String sortDirection = sort[1];
         Sort.Direction direction = sortDirection.equals("desc") ? Sort.Direction.DESC : Sort.Direction.ASC;
@@ -38,20 +41,20 @@ public class StudentController {
 
         Pageable pageable = PageRequest.of(page - 1, size, Sort.by(order));
         Page<Student> studentPage;
-        List<String> gradeLevels = studentService.findGradeLevel();
+        List<String> gradeLevels = studentService.findGradeLevel(semester);
         if (StringUtils.isBlank(keyword)) {
             if (Objects.equals("all", selectedGradeLevel)) {
-                studentPage = studentService.findAll(pageable);
+                studentPage = studentService.findAllBySemester(pageable, semester);
             } else {
-                studentPage = studentService.findAll(pageable, selectedGradeLevel);
+                studentPage = studentService.findAllBySemester(pageable, semester, selectedGradeLevel);
                 model.addAttribute("selectedGradeLevel", selectedGradeLevel);
             }
         } else {
             if (Objects.equals("all", selectedGradeLevel)) {
-                studentPage = studentService.findByKeyword(pageable, keyword);
+                studentPage = studentService.findBySemesterAndKeyword(pageable, semester, keyword);
 
             } else {
-                studentPage = studentService.findByKeyword(pageable, selectedGradeLevel, keyword);
+                studentPage = studentService.findBySemesterAndKeyword(pageable, semester, selectedGradeLevel, keyword);
                 model.addAttribute("selectedGradeLevel", selectedGradeLevel);
 
             }
@@ -70,14 +73,15 @@ public class StudentController {
     }
 
     @GetMapping(STUDENT_CREATE)
-    public String createCourse(Model model) {
+    public String createStudent(Model model) {
         model.addAttribute("student", new Student());
         return STUDENT_CREATE;
     }
 
     @PostMapping(STUDENT_CREATE)
-    public String createStudentSubmit(@ModelAttribute Student student) {
+    public String createStudentSubmit(Model model, @ModelAttribute Student student) {
         String result;
+        student.setSemester((String) model.getAttribute(SessionConstants.SEMESTER));
         if (student.getId() == null) {
             result = "redirect:" + STUDENT_CREATE;
         } else {

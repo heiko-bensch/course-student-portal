@@ -38,6 +38,9 @@ public class Course {
     @Column(name = "grade_levels")
     private String gradeLevels;
 
+    @Column(name = "semester")
+    private String semester;
+
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude
     private List<StudentCourseSelection> courseSelections = new ArrayList<>();

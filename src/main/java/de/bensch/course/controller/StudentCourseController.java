@@ -1,5 +1,6 @@
 package de.bensch.course.controller;
 
+import de.bensch.course.config.constants.SessionConstants;
 import de.bensch.course.model.WeekDay;
 import de.bensch.course.model.dto.StudentCourseSelectionDTO;
 import de.bensch.course.model.entity.Course;
@@ -34,6 +35,7 @@ import static de.bensch.course.controller.UrlMappings.STUDENT_COURSE_LIST;
 @Controller
 @AllArgsConstructor
 @Slf4j
+@SessionAttributes("semester")
 public class StudentCourseController {
 
     private final StudentService studentService;
@@ -97,7 +99,8 @@ public class StudentCourseController {
                                     @RequestParam(defaultValue = "10") int size) {
 
 
-        List<String> gradeLevels = studentService.findGradeLevel();
+        String semester = (String) model.getAttribute(SessionConstants.SEMESTER);
+        List<String> gradeLevels = studentService.findGradeLevel(semester);
 
         Pageable pageable = PageRequest.of(page - 1, size);
         Page<StudentCourseSelectionView> studentCourseSelectionView;

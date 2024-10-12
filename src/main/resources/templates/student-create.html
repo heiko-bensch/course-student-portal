@@ -29,12 +29,6 @@
                     <div id="first-name-help" class="form-text" th:text="#{student-modify.first-name.help}"></div>
                 </div>
                 <div class="mb-6 pt-3">
-                    <label class="form-label" for="class" th:text="#{student-modify.class}">:</label>
-                    <input class="form-control" type="text" id="class" th:field="*{className}" required
-                           aria-describedby="classHelp"/>
-                    <div id="classHelp" class="form-text" th:text="#{student-modify.class.help}"></div>
-                </div>
-                <div class="mb-6 pt-3">
                     <label class="form-label" for="className" th:text="#{student-modify.class-name}"></label>
                     <input class="form-control" type="text" id="className" th:field="*{className}" required
                            aria-describedby="classNameHelp"/>

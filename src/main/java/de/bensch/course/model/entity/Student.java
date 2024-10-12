@@ -34,6 +34,9 @@ public class Student {
     @Column(name = "ballot_submitted")
     private boolean ballotSubmitted;
 
+    @Column(name = "semester")
+    private String semester;
+
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
     private List<StudentCourseSelection> courseSelections = new ArrayList<>();
 
