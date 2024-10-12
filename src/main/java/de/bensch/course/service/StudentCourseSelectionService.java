@@ -33,7 +33,6 @@ public class StudentCourseSelectionService {
 
     private final StudentMapper studentMapper;
 
-
     public Optional<StudentCourseSelectionDTO> findByStudentId(Long id) {
         Optional<Student> student = studentRepository.findById(id);
 
@@ -60,7 +59,6 @@ public class StudentCourseSelectionService {
                 studentCourseSelectionRepository.save(selection);
             }
         }
-
     }
 
     public Page<StudentCourseSelectionView> findAllByStudentCourseCountByDayOfWeek(Pageable pageable, String semester) {

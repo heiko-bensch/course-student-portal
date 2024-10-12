@@ -38,7 +38,7 @@ class StudentCourseSelectionRepositoryTest {
         courseSelection.setPriority(1);
         courseSelection.setComment("Comment");
         courseSelection.setWeekDay(WeekDay.Thursday);
-        courseSelection.setSemester("01/2024");
+        courseSelection.setSemester("1/2024");
 
         course.get().addStudentCourseSelection(courseSelection);
         student.get().addStudentCourseSelection(courseSelection);

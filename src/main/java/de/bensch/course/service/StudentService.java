@@ -49,7 +49,7 @@ public class StudentService {
         return studentRepository.findBySemesterAndGradeLevel(pageable, semester, classFilter);
     }
 
-    public Page<Student> findBySemesterAndKeyword(Pageable pageable, String semenster, String gradeLevel, String keyword) {
-        return studentRepository.findByGradeLevelWithKeyword(pageable, semenster, gradeLevel, keyword);
+    public Page<Student> findBySemesterAndKeyword(Pageable pageable, String semester, String gradeLevel, String keyword) {
+        return studentRepository.findByGradeLevelWithKeyword(pageable, semester, gradeLevel, keyword);
     }
 }

@@ -17,7 +17,6 @@ import java.util.stream.Stream;
 @Service
 public class SemesterService {
 
-    private final List<String> semesters = List.of("01/2024", "02/2024", "01/2025");
 
     /**
      * Retrieves a list of semesters spanning from three years before to two years after the current year.
@@ -27,7 +26,7 @@ public class SemesterService {
      * @return a list of all semesters within the specified date range, formatted as strings, in reverse chronological order.
      */
     public List<String> findAllSemester() {
-        LocalDate localDate = LocalDate.now();
+        LocalDate localDate = getLocalDate();
         int year = localDate.getYear();
         return IntStream
                 .range(year - 3, year + 2)
@@ -45,14 +44,18 @@ public class SemesterService {
      * @return a string representing the current semester, formatted as "1/YYYY" or "2/YYYY".
      */
     public String getCurrentSemester() {
-        var localDate = LocalDate.now();
+        var localDate = getLocalDate();
         var year = localDate.getYear();
         var month = localDate.getMonth();
         if (month.getValue() < Month.SEPTEMBER.getValue()) {
             year--;
-            return "02/" + year;
+            return "2/" + year;
         } else {
-            return "01/" + year;
+            return "1/" + year;
         }
+    }
+
+    LocalDate getLocalDate() {
+        return LocalDate.now();
     }
 }

@@ -44,7 +44,7 @@ class StudentMapperTest {
             if (id != null) {
                 c = new Course();
                 c.setId(id);
-                c.setSemester("01/2024");
+                c.setSemester("1/2024");
             }
             return c;
         };
@@ -171,8 +171,8 @@ class StudentMapperTest {
 
 
         List<StudentCourseSelection> expectedResult = new ArrayList<>();
-        expectedResult.add(createStudentCourseSelection(111L, 34L, 112L, WeekDay.Monday, 1, "comment113", "01/2024"));
-        expectedResult.add(createStudentCourseSelection(null, 34L, 123L, WeekDay.Monday, 2, null, "01/2024"));
+        expectedResult.add(createStudentCourseSelection(111L, 34L, 112L, WeekDay.Monday, 1, "comment113", "1/2024"));
+        expectedResult.add(createStudentCourseSelection(null, 34L, 123L, WeekDay.Monday, 2, null, "1/2024"));
 
         expectedResult.add(createStudentCourseSelection(231L, 34L, null, WeekDay.Tuesday, 3, null, null));
 
