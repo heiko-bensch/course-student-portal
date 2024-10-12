@@ -73,6 +73,13 @@ public interface StudentMapper {
             @Context EntityLoader<Course, Long> courseLoader
     );
 
+    @AfterMapping
+    default void setSemester(@MappingTarget StudentCourseSelection courseSelection) {
+        if (Objects.nonNull(courseSelection.getCourse())) {
+            courseSelection.setSemester(courseSelection.getCourse().getSemester());
+        }
+    }
+
     // Methode, um die Liste von StudentCourseSelection zu erstellen
     default List<StudentCourseSelection> toEntityList(
             StudentCourseSelectionDTO dto,

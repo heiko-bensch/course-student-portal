@@ -12,9 +12,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import static de.bensch.course.config.constants.SessionConstants.SEMESTER;
 import static de.bensch.course.controller.UrlMappings.*;
 
 @Controller
+@SessionAttributes(SEMESTER)
 public class CourseController {
     private final CourseService courseService;
 
@@ -29,6 +31,7 @@ public class CourseController {
                           @RequestParam(defaultValue = "10") int size,
                           @RequestParam(defaultValue = "id,asc") String[] sort) {
 
+        String semester = (String) model.getAttribute(SEMESTER);
         String sortField = sort[0];
         String sortDirection = sort[1];
         Sort.Direction direction = sortDirection.equals("desc") ? Sort.Direction.DESC : Sort.Direction.ASC;
@@ -37,10 +40,10 @@ public class CourseController {
         Pageable pageable = PageRequest.of(page - 1, size, Sort.by(order));
         Page<Course> coursePage;
         if (StringUtils.isBlank(keyword)) {
-            coursePage = courseService.findAll(pageable);
+            coursePage = courseService.findBySemester(pageable, semester);
 
         } else {
-            coursePage = courseService.findByKeyword(pageable, keyword);
+            coursePage = courseService.findBySemesterKeyword(pageable, semester, keyword);
             model.addAttribute("keyword", keyword);
         }
         model.addAttribute("courseList", coursePage.getContent());
@@ -62,8 +65,10 @@ public class CourseController {
     }
 
     @PostMapping(COURSE_CREATE)
-    public String createCourseSubmit(@ModelAttribute Course course) {
+    public String createCourseSubmit(Model model, @ModelAttribute Course course) {
+        String semester = (String) model.getAttribute(SEMESTER);
         String result;
+        course.setSemester(semester);
         if (course.getId() == null) {
             result = "redirect:" + COURSE_CREATE;
         } else {

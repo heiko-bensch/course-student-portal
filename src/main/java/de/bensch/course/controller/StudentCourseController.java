@@ -1,6 +1,5 @@
 package de.bensch.course.controller;
 
-import de.bensch.course.config.constants.SessionConstants;
 import de.bensch.course.model.WeekDay;
 import de.bensch.course.model.dto.StudentCourseSelectionDTO;
 import de.bensch.course.model.entity.Course;
@@ -29,13 +28,14 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import static de.bensch.course.config.constants.SessionConstants.SEMESTER;
 import static de.bensch.course.controller.UrlMappings.STUDENT_COURSE_EXPORT;
 import static de.bensch.course.controller.UrlMappings.STUDENT_COURSE_LIST;
 
 @Controller
 @AllArgsConstructor
 @Slf4j
-@SessionAttributes("semester")
+@SessionAttributes(SEMESTER)
 public class StudentCourseController {
 
     private final StudentService studentService;
@@ -48,12 +48,12 @@ public class StudentCourseController {
 
 
     @GetMapping(UrlMappings.STUDENT_COURSE_ASSIGNMENT + "/{id}")
-    public String searchStudents(@PathVariable("id") Long id, @RequestParam(required = false, defaultValue = "all") String selectedGradeLevel, Model model) {
-
-        Iterable<Course> monday = courseService.findByDayOfWeekday(WeekDay.Monday);
-        Iterable<Course> tuesday = courseService.findByDayOfWeekday(WeekDay.Tuesday);
-        Iterable<Course> wednesday = courseService.findByDayOfWeekday(WeekDay.Wednesday);
-        Iterable<Course> thursday = courseService.findByDayOfWeekday(WeekDay.Thursday);
+    public String searchStudents(Model model, @PathVariable("id") Long id, @RequestParam(required = false, defaultValue = "all") String selectedGradeLevel) {
+        String semester = (String) model.getAttribute(SEMESTER);
+        Iterable<Course> monday = courseService.findBySemesterAndDayOfWeek(semester, WeekDay.Monday);
+        Iterable<Course> tuesday = courseService.findBySemesterAndDayOfWeek(semester, WeekDay.Tuesday);
+        Iterable<Course> wednesday = courseService.findBySemesterAndDayOfWeek(semester, WeekDay.Wednesday);
+        Iterable<Course> thursday = courseService.findBySemesterAndDayOfWeek(semester, WeekDay.Thursday);
 
         Optional<StudentCourseSelectionDTO> courseSelection = studentCourseSelectionService.findByStudentId(id);
 
@@ -74,13 +74,14 @@ public class StudentCourseController {
     }
 
     @PostMapping(UrlMappings.STUDENT_COURSE_ASSIGNMENT)
-    public String torte(@ModelAttribute StudentCourseSelectionDTO courseSelection,
-                        @RequestParam(name = "selectedGradeLevel", defaultValue = "all", required = false) String selectedGradeLevel,
-                        RedirectAttributes redirectAttributes) {
+    public String saveStudentCourseAssignment(Model model, @ModelAttribute StudentCourseSelectionDTO courseSelection,
+                                              @RequestParam(name = "selectedGradeLevel", defaultValue = "all", required = false) String selectedGradeLevel,
+                                              RedirectAttributes redirectAttributes) {
+        String semester = (String) model.getAttribute(SEMESTER);
         studentCourseSelectionService.saveStudentCourseSelection(courseSelection);
         // Zum nächsten Eintrag weiterleiten
         Optional<StudentCourseSelectionView> nextEntry = studentCourseSelectionService
-                .findNextEntry(courseSelection.getStudent().getId(), selectedGradeLevel);
+                .findNextEntry(courseSelection.getStudent().getId(), semester, selectedGradeLevel);
         redirectAttributes.addAttribute("selectedGradeLevel", selectedGradeLevel);
         if (nextEntry.isPresent()) {
             redirectAttributes.addAttribute("id", nextEntry.get().getId());
@@ -99,15 +100,15 @@ public class StudentCourseController {
                                     @RequestParam(defaultValue = "10") int size) {
 
 
-        String semester = (String) model.getAttribute(SessionConstants.SEMESTER);
+        String semester = (String) model.getAttribute(SEMESTER);
         List<String> gradeLevels = studentService.findGradeLevel(semester);
 
         Pageable pageable = PageRequest.of(page - 1, size);
         Page<StudentCourseSelectionView> studentCourseSelectionView;
         if (Objects.equals("all", selectedGradeLevel)) {
-            studentCourseSelectionView = studentCourseSelectionService.findAllByStudentCourseCountByDayOfWeek(pageable);
+            studentCourseSelectionView = studentCourseSelectionService.findAllByStudentCourseCountByDayOfWeek(pageable, semester);
         } else {
-            studentCourseSelectionView = studentCourseSelectionService.findAllByStudentCourseCountByDayOfWeek(pageable, selectedGradeLevel);
+            studentCourseSelectionView = studentCourseSelectionService.findAllByStudentCourseCountByDayOfWeek(pageable, semester, selectedGradeLevel);
             model.addAttribute("selectedGradeLevel", selectedGradeLevel);
         }
 
@@ -122,8 +123,9 @@ public class StudentCourseController {
     }
 
     @GetMapping(STUDENT_COURSE_EXPORT)
-    public ResponseEntity<byte[]> exportExcel() throws IOException {
-        Collection<StudentCourseSelection> selectionList = studentCourseSelectionService.findAll();
+    public ResponseEntity<byte[]> exportExcel(Model model) throws IOException {
+        String semester = (String) model.getAttribute(SEMESTER);
+        Collection<StudentCourseSelection> selectionList = studentCourseSelectionService.findBySemester(semester);
         byte[] data = exportService.export(selectionList);
 
         return ResponseEntity.ok()

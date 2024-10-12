@@ -17,13 +17,12 @@ public class CourseService {
         this.courseRepository = courseRepository;
     }
 
-    public Page<Course> findAll(Pageable pageable) {
-        return this.courseRepository.findAll(pageable);
+    public Page<Course> findBySemester(Pageable pageable, String semester) {
+        return this.courseRepository.findBySemester(pageable, semester);
     }
 
     public Course save(Course course) {
         return this.courseRepository.save(course);
-
     }
 
     public Optional<Course> findById(Long id) {
@@ -34,11 +33,11 @@ public class CourseService {
         this.courseRepository.deleteById(id);
     }
 
-    public Page<Course> findByKeyword(Pageable pageable, String keyword) {
-        return courseRepository.findByNameContainingIgnoreCaseOrInstructorContainingIgnoreCase(keyword, keyword, pageable);
+    public Page<Course> findBySemesterKeyword(Pageable pageable, String semester, String keyword) {
+        return courseRepository.findBySemesterAndKeyword(pageable, semester, keyword);
     }
 
-    public Iterable<Course> findByDayOfWeekday(WeekDay weekDay) {
-        return courseRepository.findByDayOfWeek(weekDay);
+    public Iterable<Course> findBySemesterAndDayOfWeek(String semester, WeekDay weekDay) {
+        return courseRepository.findBySemesterAndDayOfWeek(semester, weekDay);
     }
 }

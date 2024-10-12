@@ -26,7 +26,7 @@ class ExcelImportServiceTest {
                 new Student(null, "Name 3", "Nachname 3", "3", "Venus", true, "01/2024", new ArrayList<>()),
                 new Student(null, "Name 4", "Nachname 4", "4", "Erde", true, "01/2024", new ArrayList<>())
         );
-        List<Student> read = excelImportService.readExcelContent(bytes);
+        List<Student> read = excelImportService.readExcelContent("01/2024", bytes);
         assertThat(read).isEqualTo(expectedResult);
     }
 

@@ -44,6 +44,7 @@ class StudentMapperTest {
             if (id != null) {
                 c = new Course();
                 c.setId(id);
+                c.setSemester("01/2024");
             }
             return c;
         };
@@ -172,14 +173,14 @@ class StudentMapperTest {
 
 
         List<StudentCourseSelection> expectedResult = new ArrayList<>();
-        expectedResult.add(createStudentCourseSelection(111L, 34L, 112L, WeekDay.Monday, 1, "comment113"));
-        expectedResult.add(createStudentCourseSelection(null, 34L, 123L, WeekDay.Monday, 2, null));
+        expectedResult.add(createStudentCourseSelection(111L, 34L, 112L, WeekDay.Monday, 1, "comment113", "01/2024"));
+        expectedResult.add(createStudentCourseSelection(null, 34L, 123L, WeekDay.Monday, 2, null, "01/2024"));
 
-        expectedResult.add(createStudentCourseSelection(231L, 34L, null, WeekDay.Tuesday, 3, null));
+        expectedResult.add(createStudentCourseSelection(231L, 34L, null, WeekDay.Tuesday, 3, null, null));
 
-        expectedResult.add(createStudentCourseSelection(311L, 34L, null, WeekDay.Wednesday, 1, "comment312"));
+        expectedResult.add(createStudentCourseSelection(311L, 34L, null, WeekDay.Wednesday, 1, "comment312", null));
 
-        expectedResult.add(createStudentCourseSelection(321L, 34L, null, WeekDay.Wednesday, 2, null));
+        expectedResult.add(createStudentCourseSelection(321L, 34L, null, WeekDay.Wednesday, 2, null, null));
 
 
         assertThat(entityList).containsExactlyInAnyOrderElementsOf(expectedResult);
@@ -187,7 +188,7 @@ class StudentMapperTest {
     }
 
 
-    StudentCourseSelection createStudentCourseSelection(Long id, Long studentID, Long courseID, WeekDay weekDay, int prio, String comment) {
+    StudentCourseSelection createStudentCourseSelection(Long id, Long studentID, Long courseID, WeekDay weekDay, int prio, String comment, String semester) {
         Student student = null;
         Course course = null;
         if (studentID != null) {
@@ -197,6 +198,7 @@ class StudentMapperTest {
         if (courseID != null) {
             course = new Course();
             course.setId(courseID);
+            course.setSemester(semester);
         }
         var studentCourseSelection = new StudentCourseSelection();
         studentCourseSelection.setId(id);
@@ -205,6 +207,7 @@ class StudentMapperTest {
         studentCourseSelection.setWeekDay(weekDay);
         studentCourseSelection.setPriority(prio);
         studentCourseSelection.setComment(comment);
+        studentCourseSelection.setSemester(semester);
         return studentCourseSelection;
 
     }
