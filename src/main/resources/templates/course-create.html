@@ -51,9 +51,9 @@
                            th:text="#{course-modify.link.back}"></a>
                     </div>
                     <div class="col-6 d-flex justify-content-end">
-                        <button th:if="${course.id == null}" type="submit" class="btn btn-dark"
+                        <button id="createButton" th:if="${course.id == null}" type="submit" class="btn btn-dark"
                                 th:text="#{course-modify.button.create}"></button>
-                        <button th:if="${course.id != null}" type="submit" class="btn btn-dark"
+                        <button id="modifyButton" th:if="${course.id != null}" type="submit" class="btn btn-dark"
                                 th:text="#{course-modify.button.modify}"></button>
                     </div>
                 </div>
@@ -61,5 +61,24 @@
         </div>
     </div>
 </div>
+<script>
+    document.addEventListener("keydown", function (event) {
+        // Prüfe, ob Cmd (⌘) und Enter gedrückt wurden
+        if (event.metaKey && event.key === "Enter") {
+            event.preventDefault();
+
+            // Je nach Zustand des `course.id` existiert nur einer der Buttons im DOM
+            var createButton = document.getElementById("createButton");
+            var modifyButton = document.getElementById("modifyButton");
+
+            // Klicke den existierenden Button
+            if (createButton) {
+                createButton.click();
+            } else if (modifyButton) {
+                modifyButton.click();
+            }
+        }
+    });
+</script>
 </body>
 </html>

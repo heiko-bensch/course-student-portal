@@ -96,7 +96,7 @@
                     </div>
 
                     <div class="col-6 d-flex justify-content-end">
-                        <button type="submit" class="btn btn-dark"
+                        <button id="buttonSave" type="submit" class="btn btn-dark"
                                 th:text="#{student-course-assignment.btn-save}"></button>
                     </div>
                 </div>
@@ -104,6 +104,19 @@
         </div>
     </div>
 </form>
+<script>
+    document.addEventListener("keydown", function (event) {
+        // Prüfe, ob Cmd (⌘) und Enter gedrückt wurden
+        if (event.metaKey && event.key === "Enter") {
+            event.preventDefault();
 
+            var buttonSave = document.getElementById("buttonSave");
+    
+            if (buttonSave) {
+                buttonSave.click();
+            }
+        }
+    });
+</script>
 </body>
 </html>
