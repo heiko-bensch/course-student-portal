@@ -12,7 +12,6 @@ import de.bensch.course.service.StudentService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -103,7 +102,8 @@ public class StudentCourseController {
         String semester = (String) model.getAttribute(SEMESTER);
         List<String> gradeLevels = studentService.findGradeLevel(semester);
 
-        Pageable pageable = PageRequest.of(page - 1, size);
+        Pageable pageable = Utils.createPageable(page, size);
+
         Page<StudentCourseSelectionView> studentCourseSelectionView;
         if (Objects.equals("all", selectedGradeLevel)) {
             studentCourseSelectionView = studentCourseSelectionService.findAllByStudentCourseCountByDayOfWeek(pageable, semester);
@@ -112,12 +112,9 @@ public class StudentCourseController {
             model.addAttribute("selectedGradeLevel", selectedGradeLevel);
         }
 
+        Utils.addPaginationAttributesToModel(model, studentCourseSelectionView);
 
         model.addAttribute("studentList", studentCourseSelectionView);
-        model.addAttribute("currentPage", studentCourseSelectionView.getNumber() + 1);
-        model.addAttribute("totalItems", studentCourseSelectionView.getTotalElements());
-        model.addAttribute("totalPages", studentCourseSelectionView.getTotalPages());
-        model.addAttribute("pageSize", size);
         model.addAttribute("gradeLevels", gradeLevels);
         return STUDENT_COURSE_LIST;
     }

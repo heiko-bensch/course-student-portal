@@ -7,9 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -34,42 +32,42 @@ public class StudentController {
                           @RequestParam(defaultValue = "10") int size,
                           @RequestParam(defaultValue = "id,asc") String[] sort) {
         String semester = (String) model.getAttribute(SessionConstants.SEMESTER);
-        String sortField = sort[0];
-        String sortDirection = sort[1];
-        Sort.Direction direction = sortDirection.equals("desc") ? Sort.Direction.DESC : Sort.Direction.ASC;
-        Sort.Order order = new Sort.Order(direction, sortField);
 
-        Pageable pageable = PageRequest.of(page - 1, size, Sort.by(order));
+        Pageable pageable = Utils.createPageable(page, size, sort);
         Page<Student> studentPage;
         List<String> gradeLevels = studentService.findGradeLevel(semester);
         if (StringUtils.isBlank(keyword)) {
-            if (Objects.equals("all", selectedGradeLevel)) {
-                studentPage = studentService.findAllBySemester(pageable, semester);
-            } else {
-                studentPage = studentService.findAllBySemester(pageable, semester, selectedGradeLevel);
-                model.addAttribute("selectedGradeLevel", selectedGradeLevel);
-            }
+            studentPage = getStudentsByGradeLevel(selectedGradeLevel, pageable, semester);
         } else {
-            if (Objects.equals("all", selectedGradeLevel)) {
-                studentPage = studentService.findBySemesterAndKeyword(pageable, semester, keyword);
-
-            } else {
-                studentPage = studentService.findBySemesterAndKeyword(pageable, semester, selectedGradeLevel, keyword);
-                model.addAttribute("selectedGradeLevel", selectedGradeLevel);
-
-            }
+            studentPage = getStudentsByKeyword(selectedGradeLevel, keyword, pageable, semester);
             model.addAttribute("keyword", keyword);
         }
-        model.addAttribute("studentList", studentPage.getContent());
-        model.addAttribute("currentPage", studentPage.getNumber() + 1);
-        model.addAttribute("totalItems", studentPage.getTotalElements());
-        model.addAttribute("totalPages", studentPage.getTotalPages());
-        model.addAttribute("pageSize", size);
-        model.addAttribute("sortField", sortField);
-        model.addAttribute("gradeLevels", gradeLevels);
-        model.addAttribute("sortDirection", sortDirection);
-        model.addAttribute("reverseSortDirection", sortDirection.equals("asc") ? "desc" : "asc");
+        Utils.addPaginationAttributesToModel(model, studentPage);
+        addAttributesToModel(model, studentPage.getContent(), selectedGradeLevel, gradeLevels);
         return STUDENT_LIST;
+    }
+
+
+    private Page<Student> getStudentsByGradeLevel(String selectedGradeLevel, Pageable pageable, String semester) {
+        if (Objects.equals("all", selectedGradeLevel)) {
+            return studentService.findAllBySemester(pageable, semester);
+        } else {
+            return studentService.findAllBySemester(pageable, semester, selectedGradeLevel);
+        }
+    }
+
+    private Page<Student> getStudentsByKeyword(String selectedGradeLevel, String keyword, Pageable pageable, String semester) {
+        if (Objects.equals("all", selectedGradeLevel)) {
+            return studentService.findBySemesterAndKeyword(pageable, semester, keyword);
+        } else {
+            return studentService.findBySemesterAndKeyword(pageable, semester, selectedGradeLevel, keyword);
+        }
+    }
+
+    private void addAttributesToModel(Model model, List<Student> studentPage, String selectedGradeLevel, List<String> gradeLevels) {
+        model.addAttribute("studentList", studentPage);
+        model.addAttribute("selectedGradeLevel", selectedGradeLevel);
+        model.addAttribute("gradeLevels", gradeLevels);
     }
 
     @GetMapping(STUDENT_CREATE)
