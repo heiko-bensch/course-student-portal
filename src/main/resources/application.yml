@@ -12,3 +12,17 @@ spring:
     console:
       enabled: true
       path: /h2-console
+
+
+  security:
+    oauth2:
+      client:
+        provider:
+          keycloak:
+            issuer-uri: http://192.168.42.115:8081/realms/home-lab
+        registration:
+          keycloak:
+            authorization-grant-type: authorization_code
+            client-id: course-student-portal
+            client-secret: 20t9AK8JEcJ73ZBD2ikkpt8UVtWkLeOW
+            scope: openid

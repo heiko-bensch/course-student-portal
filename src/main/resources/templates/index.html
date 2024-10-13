@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Anmelden</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}" defer></script>
+    <style>
+        body {
+            background-color: #343a40; /* Dunkler Hintergrund */
+            color: white; /* Weiße Schriftfarbe */
+        }
+
+        .container {
+            margin-top: 100px;
+            max-width: 400px;
+        }
+
+        .btn-primary {
+            background-color: #007bff; /* Primärfarbe */
+            border-color: #007bff;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3; /* Dunklere Primärfarbe beim Hover */
+            border-color: #0056b3;
+        }
+
+        .alert {
+            display: none; /* Standardmäßig ausblenden */
+        }
+    </style>
+</head>
+<body>
+<div class="container text-center">
+    <h1>Mit Keycloak anmelden</h1>
+
+    <div th:if="${param.logout}" class="alert alert-success" role="alert">
+        Sie wurden erfolgreich abgemeldet.
+    </div>
+
+    <div th:if="${param.error}" class="alert alert-danger" role="alert">
+        Ungültiger Benutzername oder Passwort.
+    </div>
+
+    <a th:href="@{/oauth2/authorization/keycloak}" class="btn btn-primary btn-lg">Mit Keycloak anmelden</a>
+</div>
+
+
+<script>
+    // Zeige Alerts, wenn sie vorhanden sind
+    if (window.location.search.includes('logout')) {
+        $('.alert.alert-success').show();
+    }
+    if (window.location.search.includes('error')) {
+        $('.alert.alert-danger').show();
+    }
+</script>
+</body>
+</html>
