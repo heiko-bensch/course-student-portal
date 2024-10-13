@@ -22,9 +22,7 @@ spring:
             issuer-uri: http://192.168.42.115:8081/realms/home-lab
         registration:
           keycloak:
-            #            provider: keycloak
             authorization-grant-type: authorization_code
             client-id: course-student-portal
             client-secret: 20t9AK8JEcJ73ZBD2ikkpt8UVtWkLeOW
-            #redirect-uri: http://localhost:8081/login/oauth2/code/course-student-portal
             scope: openid

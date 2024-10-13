@@ -4,6 +4,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.oauth2.client.oidc.web.logout.OidcClientInitiatedLogoutSuccessHandler;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -12,7 +14,7 @@ public class SecurityConfig {
 
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, ClientRegistrationRepository clientRegistrationRepository) throws Exception {
         http.authorizeHttpRequests(authz -> authz
                 .requestMatchers("/", "/login", "/oauth2/**")
                 .permitAll()
@@ -22,6 +24,19 @@ public class SecurityConfig {
 
         http.oauth2Login(oauth2 -> oauth2
                 .successHandler(new OAuth2LoginSuccessHandler()));
+
+        http.logout(logout -> {
+            var logoutSuccessHandler =
+                    new OidcClientInitiatedLogoutSuccessHandler(clientRegistrationRepository);
+            logoutSuccessHandler.setPostLogoutRedirectUri("{baseUrl}/");
+            logout.logoutSuccessHandler(logoutSuccessHandler);
+
+//            logout
+//                    .logoutUrl("/logout")  // Der Logout-URL
+//                    .logoutSuccessUrl("/login")   // Redirect nach dem Logout
+//                    .invalidateHttpSession(true) // Session invalidieren
+//                    .deleteCookies("JSESSIONID"); // Cookies löschen
+        });
         return http.build();
     }
 }
