@@ -7,6 +7,11 @@
     color: #f8f9fa; /* Helleres Weiß für Text */
 }
 
+.navbar-text {
+    color: #f8f9fa;
+}
+
+
 .navbar-light-text .navbar-nav .nav-link:hover {
     color: #ffffff; /* Noch heller beim Hover */
 }

@@ -33,7 +33,6 @@ public class StudentCourseSelectionService {
 
     private final StudentMapper studentMapper;
 
-
     public Optional<StudentCourseSelectionDTO> findByStudentId(Long id) {
         Optional<Student> student = studentRepository.findById(id);
 
@@ -60,26 +59,25 @@ public class StudentCourseSelectionService {
                 studentCourseSelectionRepository.save(selection);
             }
         }
-
     }
 
-    public Page<StudentCourseSelectionView> findAllByStudentCourseCountByDayOfWeek(Pageable pageable) {
-        return studentCourseSelectionRepository.findAllByStudentCourseCountByDayOfWeek(pageable);
+    public Page<StudentCourseSelectionView> findAllByStudentCourseCountByDayOfWeek(Pageable pageable, String semester) {
+        return studentCourseSelectionRepository.findStudentCourseCountByDayOfWeekBySemester(pageable, semester);
     }
 
-    public Page<StudentCourseSelectionView> findAllByStudentCourseCountByDayOfWeek(Pageable pageable, String selectedGradeLevel) {
-        return studentCourseSelectionRepository.findAllByStudentCourseCountByDayOfWeek(pageable, selectedGradeLevel);
+    public Page<StudentCourseSelectionView> findAllByStudentCourseCountByDayOfWeek(Pageable pageable, String semester, String selectedGradeLevel) {
+        return studentCourseSelectionRepository.findStudentCourseCountByDayOfWeekBySemester(pageable, semester, selectedGradeLevel);
     }
 
-    public Optional<StudentCourseSelectionView> findNextEntry(Long id, String selectedGradeLevel) {
+    public Optional<StudentCourseSelectionView> findNextEntry(Long id, String semester, String selectedGradeLevel) {
         List<StudentCourseSelectionView> allStudentCourse;
         if (Objects.equals("all", selectedGradeLevel)) {
             allStudentCourse = studentCourseSelectionRepository
-                    .findAllByStudentCourseCountByDayOfWeek(Pageable.unpaged())
+                    .findStudentCourseCountByDayOfWeekBySemester(Pageable.unpaged(), semester)
                     .getContent();
         } else {
             allStudentCourse = studentCourseSelectionRepository
-                    .findAllByStudentCourseCountByDayOfWeek(Pageable.unpaged(), selectedGradeLevel)
+                    .findStudentCourseCountByDayOfWeekBySemester(Pageable.unpaged(), selectedGradeLevel)
                     .getContent();
         }
         int currentIndex = IntStream.range(0, allStudentCourse.size())
@@ -93,7 +91,7 @@ public class StudentCourseSelectionService {
         }
     }
 
-    public List<StudentCourseSelection> findAll() {
-        return studentCourseSelectionRepository.findAll();
+    public List<StudentCourseSelection> findBySemester(String semester) {
+        return studentCourseSelectionRepository.findBySemester(semester);
     }
 }

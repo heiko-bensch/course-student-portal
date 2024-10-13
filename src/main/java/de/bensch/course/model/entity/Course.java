@@ -22,12 +22,6 @@ public class Course {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "half_year")
-    private Integer halfYear;
-
-    @Column(name = "year_")
-    private Integer year;
-
     @Column(name = "instructor")
     private String instructor;
 
@@ -37,6 +31,9 @@ public class Course {
 
     @Column(name = "grade_levels")
     private String gradeLevels;
+
+    @Column(name = "semester")
+    private String semester;
 
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude

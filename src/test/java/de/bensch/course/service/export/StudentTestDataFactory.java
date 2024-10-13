@@ -18,6 +18,7 @@ public class StudentTestDataFactory {
         student.setLastName(dataFacker.name().lastName());
         student.setClassName(dataFacker.planet().name());
         student.setGradeLevel(gradeLevel);
+        student.setSemester("2/2024");
         return student;
     }
 
@@ -26,10 +27,9 @@ public class StudentTestDataFactory {
         course.setId(dataFacker.number().randomNumber());
         course.setName(dataFacker.educator().course());
         course.setInstructor(dataFacker.name().name());
-        course.setYear(2024);
-        course.setHalfYear(2);
         course.setDayOfWeek(dayOfWeek);
         course.setGradeLevels(gradeLevel);
+        course.setSemester("2/2024");
         return course;
     }
 
@@ -37,6 +37,7 @@ public class StudentTestDataFactory {
         Course course = createCourse(weekDay, "1-4");
         for (int i = 0; i < nofStudents; i++) {
             StudentCourseSelection sel = new StudentCourseSelection();
+            sel.setSemester("1/2024");
             sel.setId(dataFacker.number().randomNumber());
             sel.setWeekDay(weekDay);
             sel.setPriority(dataFacker.number().numberBetween(1, 4));

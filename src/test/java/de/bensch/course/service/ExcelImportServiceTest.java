@@ -21,12 +21,12 @@ class ExcelImportServiceTest {
     void shouldReadExcelContentAndParseExcelFileIntoStudentList1() throws ExcelImportException, IOException {
         byte[] bytes = Files.readAllBytes(Path.of("src", "test", "resources", "Excel_Import_File1.xlsx"));
         List<Student> expectedResult = List.of(
-                new Student(null, "Name 1", "Nachname 1", "1", "Jupiter", true, new ArrayList<>()),
-                new Student(null, "Name 2", "Nachname 2", "2", "Sonne", false, new ArrayList<>()),
-                new Student(null, "Name 3", "Nachname 3", "3", "Venus", true, new ArrayList<>()),
-                new Student(null, "Name 4", "Nachname 4", "4", "Erde", true, new ArrayList<>())
+                new Student(null, "Name 1", "Nachname 1", "1", "Jupiter", true, "1/2024", new ArrayList<>()),
+                new Student(null, "Name 2", "Nachname 2", "2", "Sonne", false, "1/2024", new ArrayList<>()),
+                new Student(null, "Name 3", "Nachname 3", "3", "Venus", true, "1/2024", new ArrayList<>()),
+                new Student(null, "Name 4", "Nachname 4", "4", "Erde", true, "1/2024", new ArrayList<>())
         );
-        List<Student> read = excelImportService.readExcelContent(bytes);
+        List<Student> read = excelImportService.readExcelContent("1/2024", bytes);
         assertThat(read).isEqualTo(expectedResult);
     }
 

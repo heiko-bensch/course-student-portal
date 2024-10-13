@@ -30,4 +30,7 @@ public class StudentCourseSelection {
 
     @Column(name = "comment")
     private String comment;
+
+    @Column(name = "semester")
+    private String semester;
 }

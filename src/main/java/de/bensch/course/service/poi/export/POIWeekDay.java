@@ -30,6 +30,8 @@ public class POIWeekDay {
 
     private final List<POICourse> list3 = new ArrayList<>();
 
+    private final String semester;
+
     /**
      * Constructs a POIWeekDay object with the specified weekday and list of courses.
      * The courses are distributed across three lists based on their index.
@@ -37,8 +39,9 @@ public class POIWeekDay {
      * @param weekDay The weekday for which courses are organized.
      * @param value   The list of POICourse objects to be distributed.
      */
-    public POIWeekDay(WeekDay weekDay, List<POICourse> value) {
+    public POIWeekDay(String semester, WeekDay weekDay, List<POICourse> value) {
         this.weekDay = weekDay;
+        this.semester = semester;
         for (int i = 0; i < value.size(); i++) {
             var currentElement = value.get(i);
 
@@ -57,11 +60,12 @@ public class POIWeekDay {
      * @return A list of POIWeekDay objects, each representing a day of the week with associated courses.
      */
     public static List<POIWeekDay> parseWeekDays(Collection<StudentCourseSelection> selectionList) {
+        String semester = selectionList.stream().findFirst().map(StudentCourseSelection::getSemester).orElse("");
         return selectionList.stream()
                 .collect(groupingBy(StudentCourseSelection::getWeekDay))
                 .entrySet()
                 .stream()
-                .map((e) -> new POIWeekDay(e.getKey(), POICourse.createPOICourse(e.getValue())))
+                .map((e) -> new POIWeekDay(semester, e.getKey(), POICourse.createPOICourse(e.getValue())))
                 .sorted(Comparator.comparing(s -> s.weekDay))
                 .toList();
     }
@@ -113,7 +117,7 @@ public class POIWeekDay {
         XSSFSheet sheet = poiContext.getWorkbook().createSheet(weekDay.getDisplayName());
         CellStyle cellStyle = poiContext.getStyleFactory().getCellStyle(StyleFactory.StyleEnum.SheetHeader);
 
-        POIUtil.addCell(sheet, rowIndex, columnIndex, cellStyle, "Kurswahl P1");
+        POIUtil.addCell(sheet, rowIndex, columnIndex, cellStyle, "Kurswahl P1 " + semester);
         POIUtil.addCell(sheet, ++rowIndex, columnIndex, cellStyle, weekDay.getDisplayName());
     }
 }

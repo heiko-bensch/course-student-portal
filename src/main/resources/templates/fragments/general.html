@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/font-awesome/css/all.css}"/>
 
-    <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}" defer></script>
+    <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
     <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}" defer></script>
 </div>
 
@@ -80,7 +80,23 @@
                 <a class="nav-link" th:href="@{${urlMappings.STUDENT_COURSE_LIST}}"
                    th:text="#{nav.student-course-list}"></a>
             </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+                   aria-expanded="false">
+                    Semester auswählen
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <!-- Dynamische Liste von Mandanten aus dem Controller -->
+                    <li th:each="_semester : ${semesterList}">
+                        <a class="dropdown-item" th:href="@{/selectSemester(semester=${_semester})}"
+                           th:text="${_semester}"></a>
+                    </li>
+                </ul>
+            </li>
         </ul>
+        <span class="navbar-text">
+        <span th:if="${semester}" th:text="'Aktuelles Semester: ' + ${semester}"></span>
+      </span>
     </div>
 </nav>
 

@@ -17,6 +17,7 @@ public class CourseStudentExcelExportService {
 
         try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
              var workbook = new XSSFWorkbook()) {
+
             Collection<POIWeekDay> poiWeekDays = POIWeekDay.parseWeekDays(studentCourseSelection);
             POIContext poiContext = new POIContext(workbook);
             poiWeekDays.forEach(e -> e.toExcel(poiContext));
