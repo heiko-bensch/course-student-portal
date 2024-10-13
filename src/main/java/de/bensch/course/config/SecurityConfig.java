@@ -16,7 +16,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, ClientRegistrationRepository clientRegistrationRepository) throws Exception {
         http.authorizeHttpRequests(authz -> authz
-                .requestMatchers("/", "/login", "/oauth2/**")
+                .requestMatchers("/", "/login", "/oauth2/**", "/webjars/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
@@ -31,11 +31,6 @@ public class SecurityConfig {
             logoutSuccessHandler.setPostLogoutRedirectUri("{baseUrl}/");
             logout.logoutSuccessHandler(logoutSuccessHandler);
 
-//            logout
-//                    .logoutUrl("/logout")  // Der Logout-URL
-//                    .logoutSuccessUrl("/login")   // Redirect nach dem Logout
-//                    .invalidateHttpSession(true) // Session invalidieren
-//                    .deleteCookies("JSESSIONID"); // Cookies löschen
         });
         return http.build();
     }
