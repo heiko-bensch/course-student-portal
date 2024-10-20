@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    #jdbc:postgresql://prod-db-url:5432/prod-db
+    url: ${DB_URL}
+    driverClassName: org.postgresql.Driver
+    username: ${DB_USERNAME?Variable not set}
+    password: ${DB_PASSWORD?Variable not set}
+
+  security:
+    oauth2:
+      client:
+        provider:
+          keycloak:
+            issuer-uri: ${KEYCLOAK_ISSUER_URI?Variable not set}
+        registration:
+          keycloak:
+            client-id: ${KEYCLOAK_CLIENT_ID?Variable not set}
+            client-secret: ${KEYCLOAK_CLIENT_SECRET?Variable not set}
