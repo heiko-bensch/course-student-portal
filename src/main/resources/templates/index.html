@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Anmelden</title>
+    <title th:text="#{index.title}"></title>
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
     <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
     <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}" defer></script>
@@ -35,17 +35,17 @@
 </head>
 <body>
 <div class="container text-center">
-    <h1>Mit Keycloak anmelden</h1>
+    <h1 th:text="#{index.h1}"></h1>
 
-    <div th:if="${param.logout}" class="alert alert-success" role="alert">
-        Sie wurden erfolgreich abgemeldet.
+    <div th:if="${param.logout}" class="alert alert-success" role="alert" th:text="#{index.successfull.logout}">
+
     </div>
 
-    <div th:if="${param.error}" class="alert alert-danger" role="alert">
-        Ungültiger Benutzername oder Passwort.
+    <div th:if="${param.error}" class="alert alert-danger" role="alert" th:text="#{index.wrong.user}">
+
     </div>
 
-    <a th:href="@{/oauth2/authorization/keycloak}" class="btn btn-primary btn-lg">Mit Keycloak anmelden</a>
+    <a th:href="@{/oauth2/authorization/keycloak}" class="btn btn-primary btn-lg" th:text="#{index.h1}"></a>
 </div>
 
 
