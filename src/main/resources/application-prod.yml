@@ -1,4 +1,10 @@
 spring:
+  h2:
+    console:
+      enabled: false
+  docker:
+    compose:
+      enabled: false
   datasource:
     #jdbc:postgresql://prod-db-url:5432/prod-db
     url: ${DB_URL}
@@ -16,3 +22,4 @@ spring:
           keycloak:
             client-id: ${KEYCLOAK_CLIENT_ID}
             client-secret: ${KEYCLOAK_CLIENT_SECRET}
+            scope: openid
