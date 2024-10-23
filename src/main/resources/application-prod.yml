@@ -6,7 +6,6 @@ spring:
     compose:
       enabled: false
   datasource:
-    #jdbc:postgresql://prod-db-url:5432/prod-db
     url: ${DB_URL}
     driverClassName: org.postgresql.Driver
     username: ${DB_USERNAME}
