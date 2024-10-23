@@ -1,4 +1,11 @@
 spring:
+  flyway:
+    locations:
+      - classpath:db/migration
+      - classpath:db/data
+  docker:
+    compose:
+      enabled: false
   application:
     name: course
   datasource:

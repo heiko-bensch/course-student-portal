@@ -1,0 +1,22 @@
+services:
+  database:
+    image: 'postgres:16-alpine'
+    ports:
+      - '15432:5432'
+    environment:
+      - 'POSTGRES_USER=myuser'
+      - 'POSTGRES_DB=mydatabase'
+      - 'POSTGRES_PASSWORD=secret'
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.0
+    container_name: keycloak
+    environment:
+      KC_BOOTSTRAP_ADMIN_USERNAME: admin
+      KC_BOOTSTRAP_ADMIN_PASSWORD: admin
+    ports:
+      - 8081:8080
+    command: start-dev --import-realm
+    volumes:
+      - ./src/test/keycloak/dev-realm.json:/opt/keycloak/data/import/dev-realm.json
+
