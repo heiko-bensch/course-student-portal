@@ -1,12 +1,13 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.3.3'
-    id 'io.spring.dependency-management' version '1.1.6'
+    id 'org.springframework.boot' version '3.3.5'
     id 'com.netflix.nebula.release' version '19.0.10'
     //Versions 3.4.2 and later have a bug where it is not possible to publish an image from within a workflow
     id "com.google.cloud.tools.jib" version "3.4.1"
     id "com.github.spotbugs" version "6.0.24"
+    id "com.gorylenko.gradle-git-properties" version "2.4.2"
     id 'jacoco'
+
 }
 
 group = 'de.bensch'
@@ -14,8 +15,15 @@ group = 'de.bensch'
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(17)
+        vendor = JvmVendorSpec.ADOPTIUM
     }
 }
+
+springBoot {
+    buildInfo()
+}
+
+
 
 configurations {
     compileOnly {
@@ -33,11 +41,13 @@ ext {
 }
 
 dependencies {
+    implementation platform(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES)
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
     implementation 'org.apache.commons:commons-lang3'
@@ -57,14 +67,14 @@ dependencies {
     implementation 'org.flywaydb:flyway-database-postgresql'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
-    //developmentOnly 'com.h2database:h2'
+    developmentOnly 'com.h2database:h2'
     runtimeOnly 'org.postgresql:postgresql'
 
-    implementation 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
+    compileOnly 'org.projectlombok:lombok:1.18.34'
+    annotationProcessor 'org.projectlombok:lombok:1.18.34'
 
-    testCompileOnly 'org.projectlombok:lombok'
-    testAnnotationProcessor 'org.projectlombok:lombok'
+//    testCompileOnly 'org.projectlombok:lombok'
+//    testAnnotationProcessor 'org.projectlombok:lombok'
 
     implementation "org.mapstruct:mapstruct:${mapstructVersion}"
     annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
