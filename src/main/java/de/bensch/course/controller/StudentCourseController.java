@@ -46,6 +46,13 @@ import lombok.extern.slf4j.Slf4j;
 public class StudentCourseController {
 
     public static final String SELECTED_GRADE_LEVEL = "selectedGradeLevel";
+    public static final String MODEL_STUDENT_COURSE = "studentCourse";
+    public static final String MODEL_MONDAY_COURSE_LIST = "mondayCourseList";
+    public static final String MODEL_TUESDAY_COURSE_LIST = "tuesdayCourseList";
+    public static final String MODEL_WEDNESDAY_COURSE_LIST = "wednesdayCourseList";
+    public static final String MODEL_THURSDAY_COURSE_LIST = "thursdayCourseList";
+    public static final String MODEL_STUDENT_LIST = "studentList";
+    public static final String MODEL_GRADE_LEVELS = "gradeLevels";
     private final StudentService studentService;
 
     private final StudentCourseSelectionService studentCourseSelectionService;
@@ -67,15 +74,15 @@ public class StudentCourseController {
 
 
         if (courseSelection.isPresent()) {
-            model.addAttribute("studentCourse", courseSelection.get());
+            model.addAttribute(MODEL_STUDENT_COURSE, courseSelection.get());
         } else {
-            model.addAttribute("studentCourse", new StudentCourseSelectionDTO());
+            model.addAttribute(MODEL_STUDENT_COURSE, new StudentCourseSelectionDTO());
         }
 
-        model.addAttribute("mondayCourseList", monday);
-        model.addAttribute("tuesdayCourseList", tuesday);
-        model.addAttribute("wednesdayCourseList", wednesday);
-        model.addAttribute("thursdayCourseList", thursday);
+        model.addAttribute(MODEL_MONDAY_COURSE_LIST, monday);
+        model.addAttribute(MODEL_TUESDAY_COURSE_LIST, tuesday);
+        model.addAttribute(MODEL_WEDNESDAY_COURSE_LIST, wednesday);
+        model.addAttribute(MODEL_THURSDAY_COURSE_LIST, thursday);
         model.addAttribute(SELECTED_GRADE_LEVEL, selectedGradeLevel);
 
         return STUDENT_COURSE_ASSIGNMENT;
@@ -123,8 +130,8 @@ public class StudentCourseController {
 
         Utils.addPaginationAttributesToModel(model, studentCourseSelectionView);
 
-        model.addAttribute("studentList", studentCourseSelectionView);
-        model.addAttribute("gradeLevels", gradeLevels);
+        model.addAttribute(MODEL_STUDENT_LIST, studentCourseSelectionView);
+        model.addAttribute(MODEL_GRADE_LEVELS, gradeLevels);
         return STUDENT_COURSE_LIST;
     }
 

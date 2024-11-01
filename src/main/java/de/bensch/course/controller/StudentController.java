@@ -34,6 +34,11 @@ import lombok.extern.slf4j.Slf4j;
 @SuppressWarnings("squid:S3753")
 @SessionAttributes(SessionConstants.SEMESTER)
 public class StudentController {
+    public static final String MODEL_KEYWORD = "keyword";
+    public static final String MODEL_STUDENT_LIST1 = "studentList";
+    public static final String MODEL_SELECTED_GRADE_LEVEL = "selectedGradeLevel";
+    public static final String MODEL_GRADE_LEVELS = "gradeLevels";
+    public static final String MODEL_STUDENT = "student";
     private final StudentService studentService;
 
     @GetMapping(STUDENT_LIST)
@@ -52,7 +57,7 @@ public class StudentController {
             studentPage = getStudentsByGradeLevel(selectedGradeLevel, pageable, semester);
         } else {
             studentPage = getStudentsByKeyword(selectedGradeLevel, keyword, pageable, semester);
-            model.addAttribute("keyword", keyword);
+            model.addAttribute(MODEL_KEYWORD, keyword);
         }
         Utils.addPaginationAttributesToModel(model, studentPage);
         addAttributesToModel(model, studentPage.getContent(), selectedGradeLevel, gradeLevels);
@@ -77,14 +82,14 @@ public class StudentController {
     }
 
     private void addAttributesToModel(Model model, List<Student> studentPage, String selectedGradeLevel, List<String> gradeLevels) {
-        model.addAttribute("studentList", studentPage);
-        model.addAttribute("selectedGradeLevel", selectedGradeLevel);
-        model.addAttribute("gradeLevels", gradeLevels);
+        model.addAttribute(MODEL_STUDENT_LIST1, studentPage);
+        model.addAttribute(MODEL_SELECTED_GRADE_LEVEL, selectedGradeLevel);
+        model.addAttribute(MODEL_GRADE_LEVELS, gradeLevels);
     }
 
     @GetMapping(STUDENT_CREATE)
     public String createStudent(Model model) {
-        model.addAttribute("student", new Student());
+        model.addAttribute(MODEL_STUDENT, new Student());
         return STUDENT_CREATE;
     }
 
@@ -105,7 +110,7 @@ public class StudentController {
     public String editStudentForm(@PathVariable("id") Long id, Model model) {
         Student student = studentService.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid student ID:" + id));
-        model.addAttribute("student", student);
+        model.addAttribute(MODEL_STUDENT, student);
         return STUDENT_CREATE;
     }
 

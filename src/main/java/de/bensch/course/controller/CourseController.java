@@ -27,6 +27,11 @@ import de.bensch.course.service.CourseService;
 @SuppressWarnings("squid:S3753")
 @SessionAttributes(SEMESTER)
 public class CourseController {
+    public static final String MODEL_KEYWORD = "keyword";
+    public static final String MODEL_COURSE = "course";
+    public static final String MODEL_ALL_DAYS = "allDays";
+    public static final String MODEL_COURSE_LIST = "courseList";
+
     private final CourseService courseService;
 
     public CourseController(CourseService courseService) {
@@ -46,17 +51,17 @@ public class CourseController {
 
         } else {
             coursePage = courseService.findBySemesterKeyword(pageable, semester, keyword);
-            model.addAttribute("keyword", keyword);
+            model.addAttribute(MODEL_KEYWORD, keyword);
         }
         Utils.addPaginationAttributesToModel(model, coursePage);
-        model.addAttribute("courseList", coursePage.getContent());
+        model.addAttribute(MODEL_COURSE_LIST, coursePage.getContent());
         return COURSE_LIST;
     }
 
     @GetMapping(COURSE_CREATE)
     public String createCourseForm(Model model) {
-        model.addAttribute("course", new Course());
-        model.addAttribute("allDays", WeekDay.values());
+        model.addAttribute(MODEL_COURSE, new Course());
+        model.addAttribute(MODEL_ALL_DAYS, WeekDay.values());
         return COURSE_CREATE;
     }
 
@@ -77,8 +82,8 @@ public class CourseController {
     public String editCourseForm(@PathVariable("id") Long id, Model model) {
         Course course = courseService.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid course ID:" + id));
-        model.addAttribute("course", course);
-        model.addAttribute("allDays", WeekDay.values());
+        model.addAttribute(MODEL_COURSE, course);
+        model.addAttribute(MODEL_ALL_DAYS, WeekDay.values());
         return COURSE_CREATE;
     }
 

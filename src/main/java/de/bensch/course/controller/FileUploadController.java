@@ -2,6 +2,7 @@ package de.bensch.course.controller;
 
 import static de.bensch.course.controller.routing.StudentMappings.STUDENT_LIST;
 import static de.bensch.course.controller.routing.StudentMappings.STUDENT_UPLOAD_FORM;
+import static de.bensch.course.controller.routing.StudentMappings.redirect;
 
 import java.util.List;
 
@@ -26,6 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 @SessionAttributes(SessionConstants.SEMESTER)
 public class FileUploadController {
 
+    public static final String MODEL_MESSAGE = "message";
     private final ExcelImportService excelImportService;
 
     private final StudentService studentService;
@@ -43,7 +45,7 @@ public class FileUploadController {
                     message = "No data found in the Excel spreadsheet.";
                 } else {
                     studentService.saveAll(studentList);
-                    return "redirect:" + STUDENT_LIST;
+                    return redirect(STUDENT_LIST);
                 }
             }
         } catch (Exception e) {
@@ -51,7 +53,7 @@ public class FileUploadController {
             message = "Could not upload the file. " + e.getMessage();
 
         }
-        model.addAttribute("message", message);
+        model.addAttribute(MODEL_MESSAGE, message);
         return STUDENT_LIST;
     }
 
