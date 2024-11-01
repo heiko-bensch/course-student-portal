@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="de">
 <head>
-    <th:block th:replace="fragments/general :: styles"></th:block>
+    <th:block th:replace="~{fragments/general :: styles}"></th:block>
     <title th:text="#{student-upload-form.title}">Title</title>
 </head>
 <title th:text="#{student-create.title}">"</title>
 <body>
 
 <!-- Nav bar -->
-<div th:replace="fragments/general :: navbar"></div>
+<div th:replace="~{fragments/general :: navbar}"></div>
 
 <div class="container">
     <div class="row justify-content-center">

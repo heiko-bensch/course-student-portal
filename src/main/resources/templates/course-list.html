@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="de">
 <head>
-    <th:block th:replace="fragments/general :: styles"></th:block>
+    <th:block th:replace="~{fragments/general :: styles}"></th:block>
     <title th:text="#{course-list.title}">Title</title>
 </head>
 
@@ -9,9 +9,9 @@
             + (${keyword != null and keyword != '' ? 'keyword=' + keyword + '&' : ''})">
 
 <!-- Nav bar -->
-<div th:replace="fragments/general :: navbar"></div>
+<div th:replace="~{fragments/general :: navbar}"></div>
 
-<div th:replace="fragments/general :: confirmationModal(#{course-list.delete.confirmation.text})"></div>
+<div th:replace="~{fragments/general :: confirmationModal(#{course-list.delete.confirmation.text})}"></div>
 
 <!-- ----------------------------------------------------------------------- -->
 <div class="container">
@@ -39,11 +39,11 @@
         <table class="table table-hover table-responsive-xl col-12">
             <thead class="custom-header">
             <tr>
-                <th th:replace="fragments/sorting :: sorting(field='id',label=#{course-list.table.id},url=${baseUrl})"></th>
-                <th th:replace="fragments/sorting :: sorting(field='gradeLevels',label=#{course-list.table.grade-levels},url=${baseUrl})"></th>
-                <th th:replace="fragments/sorting :: sorting(field='name',label=#{course-list.table.name},url=${baseUrl})"></th>
-                <th th:replace="fragments/sorting :: sorting(field='instructor',label=#{course-list.table.instructor},url=${baseUrl})"></th>
-                <th th:replace="fragments/sorting :: sorting(field='dayOfWeek',label=#{course-list.table.day-of-week},url=${baseUrl})"></th>
+                <th th:replace="~{fragments/sorting :: sorting(field='id',label=#{course-list.table.id},url=${baseUrl})}"></th>
+                <th th:replace="~{fragments/sorting :: sorting(field='gradeLevels',label=#{course-list.table.grade-levels},url=${baseUrl})}"></th>
+                <th th:replace="~{fragments/sorting :: sorting(field='name',label=#{course-list.table.name},url=${baseUrl})}"></th>
+                <th th:replace="~{fragments/sorting :: sorting(field='instructor',label=#{course-list.table.instructor},url=${baseUrl})}"></th>
+                <th th:replace="~{fragments/sorting :: sorting(field='dayOfWeek',label=#{course-list.table.day-of-week},url=${baseUrl})}"></th>
                 <th class="col-1" scope="col" th:text="#{course-list.table.action}"></th>
             </tr>
             </thead>

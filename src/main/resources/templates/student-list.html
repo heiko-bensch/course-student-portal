@@ -8,9 +8,9 @@
             + (${selectedGradeLevel != null and selectedGradeLevel != 'all' ? 'selectedGradeLevel=' + selectedGradeLevel + '&' : ''})">
 
 <!-- Nav bar -->
-<div th:replace="fragments/general :: navbar"></div>
+<div th:replace="~{fragments/general :: navbar}"></div>
 
-<div th:replace="fragments/general :: confirmationModal(#{student-list.delete.confirmation.text})"></div>
+<div th:replace="~{fragments/general :: confirmationModal(#{student-list.delete.confirmation.text})}"></div>
 
 <div class="container">
     <div class="row d-flex mt-3">
@@ -69,11 +69,11 @@
             <table class="table table-hover table-responsive-xl " data-sticky-header="true">
                 <thead class="custom-header">
                 <tr>
-                    <th th:replace="fragments/sorting :: sorting(field='id',label=#{student-list.table.id},url=${baseUrl})"></th>
-                    <th th:replace="fragments/sorting :: sorting(field='lastName',label=#{student-list.table.last-name},url=${baseUrl})"></th>
-                    <th th:replace="fragments/sorting :: sorting(field='firstName',label=#{student-list.table.first-name},url=${baseUrl})"></th>
-                    <th th:replace="fragments/sorting :: sorting(field='gradeLevel',label=#{student-list.table.grade-level},url=${baseUrl})"></th>
-                    <th th:replace="fragments/sorting :: sorting(field='className',label=#{student-list.table.class-name},url=${baseUrl})"></th>
+                    <th th:replace="~{fragments/sorting :: sorting(field='id',label=#{student-list.table.id},url=${baseUrl})}"></th>
+                    <th th:replace="~{fragments/sorting :: sorting(field='lastName',label=#{student-list.table.last-name},url=${baseUrl})}"></th>
+                    <th th:replace="~{fragments/sorting :: sorting(field='firstName',label=#{student-list.table.first-name},url=${baseUrl})}"></th>
+                    <th th:replace="~{fragments/sorting :: sorting(field='gradeLevel',label=#{student-list.table.grade-level},url=${baseUrl})}"></th>
+                    <th th:replace="~{fragments/sorting :: sorting(field='className',label=#{student-list.table.class-name},url=${baseUrl})}"></th>
                     <th scope="col" th:text="#{student-list.table.action}"></th>
                 </tr>
                 </thead>

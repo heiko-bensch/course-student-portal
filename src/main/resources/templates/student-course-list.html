@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="de">
 <head>
-    <th:block th:replace="fragments/general :: styles"></th:block>
+    <th:block th:replace="~{fragments/general :: styles}"></th:block>
     <title th:text="#{student-course-list.title}" th:title="#{student-course-assignment.title}"></title>
 </head>
 
@@ -9,7 +9,7 @@
              + (${selectedGradeLevel != null and selectedGradeLevel != 'all' ? 'selectedGradeLevel=' + selectedGradeLevel + '&' : ''})">
 
 <!-- Nav bar -->
-<div th:replace="fragments/general :: navbar"></div>
+<div th:replace="~{fragments/general :: navbar}"></div>
 <!--<div th:replace="fragments/general :: confirmationModal(#{student-list.delete.confirmation.text})"></div>-->
 <div class="container">
     <div class="row d-flex mt-3">

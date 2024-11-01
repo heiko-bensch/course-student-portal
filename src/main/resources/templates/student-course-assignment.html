@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="de">
 <head>
-    <th:block th:replace="fragments/general :: styles"></th:block>
+    <th:block th:replace="~{fragments/general :: styles}"></th:block>
     <title th:text="#{course-list.title}" th:title="#{student-course-assignment.title}"></title>
 </head>
 
 <body>
 
 <!-- Nav bar -->
-<div th:replace="fragments/general :: navbar"></div>
+<div th:replace="~{fragments/general :: navbar}"></div>
 <form th:action="@{${studentCourseMappings.STUDENT_COURSE_ASSIGNMENT}}" th:object="${studentCourse}" method="post">
     <input type="hidden" th:field="*{student.id}">
     <input type="hidden" name="selectedGradeLevel" th:value="${selectedGradeLevel}">
@@ -75,18 +75,18 @@
                 <!-- Card 1 -->
                 <div class="row">
                     <div class="col-6">
-                        <div th:replace="fragments/weekday-course :: cardFragment(#{student-course-assignment.monday-card}, ${mondayCourseList},'courseSelectionMonday')"></div>
+                        <div th:replace="~{fragments/weekday-course :: cardFragment(#{student-course-assignment.monday-card}, ${mondayCourseList},'courseSelectionMonday')}"></div>
                     </div>
                     <div class="col-6">
-                        <div th:replace="fragments/weekday-course :: cardFragment(#{student-course-assignment.tuesday-card},${tuesdayCourseList},'courseSelectionTuesday')"></div>
+                        <div th:replace="~{fragments/weekday-course :: cardFragment(#{student-course-assignment.tuesday-card},${tuesdayCourseList},'courseSelectionTuesday')}"></div>
                     </div>
                 </div>
                 <div class="row mt-5">
                     <div class="col-6">
-                        <div th:replace="fragments/weekday-course :: cardFragment(#{student-course-assignment.wednesday-card},${wednesdayCourseList},'courseSelectionWednesday')"></div>
+                        <div th:replace="~{fragments/weekday-course :: cardFragment(#{student-course-assignment.wednesday-card},${wednesdayCourseList},'courseSelectionWednesday')}"></div>
                     </div>
                     <div class="col-6">
-                        <div th:replace="fragments/weekday-course :: cardFragment(#{student-course-assignment.thursday-card},${thursdayCourseList},'courseSelectionThursday')"></div>
+                        <div th:replace="~{fragments/weekday-course :: cardFragment(#{student-course-assignment.thursday-card},${thursdayCourseList},'courseSelectionThursday')}"></div>
                     </div>
                 </div>
                 <div class="row mt-3">
