@@ -1,5 +1,31 @@
 package de.bensch.course.controller;
 
+import static de.bensch.course.config.constants.SessionConstants.SEMESTER;
+import static de.bensch.course.controller.routing.StudentCourseMappings.STUDENT_COURSE_ASSIGNMENT;
+import static de.bensch.course.controller.routing.StudentCourseMappings.STUDENT_COURSE_EXPORT;
+import static de.bensch.course.controller.routing.StudentCourseMappings.STUDENT_COURSE_LIST;
+
+import java.io.IOException;
+import java.util.Collection;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import de.bensch.course.model.WeekDay;
 import de.bensch.course.model.dto.StudentCourseSelectionDTO;
 import de.bensch.course.model.entity.Course;
@@ -11,32 +37,15 @@ import de.bensch.course.service.StudentCourseSelectionService;
 import de.bensch.course.service.StudentService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.io.IOException;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-
-import static de.bensch.course.config.constants.SessionConstants.SEMESTER;
-import static de.bensch.course.controller.UrlMappings.STUDENT_COURSE_EXPORT;
-import static de.bensch.course.controller.UrlMappings.STUDENT_COURSE_LIST;
 
 @Controller
 @AllArgsConstructor
 @Slf4j
+@SuppressWarnings("squid:S3753")
 @SessionAttributes(SEMESTER)
 public class StudentCourseController {
 
+    public static final String SELECTED_GRADE_LEVEL = "selectedGradeLevel";
     private final StudentService studentService;
 
     private final StudentCourseSelectionService studentCourseSelectionService;
@@ -46,7 +55,7 @@ public class StudentCourseController {
     private final CourseService courseService;
 
 
-    @GetMapping(UrlMappings.STUDENT_COURSE_ASSIGNMENT + "/{id}")
+    @GetMapping(STUDENT_COURSE_ASSIGNMENT + "/{id}")
     public String searchStudents(Model model, @PathVariable("id") Long id, @RequestParam(required = false, defaultValue = "all") String selectedGradeLevel) {
         String semester = (String) model.getAttribute(SEMESTER);
         Iterable<Course> monday = courseService.findBySemesterAndDayOfWeek(semester, WeekDay.Monday);
@@ -67,24 +76,24 @@ public class StudentCourseController {
         model.addAttribute("tuesdayCourseList", tuesday);
         model.addAttribute("wednesdayCourseList", wednesday);
         model.addAttribute("thursdayCourseList", thursday);
-        model.addAttribute("selectedGradeLevel", selectedGradeLevel);
+        model.addAttribute(SELECTED_GRADE_LEVEL, selectedGradeLevel);
 
-        return UrlMappings.STUDENT_COURSE_ASSIGNMENT;
+        return STUDENT_COURSE_ASSIGNMENT;
     }
 
-    @PostMapping(UrlMappings.STUDENT_COURSE_ASSIGNMENT)
+    @PostMapping(STUDENT_COURSE_ASSIGNMENT)
     public String saveStudentCourseAssignment(Model model, @ModelAttribute StudentCourseSelectionDTO courseSelection,
-                                              @RequestParam(name = "selectedGradeLevel", defaultValue = "all", required = false) String selectedGradeLevel,
+                                              @RequestParam(name = SELECTED_GRADE_LEVEL, defaultValue = "all", required = false) String selectedGradeLevel,
                                               RedirectAttributes redirectAttributes) {
         String semester = (String) model.getAttribute(SEMESTER);
         studentCourseSelectionService.saveStudentCourseSelection(courseSelection);
         // Zum nächsten Eintrag weiterleiten
         Optional<StudentCourseSelectionView> nextEntry = studentCourseSelectionService
                 .findNextEntry(courseSelection.getStudent().getId(), semester, selectedGradeLevel);
-        redirectAttributes.addAttribute("selectedGradeLevel", selectedGradeLevel);
+        redirectAttributes.addAttribute(SELECTED_GRADE_LEVEL, selectedGradeLevel);
         if (nextEntry.isPresent()) {
             redirectAttributes.addAttribute("id", nextEntry.get().getId());
-            return "redirect:" + UrlMappings.STUDENT_COURSE_ASSIGNMENT + "/{id}?selectedGradeLevel={selectedGradeLevel}";
+            return "redirect:" + STUDENT_COURSE_ASSIGNMENT + "/{id}?selectedGradeLevel={selectedGradeLevel}";
         } else {
             return "redirect:" + STUDENT_COURSE_LIST + "?selectedGradeLevel={selectedGradeLevel}";
         }
@@ -109,7 +118,7 @@ public class StudentCourseController {
             studentCourseSelectionView = studentCourseSelectionService.findAllByStudentCourseCountByDayOfWeek(pageable, semester);
         } else {
             studentCourseSelectionView = studentCourseSelectionService.findAllByStudentCourseCountByDayOfWeek(pageable, semester, selectedGradeLevel);
-            model.addAttribute("selectedGradeLevel", selectedGradeLevel);
+            model.addAttribute(SELECTED_GRADE_LEVEL, selectedGradeLevel);
         }
 
         Utils.addPaginationAttributesToModel(model, studentCourseSelectionView);

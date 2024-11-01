@@ -13,7 +13,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-lg-6">
-            <form th:action="@{${student.id == null ? urlMappings.STUDENT_CREATE : urlMappings.getStudentEditUrl(student.id)}}"
+            <form th:action="@{${student.id == null ? studentMappings.STUDENT_CREATE : studentMappings.getStudentEditUrl(student.id)}}"
                   th:object="${student}"
                   method="post" class="p-4 border rounded">
                 <div class="mb-6 pt-3">
@@ -42,7 +42,7 @@
                 </div>
                 <div class="row pt-5">
                     <div class="col-6 d-flex justify-content-start">
-                        <a th:href="@{${urlMappings.STUDENT_LIST}}" class="btn btn-dark"
+                        <a th:href="@{${studentMappings.STUDENT_LIST}}" class="btn btn-dark"
                            th:text="#{student-modify.link.back}"></a>
                     </div>
                     <div class="col-6 d-flex justify-content-end">

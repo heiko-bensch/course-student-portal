@@ -5,7 +5,7 @@
     <title th:text="#{student-course-list.title}" th:title="#{student-course-assignment.title}"></title>
 </head>
 
-<body th:with="baseUrl=${urlMappings.STUDENT_COURSE_LIST} + '?'
+<body th:with="baseUrl=${studentCourseMappings.STUDENT_COURSE_LIST} + '?'
              + (${selectedGradeLevel != null and selectedGradeLevel != 'all' ? 'selectedGradeLevel=' + selectedGradeLevel + '&' : ''})">
 
 <!-- Nav bar -->
@@ -13,7 +13,7 @@
 <!--<div th:replace="fragments/general :: confirmationModal(#{student-list.delete.confirmation.text})"></div>-->
 <div class="container">
     <div class="row d-flex mt-3">
-        <form class="col-6" th:action="@{${urlMappings.STUDENT_COURSE_LIST}}" id="searchForm">
+        <form class="col-6" th:action="@{${studentCourseMappings.STUDENT_COURSE_LIST}}" id="searchForm">
             <div class="row form-group">
                 <!-- grade level filter -->
                 <div class="col-md-2">
@@ -54,7 +54,7 @@
                     <td th:text="${student.className}"></td>
                     <td th:text="'M'+${student.courseCountMonday+',D'+student.courseCountTuesday+', M'+student.courseCountWednesday+', D'+student.courseCountThursday}"></td>
                     <td>
-                        <a th:href="@{|${urlMappings.STUDENT_COURSE_ASSIGNMENT}/${student.id}|(selectedGradeLevel=${selectedGradeLevel})}">
+                        <a th:href="@{|${studentCourseMappings.STUDENT_COURSE_ASSIGNMENT}/${student.id}|(selectedGradeLevel=${selectedGradeLevel})}">
                             <i class="fa-solid fa-pen-to-square black-link"></i></a>
                     </td>
                 </tr>
@@ -90,7 +90,7 @@
     <!-- ---- -->
     <div class="row">
         <div class="col-6 d-flex justify-content-end">
-            <a th:href="${urlMappings.STUDENT_COURSE_EXPORT}" class="btn btn-dark"
+            <a th:href="${studentCourseMappings.STUDENT_COURSE_EXPORT}" class="btn btn-dark"
                th:text="#{student-course-assignment.btn-export}"></a>
         </div>
     </div>

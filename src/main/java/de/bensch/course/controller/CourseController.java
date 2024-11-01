@@ -11,9 +11,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import static de.bensch.course.config.constants.SessionConstants.SEMESTER;
-import static de.bensch.course.controller.UrlMappings.*;
+import static de.bensch.course.controller.routing.CourseMappings.*;
 
 @Controller
+@SuppressWarnings("squid:S3753")
 @SessionAttributes(SEMESTER)
 public class CourseController {
     private final CourseService courseService;
@@ -22,7 +23,7 @@ public class CourseController {
         this.courseService = courseService;
     }
 
-    @GetMapping(COURSE_LIST)
+    @GetMapping(value = COURSE_LIST)
     public String courses(Model model, @RequestParam(required = false) String keyword, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "id,asc") String[] sort) {
 
         String semester = (String) model.getAttribute(SEMESTER);
@@ -55,9 +56,9 @@ public class CourseController {
         String result;
         course.setSemester(semester);
         if (course.getId() == null) {
-            result = "redirect:" + COURSE_CREATE;
+            result = redirect(COURSE_CREATE);
         } else {
-            result = "redirect:" + COURSE_LIST;
+            result = redirect(COURSE_LIST);
         }
         courseService.save(course);
         return result;
@@ -75,14 +76,14 @@ public class CourseController {
     @PostMapping(COURSE_EDIT)
     public String editCourseSubmit(@PathVariable("id") Long id, @ModelAttribute Course course) {
         courseService.save(course);
-        return "redirect:" + COURSE_LIST;
+        return redirect( COURSE_LIST);
     }
 
     @GetMapping(COURSE_DELETE)
     public String deleteCourse(@PathVariable("id") Long id) {
 
         courseService.delete(id);
-        return "redirect:" + COURSE_LIST;
+        return redirect(COURSE_LIST);
     }
 
 }

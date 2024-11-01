@@ -15,11 +15,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Objects;
 
-import static de.bensch.course.controller.UrlMappings.*;
+import static de.bensch.course.controller.routing.StudentMappings.*;
 
 @Slf4j
 @Controller
 @AllArgsConstructor
+@SuppressWarnings("squid:S3753")
 @SessionAttributes(SessionConstants.SEMESTER)
 public class StudentController {
     private final StudentService studentService;
@@ -81,9 +82,9 @@ public class StudentController {
         String result;
         student.setSemester((String) model.getAttribute(SessionConstants.SEMESTER));
         if (student.getId() == null) {
-            result = "redirect:" + STUDENT_CREATE;
+            result = redirect(STUDENT_CREATE);
         } else {
-            result = "redirect:" + STUDENT_LIST;
+            result = redirect(STUDENT_LIST);
         }
         studentService.save(student);
         return result;
@@ -100,12 +101,12 @@ public class StudentController {
     @PostMapping(STUDENT_EDIT)
     public String editStudentSubmit(@PathVariable("id") Long id, @ModelAttribute Student student) {
         studentService.save(student);
-        return "redirect:" + STUDENT_LIST;
+        return redirect( STUDENT_LIST);
     }
 
     @GetMapping(STUDENT_DELETE)
     public String deleteStudent(@PathVariable("id") Long id) {
         studentService.delete(id);
-        return "redirect:" + STUDENT_LIST;
+        return redirect( STUDENT_LIST);
     }
 }

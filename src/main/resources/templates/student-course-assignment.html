@@ -9,7 +9,7 @@
 
 <!-- Nav bar -->
 <div th:replace="fragments/general :: navbar"></div>
-<form th:action="@{${urlMappings.STUDENT_COURSE_ASSIGNMENT}}" th:object="${studentCourse}" method="post">
+<form th:action="@{${studentCourseMappings.STUDENT_COURSE_ASSIGNMENT}}" th:object="${studentCourse}" method="post">
     <input type="hidden" th:field="*{student.id}">
     <input type="hidden" name="selectedGradeLevel" th:value="${selectedGradeLevel}">
     <div class="container mt-4">
@@ -91,7 +91,7 @@
                 </div>
                 <div class="row mt-3">
                     <div class="col-6 d-flex justify-content-start">
-                        <a th:href="@{${urlMappings.STUDENT_COURSE_LIST}}" class="btn btn-dark"
+                        <a th:href="@{${studentCourseMappings.STUDENT_COURSE_LIST}}" class="btn btn-dark"
                            th:text="#{student-course-assignment.btn-close}"></a>
                     </div>
 

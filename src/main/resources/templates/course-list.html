@@ -5,7 +5,7 @@
     <title th:text="#{course-list.title}">Title</title>
 </head>
 
-<body th:with="baseUrl=${urlMappings.COURSE_LIST} + '?'
+<body th:with="baseUrl=${courseMappings.COURSE_LIST} + '?'
             + (${keyword != null and keyword != '' ? 'keyword=' + keyword + '&' : ''})">
 
 <!-- Nav bar -->
@@ -16,7 +16,7 @@
 <!-- ----------------------------------------------------------------------- -->
 <div class="container">
     <!-- -------Search field---------------------------------------------------- -->
-    <form class="col-6" th:action="@{${urlMappings.COURSE_LIST}}" id="searchForm">
+    <form class="col-6" th:action="@{${courseMappings.COURSE_LIST}}" id="searchForm">
         <div class="row form-group">
             <!-- search field -->
             <div class="col-md-5">
@@ -55,10 +55,10 @@
                 <td th:text="${course.instructor}"></td>
                 <td th:text="${course.dayOfWeek}"></td>
                 <td>
-                    <a th:href="@{${urlMappings.COURSE_EDIT}(id=${course.id})}" class="black-link"><i
+                    <a th:href="@{${courseMappings.COURSE_EDIT}(id=${course.id})}" class="black-link"><i
                             class="fa-solid fa-pen-to-square"></i></a>
                     &nbsp;
-                    <a th:href="@{${urlMappings.COURSE_DELETE}(id=${course.id})}" class="delete-link black-link"><i
+                    <a th:href="@{${courseMappings.COURSE_DELETE}(id=${course.id})}" class="delete-link black-link"><i
                             class="fa-solid fa-trash"></i></a>
                 </td>
             </tr>
