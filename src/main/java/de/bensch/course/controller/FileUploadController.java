@@ -14,7 +14,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import de.bensch.course.config.constants.SessionConstants;
 import de.bensch.course.model.entity.Student;
-import de.bensch.course.service.ExcelImportException;
 import de.bensch.course.service.ExcelImportService;
 import de.bensch.course.service.StudentService;
 import lombok.AllArgsConstructor;
@@ -32,7 +31,7 @@ public class FileUploadController {
     private final StudentService studentService;
 
     @PostMapping(STUDENT_UPLOAD_FORM)
-    public String uploadStudents(Model model, @RequestParam("file") MultipartFile file) throws ExcelImportException {
+    public String uploadStudents(Model model, @RequestParam("file") MultipartFile file) {
         String message;
         String semester = (String) model.getAttribute(SessionConstants.SEMESTER);
         try {

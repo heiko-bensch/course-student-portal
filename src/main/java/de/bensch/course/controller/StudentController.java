@@ -1,21 +1,32 @@
 package de.bensch.course.controller;
 
-import de.bensch.course.config.constants.SessionConstants;
-import de.bensch.course.model.entity.Student;
-import de.bensch.course.service.StudentService;
-import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import static de.bensch.course.config.constants.SessionConstants.SEMESTER;
+import static de.bensch.course.controller.routing.StudentMappings.STUDENT_CREATE;
+import static de.bensch.course.controller.routing.StudentMappings.STUDENT_DELETE;
+import static de.bensch.course.controller.routing.StudentMappings.STUDENT_EDIT;
+import static de.bensch.course.controller.routing.StudentMappings.STUDENT_LIST;
+import static de.bensch.course.controller.routing.StudentMappings.redirect;
+
+import java.util.List;
+import java.util.Objects;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
-import java.util.List;
-import java.util.Objects;
-
-import static de.bensch.course.controller.routing.StudentMappings.*;
+import de.bensch.course.config.constants.SessionConstants;
+import de.bensch.course.model.entity.Student;
+import de.bensch.course.service.StudentService;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
@@ -80,12 +91,12 @@ public class StudentController {
     @PostMapping(STUDENT_CREATE)
     public String createStudentSubmit(Model model, @ModelAttribute Student student) {
         String result;
-        student.setSemester((String) model.getAttribute(SessionConstants.SEMESTER));
         if (student.getId() == null) {
             result = redirect(STUDENT_CREATE);
         } else {
             result = redirect(STUDENT_LIST);
         }
+        student.setSemester((String) model.getAttribute(SEMESTER));
         studentService.save(student);
         return result;
     }
@@ -99,14 +110,15 @@ public class StudentController {
     }
 
     @PostMapping(STUDENT_EDIT)
-    public String editStudentSubmit(@PathVariable("id") Long id, @ModelAttribute Student student) {
+    public String editStudentSubmit(Model model,@PathVariable("id") Long id, @ModelAttribute Student student) {
+        student.setSemester((String) model.getAttribute(SEMESTER));
         studentService.save(student);
-        return redirect( STUDENT_LIST);
+        return redirect(STUDENT_LIST);
     }
 
     @GetMapping(STUDENT_DELETE)
     public String deleteStudent(@PathVariable("id") Long id) {
         studentService.delete(id);
-        return redirect( STUDENT_LIST);
+        return redirect(STUDENT_LIST);
     }
 }

@@ -1,17 +1,27 @@
 package de.bensch.course.controller;
 
-import de.bensch.course.model.WeekDay;
-import de.bensch.course.model.entity.Course;
-import de.bensch.course.service.CourseService;
+import static de.bensch.course.config.constants.SessionConstants.SEMESTER;
+import static de.bensch.course.controller.routing.CourseMappings.COURSE_CREATE;
+import static de.bensch.course.controller.routing.CourseMappings.COURSE_DELETE;
+import static de.bensch.course.controller.routing.CourseMappings.COURSE_EDIT;
+import static de.bensch.course.controller.routing.CourseMappings.COURSE_LIST;
+import static de.bensch.course.controller.routing.CourseMappings.redirect;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
-import static de.bensch.course.config.constants.SessionConstants.SEMESTER;
-import static de.bensch.course.controller.routing.CourseMappings.*;
+import de.bensch.course.model.WeekDay;
+import de.bensch.course.model.entity.Course;
+import de.bensch.course.service.CourseService;
 
 @Controller
 @SuppressWarnings("squid:S3753")
@@ -52,14 +62,13 @@ public class CourseController {
 
     @PostMapping(COURSE_CREATE)
     public String createCourseSubmit(Model model, @ModelAttribute Course course) {
-        String semester = (String) model.getAttribute(SEMESTER);
         String result;
-        course.setSemester(semester);
         if (course.getId() == null) {
             result = redirect(COURSE_CREATE);
         } else {
             result = redirect(COURSE_LIST);
         }
+        course.setSemester((String) model.getAttribute(SEMESTER));
         courseService.save(course);
         return result;
     }
@@ -74,9 +83,10 @@ public class CourseController {
     }
 
     @PostMapping(COURSE_EDIT)
-    public String editCourseSubmit(@PathVariable("id") Long id, @ModelAttribute Course course) {
+    public String editCourseSubmit(Model model, @PathVariable("id") Long id, @ModelAttribute Course course) {
+        course.setSemester((String) model.getAttribute(SEMESTER));
         courseService.save(course);
-        return redirect( COURSE_LIST);
+        return redirect(COURSE_LIST);
     }
 
     @GetMapping(COURSE_DELETE)
