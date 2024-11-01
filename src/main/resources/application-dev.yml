@@ -26,3 +26,28 @@ spring:
             client-id: course-student-portal
             client-secret: 8YGmXLTpllBsr3Ax67AkQ7EyhbzydIPf
             scope: openid
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+    health:
+      show-details: always
+  tracing:
+    sampling:
+      probability: 1.0
+  info:
+    env:
+      enabled: true
+    git:
+        mode: simple
+
+info:
+  app:
+    name: Course Student Portal
+    description: Course Student Portal
+    author:
+      name: Heiko Bensch
+    java:
+      version: ${java.version}

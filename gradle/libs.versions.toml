@@ -1,0 +1,46 @@
+[versions]
+spring-boot = "3.3.5"
+poi = "5.3.0"
+map-struct = "1.6.2"
+lombok = "1.18.34"
+fastexcel-reader = "0.18.1"
+
+[plugins]
+spring-boot-gradle-plugin = { id = "org.springframework.boot", version.ref = "spring-boot" }
+nebula-release = { id = "com.netflix.nebula.release", version = "19.0.10" }
+#Versions 3.4.2 and later have a bug where it is not possible to publish an image from within a workflow
+jib = { id = "com.google.cloud.tools.jib", version = "3.4.1" }
+spotbugs = { id = "com.github.spotbugs", version = "6.0.24" }
+gradle-git-properties = { id = "com.gorylenko.gradle-git-properties", version = "2.4.2" }
+
+[libraries]
+spring-boot-starter-data-jpa = { module = "org.springframework.boot:spring-boot-starter-data-jpa" }
+spring-boot-starter-thymeleaf = { module = "org.springframework.boot:spring-boot-starter-thymeleaf" }
+spring-boot-starter-web = { module = "org.springframework.boot:spring-boot-starter-web" }
+spring-boot-starter-security = { module = "org.springframework.boot:spring-boot-starter-security" }
+spring-boot-starter-oauth2-client = { module = "org.springframework.boot:spring-boot-starter-oauth2-client" }
+spring-boot-starter-actuator = { module = "org.springframework.boot:spring-boot-starter-actuator" }
+spring-boot-starter-test = { module = 'org.springframework.boot:spring-boot-starter-test' }
+spring-security-test = { module = 'org.springframework.security:spring-security-test' }
+spring-boot-devtools = { module = 'org.springframework.boot:spring-boot-devtools' }
+spring-boot-docker-compose = { module = 'org.springframework.boot:spring-boot-docker-compose' }
+webjars-bootstrap = { module = "org.webjars:bootstrap", version = "5.3.3" }
+webjars-jquery = { module = "org.webjars:jquery", version = "3.7.1" }
+webjars-font-awesome = { module = "org.webjars:font-awesome", version = "6.5.2" }
+webjars-locator-core = { module = "org.webjars:webjars-locator-core" }
+thymeleaf-extras-springsecurity6 = { module = "org.thymeleaf.extras:thymeleaf-extras-springsecurity6" }
+mapstruct = { module = "org.mapstruct:mapstruct", version.ref = "map-struct" }
+mapstruct-processor = { module = "org.mapstruct:mapstruct-processor", version.ref = "map-struct" }
+lombok = { module = "org.projectlombok:lombok", version.ref = "lombok" }
+lombok-mapstruct-binding = { module = "org.projectlombok:lombok-mapstruct-binding", version = "0.2.0" }
+fastexcel-reader = { module = "org.dhatim:fastexcel-reader", version.ref = "fastexcel-reader" }
+fastexcel = { module = "org.dhatim:fastexcel", version.ref = "fastexcel-reader" }
+poi = { module = "org.apache.poi:poi", version.ref = "poi" }
+poi-ooxml = { module = "org.apache.poi:poi-ooxml", version.ref = "poi" }
+datafaker = { module = "net.datafaker:datafaker", version = "2.3.0" }
+commons-lang3 = { module = 'org.apache.commons:commons-lang3' }
+flyway-core = { module = 'org.flywaydb:flyway-core' }
+flyway-database-postgresql = { module = 'org.flywaydb:flyway-database-postgresql' }
+h2 = { module = 'com.h2database:h2' }
+postgresql = { module = 'org.postgresql:postgresql' }
+junit-platform-launcher = { module = 'org.junit.platform:junit-platform-launcher' }

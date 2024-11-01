@@ -16,7 +16,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, ClientRegistrationRepository clientRegistrationRepository) throws Exception {
         http.authorizeHttpRequests(authz -> authz
-                .requestMatchers("/", "/login", "/oauth2/**", "/webjars/**")
+                .requestMatchers("/", "/login", "/oauth2/**", "/webjars/**","/actuator/health")
                 .permitAll()
                 .anyRequest()
                 .authenticated()

@@ -1,12 +1,12 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.3.3'
-    id 'io.spring.dependency-management' version '1.1.6'
-    id 'com.netflix.nebula.release' version '19.0.10'
-    //Versions 3.4.2 and later have a bug where it is not possible to publish an image from within a workflow
-    id "com.google.cloud.tools.jib" version "3.4.1"
-    id "com.github.spotbugs" version "6.0.24"
+    alias(libs.plugins.spring.boot.gradle.plugin )
+    alias(libs.plugins.nebula.release )
+    alias(libs.plugins.jib)
+    alias(libs.plugins.spotbugs)
+    alias(libs.plugins.gradle.git.properties)
     id 'jacoco'
+
 }
 
 group = 'de.bensch'
@@ -14,8 +14,15 @@ group = 'de.bensch'
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(17)
+        vendor = JvmVendorSpec.ADOPTIUM
     }
 }
+
+springBoot {
+    buildInfo()
+}
+
+
 
 configurations {
     compileOnly {
@@ -27,55 +34,54 @@ repositories {
     mavenCentral()
 }
 
-ext {
-    mapstructVersion = "1.6.2"
-    poiVersion = "5.3.0"
-}
+
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+    implementation platform(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES)
+    implementation libs.spring.boot.starter.data.jpa
+    implementation libs.spring.boot.starter.thymeleaf
+    implementation libs.spring.boot.starter.web
+    implementation libs.spring.boot.starter.security
+    implementation libs.spring.boot.starter.oauth2.client
+    implementation libs.spring.boot.starter.actuator
 
-    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
-    implementation 'org.apache.commons:commons-lang3'
+    implementation libs.thymeleaf.extras.springsecurity6
+    implementation libs.commons.lang3
 
-    implementation "org.apache.poi:poi:${poiVersion}"
-    implementation "org.apache.poi:poi-ooxml:${poiVersion}"
-    implementation 'org.dhatim:fastexcel-reader:0.18.1'
-    implementation 'org.dhatim:fastexcel:0.18.1'
+    implementation libs.poi
+    implementation libs.poi.ooxml
+    implementation libs.fastexcel.reader
+    implementation libs.fastexcel
 
 //    implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
-    implementation('org.webjars:bootstrap:5.3.3')
-    implementation 'org.webjars:font-awesome:6.5.2'
-    implementation('org.webjars:jquery:3.7.1')
-    implementation 'org.webjars:webjars-locator-core'
+    implementation libs.webjars.bootstrap
+    implementation libs.webjars.font.awesome
+    implementation libs.webjars.jquery
+    implementation libs.webjars.locator.core
 
-    implementation 'org.flywaydb:flyway-core'
-    implementation 'org.flywaydb:flyway-database-postgresql'
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
-    //developmentOnly 'com.h2database:h2'
-    runtimeOnly 'org.postgresql:postgresql'
+    implementation libs.flyway.core
+    implementation libs.flyway.database.postgresql
+    developmentOnly libs.spring.boot.devtools
+    developmentOnly libs.spring.boot.docker.compose
+    developmentOnly libs.h2
+    runtimeOnly libs.postgresql
 
-    implementation 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
+    compileOnly libs.lombok
+    annotationProcessor libs.lombok
 
-    testCompileOnly 'org.projectlombok:lombok'
-    testAnnotationProcessor 'org.projectlombok:lombok'
+    implementation libs.mapstruct
+    annotationProcessor libs.mapstruct.processor
+    annotationProcessor libs.lombok.mapstruct.binding
 
-    implementation "org.mapstruct:mapstruct:${mapstructVersion}"
-    annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
-    annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
+    testCompileOnly libs.lombok
+    testAnnotationProcessor libs.lombok
 
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.springframework.security:spring-security-test'
+    testImplementation libs.spring.boot.starter.test
+    testImplementation libs.spring.security.test
 
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-    testRuntimeOnly 'com.h2database:h2'
-    testImplementation 'net.datafaker:datafaker:2.3.0'
+    testRuntimeOnly libs.junit.platform.launcher
+    testRuntimeOnly libs.h2
+    testImplementation libs.datafaker
 }
 tasks.named('test') {
     useJUnitPlatform()

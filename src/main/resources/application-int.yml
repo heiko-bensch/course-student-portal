@@ -14,3 +14,27 @@ spring:
             client-id: ${KEYCLOAK_CLIENT_ID}
             client-secret: ${KEYCLOAK_CLIENT_SECRET}
             scope: openid
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+    health:
+      show-details: always
+  tracing:
+    sampling:
+      probability: 1.0
+  info:
+    env:
+      enabled: true
+    git:
+      mode: simple
+
+info:
+  app:
+    name: Course Student Portal
+    description: Course Student Portal
+    author:
+      name: Heiko Bensch
+    java:
+      version: ${java.version}
