@@ -50,7 +50,7 @@ public class StudentController {
                           @RequestParam(defaultValue = "id,asc") String[] sort) {
         String semester = (String) model.getAttribute(SessionConstants.SEMESTER);
 
-        Pageable pageable = Utils.createPageable(page, size, sort);
+        Pageable pageable = PageUtils.createPageable(page, size, sort);
         Page<Student> studentPage;
         List<String> gradeLevels = studentService.findGradeLevel(semester);
         if (StringUtils.isBlank(keyword)) {
@@ -59,7 +59,7 @@ public class StudentController {
             studentPage = getStudentsByKeyword(selectedGradeLevel, keyword, pageable, semester);
             model.addAttribute(MODEL_KEYWORD, keyword);
         }
-        Utils.addPaginationAttributesToModel(model, studentPage);
+        PageUtils.addPaginationAttributesToModel(model, studentPage);
         addAttributesToModel(model, studentPage.getContent(), selectedGradeLevel, gradeLevels);
         return STUDENT_LIST;
     }

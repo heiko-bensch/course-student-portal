@@ -1,36 +1,72 @@
 package de.bensch.course.model.util;
 
-import de.bensch.course.TestOAuth2Config;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+
 import de.bensch.course.model.WeekDay;
 import de.bensch.course.model.dto.StudentCourseSelectionDTO;
 import de.bensch.course.model.dto.StudentDTO;
 import de.bensch.course.model.entity.Course;
 import de.bensch.course.model.entity.Student;
 import de.bensch.course.model.entity.StudentCourseSelection;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
-@AutoConfigureMockMvc
-@SpringBootTest(classes = {TestOAuth2Config.class})
+/*
+Provide a reduced Spring configuration for the test.
+Load only the StudentMapper class and its dependencies.
+ */
+@ContextConfiguration(classes = { StudentMapperTest.TestConfig.class })
 class StudentMapperTest {
 
+    EntityLoader<Student, Long> studentLoader;
+    EntityLoader<Course, Long> courseLoader;
     @Autowired
     private StudentMapper studentMapper;
 
-    EntityLoader<Student, Long> studentLoader;
+    private static StudentCourseSelection createStudentCourseSelection() {
+        Student student = new Student();
+        student.setId(42L);
+        student.setClassName("Classname");
+        student.setFirstName("FirstName");
+        student.setLastName("LastName");
+        student.setGradeLevel("1111");
+        student.setBallotSubmitted(true);
 
-    EntityLoader<Course, Long> courseLoader;
+        Course course = new Course();
+        course.setId(43L);
+        course.setGradeLevels("1222");
+        course.setName("Course 1");
+        course.setDayOfWeek(WeekDay.Monday);
+        course.setInstructor("Instructor");
+
+        StudentCourseSelection selection;
+        selection = new StudentCourseSelection();
+        selection.setWeekDay(WeekDay.Monday);
+        selection.setPriority(1);
+        selection.setComment("Comment1");
+        course.addStudentCourseSelection(selection);
+        student.addStudentCourseSelection(selection);
+
+        selection = new StudentCourseSelection();
+        selection.setWeekDay(WeekDay.Thursday);
+        selection.setPriority(2);
+        selection.setComment("Comment2");
+
+        course.addStudentCourseSelection(selection);
+        student.addStudentCourseSelection(selection);
+        return selection;
+    }
 
     @BeforeEach
     void setuo() {
@@ -111,41 +147,6 @@ class StudentMapperTest {
 
     }
 
-    private static StudentCourseSelection createStudentCourseSelection() {
-        Student student = new Student();
-        student.setId(42L);
-        student.setClassName("Classname");
-        student.setFirstName("FirstName");
-        student.setLastName("LastName");
-        student.setGradeLevel("1111");
-        student.setBallotSubmitted(true);
-
-        Course course = new Course();
-        course.setId(43L);
-        course.setGradeLevels("1222");
-        course.setName("Course 1");
-        course.setDayOfWeek(WeekDay.Monday);
-        course.setInstructor("Instructor");
-
-        StudentCourseSelection selection;
-        selection = new StudentCourseSelection();
-        selection.setWeekDay(WeekDay.Monday);
-        selection.setPriority(1);
-        selection.setComment("Comment1");
-        course.addStudentCourseSelection(selection);
-        student.addStudentCourseSelection(selection);
-
-        selection = new StudentCourseSelection();
-        selection.setWeekDay(WeekDay.Thursday);
-        selection.setPriority(2);
-        selection.setComment("Comment2");
-
-        course.addStudentCourseSelection(selection);
-        student.addStudentCourseSelection(selection);
-        return selection;
-    }
-
-
     @Test
     void mapToStudentCourseSelection() {
         var dto = new StudentCourseSelectionDTO();
@@ -213,5 +214,9 @@ class StudentMapperTest {
 
     }
 
+    @Configuration
+    @ComponentScan(basePackageClasses = StudentMapper.class)
+    static class TestConfig {
+    }
 
 }

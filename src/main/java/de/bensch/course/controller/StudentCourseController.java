@@ -65,6 +65,7 @@ public class StudentCourseController {
     @GetMapping(STUDENT_COURSE_ASSIGNMENT + "/{id}")
     public String searchStudents(Model model, @PathVariable("id") Long id, @RequestParam(required = false, defaultValue = "all") String selectedGradeLevel) {
         String semester = (String) model.getAttribute(SEMESTER);
+        semester = Objects.requireNonNullElse(semester, "01/2024");
         Iterable<Course> monday = courseService.findBySemesterAndDayOfWeek(semester, WeekDay.Monday);
         Iterable<Course> tuesday = courseService.findBySemesterAndDayOfWeek(semester, WeekDay.Tuesday);
         Iterable<Course> wednesday = courseService.findBySemesterAndDayOfWeek(semester, WeekDay.Wednesday);
@@ -118,7 +119,7 @@ public class StudentCourseController {
         String semester = (String) model.getAttribute(SEMESTER);
         List<String> gradeLevels = studentService.findGradeLevel(semester);
 
-        Pageable pageable = Utils.createPageable(page, size);
+        Pageable pageable = PageUtils.createPageable(page, size);
 
         Page<StudentCourseSelectionView> studentCourseSelectionView;
         if (Objects.equals("all", selectedGradeLevel)) {
@@ -128,7 +129,7 @@ public class StudentCourseController {
             model.addAttribute(SELECTED_GRADE_LEVEL, selectedGradeLevel);
         }
 
-        Utils.addPaginationAttributesToModel(model, studentCourseSelectionView);
+        PageUtils.addPaginationAttributesToModel(model, studentCourseSelectionView);
 
         model.addAttribute(MODEL_STUDENT_LIST, studentCourseSelectionView);
         model.addAttribute(MODEL_GRADE_LEVELS, gradeLevels);

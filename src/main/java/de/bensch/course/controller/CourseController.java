@@ -1,11 +1,11 @@
 package de.bensch.course.controller;
 
 import static de.bensch.course.config.constants.SessionConstants.SEMESTER;
-import static de.bensch.course.controller.routing.CourseMappings.COURSE_CREATE;
-import static de.bensch.course.controller.routing.CourseMappings.COURSE_DELETE;
-import static de.bensch.course.controller.routing.CourseMappings.COURSE_EDIT;
-import static de.bensch.course.controller.routing.CourseMappings.COURSE_LIST;
-import static de.bensch.course.controller.routing.CourseMappings.redirect;
+import static de.bensch.course.controller.routing.CoursePaths.URL_COURSE_CREATE;
+import static de.bensch.course.controller.routing.CoursePaths.URL_COURSE_DELETE;
+import static de.bensch.course.controller.routing.CoursePaths.URL_COURSE_EDIT;
+import static de.bensch.course.controller.routing.CoursePaths.URL_COURSE_LIST;
+import static de.bensch.course.controller.routing.CoursePaths.redirect;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
@@ -38,14 +38,14 @@ public class CourseController {
         this.courseService = courseService;
     }
 
-    @GetMapping(value = COURSE_LIST)
-    public String courses(Model model, @RequestParam(required = false) String keyword, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "id,asc") String[] sort) {
+    @GetMapping(value = URL_COURSE_LIST)
+    public String showCourseListPage(Model model, @RequestParam(required = false) String keyword, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "id,asc") String[] sort) {
 
         String semester = (String) model.getAttribute(SEMESTER);
-
-        Pageable pageable = Utils.createPageable(page, size, sort);
-
+        semester = StringUtils.defaultIfBlank(semester, "01/2024");
+        Pageable pageable = PageUtils.createPageable(page, size, sort);
         Page<Course> coursePage;
+
         if (StringUtils.isBlank(keyword)) {
             coursePage = courseService.findBySemester(pageable, semester);
 
@@ -53,52 +53,51 @@ public class CourseController {
             coursePage = courseService.findBySemesterKeyword(pageable, semester, keyword);
             model.addAttribute(MODEL_KEYWORD, keyword);
         }
-        Utils.addPaginationAttributesToModel(model, coursePage);
+        PageUtils.addPaginationAttributesToModel(model, coursePage);
         model.addAttribute(MODEL_COURSE_LIST, coursePage.getContent());
-        return COURSE_LIST;
+        return URL_COURSE_LIST;
     }
 
-    @GetMapping(COURSE_CREATE)
-    public String createCourseForm(Model model) {
+    @GetMapping(URL_COURSE_CREATE)
+    public String showCreateCourseForm(Model model) {
         model.addAttribute(MODEL_COURSE, new Course());
         model.addAttribute(MODEL_ALL_DAYS, WeekDay.values());
-        return COURSE_CREATE;
+        return URL_COURSE_CREATE;
     }
 
-    @PostMapping(COURSE_CREATE)
-    public String createCourseSubmit(Model model, @ModelAttribute Course course) {
+    @PostMapping(URL_COURSE_CREATE)
+    public String submitCreateCourseForm(Model model, @ModelAttribute Course course) {
         String result;
         if (course.getId() == null) {
-            result = redirect(COURSE_CREATE);
+            result = redirect(URL_COURSE_CREATE);
         } else {
-            result = redirect(COURSE_LIST);
+            result = redirect(URL_COURSE_LIST);
         }
         course.setSemester((String) model.getAttribute(SEMESTER));
         courseService.save(course);
         return result;
     }
 
-    @GetMapping(COURSE_EDIT)
-    public String editCourseForm(@PathVariable("id") Long id, Model model) {
+    @GetMapping(URL_COURSE_EDIT)
+    public String showEditCourseForm(@PathVariable("id") Long id, Model model) {
         Course course = courseService.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid course ID:" + id));
         model.addAttribute(MODEL_COURSE, course);
         model.addAttribute(MODEL_ALL_DAYS, WeekDay.values());
-        return COURSE_CREATE;
+        return URL_COURSE_CREATE;
     }
 
-    @PostMapping(COURSE_EDIT)
-    public String editCourseSubmit(Model model, @PathVariable("id") Long id, @ModelAttribute Course course) {
+    @PostMapping(URL_COURSE_EDIT)
+    public String submitEditCourse(Model model, @PathVariable("id") Long id, @ModelAttribute Course course) {
         course.setSemester((String) model.getAttribute(SEMESTER));
         courseService.save(course);
-        return redirect(COURSE_LIST);
+        return redirect(URL_COURSE_LIST);
     }
 
-    @GetMapping(COURSE_DELETE)
+    @GetMapping(URL_COURSE_DELETE)
     public String deleteCourse(@PathVariable("id") Long id) {
 
         courseService.delete(id);
-        return redirect(COURSE_LIST);
+        return redirect(URL_COURSE_LIST);
     }
-
 }
