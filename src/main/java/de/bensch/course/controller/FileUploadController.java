@@ -1,8 +1,8 @@
 package de.bensch.course.controller;
 
-import static de.bensch.course.controller.routing.StudentMappings.STUDENT_LIST;
-import static de.bensch.course.controller.routing.StudentMappings.STUDENT_UPLOAD_FORM;
-import static de.bensch.course.controller.routing.StudentMappings.redirect;
+import static de.bensch.course.controller.routing.StudentPaths.URL_STUDENT_LIST;
+import static de.bensch.course.controller.routing.StudentPaths.URL_STUDENT_UPLOAD_FORM;
+import static de.bensch.course.controller.routing.StudentPaths.redirect;
 
 import java.util.List;
 
@@ -32,7 +32,7 @@ public class FileUploadController {
 
     private final StudentService studentService;
 
-    @PostMapping(STUDENT_UPLOAD_FORM)
+    @PostMapping(URL_STUDENT_UPLOAD_FORM)
     public String uploadStudents(Model model, @RequestParam("file") MultipartFile file) {
         String message;
         String semester = (String) model.getAttribute(SessionConstants.SEMESTER);
@@ -45,7 +45,7 @@ public class FileUploadController {
                     message = "No data found in the Excel spreadsheet.";
                 } else {
                     studentService.saveAll(studentList);
-                    return redirect(STUDENT_LIST);
+                    return redirect(URL_STUDENT_LIST);
                 }
             }
         } catch (Exception e) {
@@ -54,7 +54,7 @@ public class FileUploadController {
 
         }
         model.addAttribute(MODEL_MESSAGE, message);
-        return STUDENT_LIST;
+        return URL_STUDENT_LIST;
     }
 
 

@@ -3,7 +3,7 @@
 <head th:replace="~{fragments/general :: styles}">
     <title th:text="#{student-list.title}">Title</title>
 </head>
-<body th:with="baseUrl=${studentMappings.STUDENT_LIST} + '?'
+<body th:with="baseUrl=${studentMappings.URL_STUDENT_LIST} + '?'
             + (${keyword != null and keyword != '' ? 'keyword=' + keyword + '&' : ''})
             + (${selectedGradeLevel != null and selectedGradeLevel != 'all' ? 'selectedGradeLevel=' + selectedGradeLevel + '&' : ''})">
 
@@ -14,7 +14,7 @@
 
 <div class="container">
     <div class="row d-flex mt-3">
-        <form class="col-6" th:action="@{${studentMappings.STUDENT_LIST}}" id="searchForm">
+        <form class="col-6" th:action="@{${studentMappings.URL_STUDENT_LIST}}" id="searchForm">
             <div class="row form-group">
                 <!-- search field -->
                 <div class="col-md-5">
@@ -43,7 +43,7 @@
                 </div>
             </div>
         </form>
-        <form class="col-6" id="uploadForm" method="post" th:action="@{${studentMappings.STUDENT_UPLOAD_FORM}}"
+        <form class="col-6" id="uploadForm" method="post" th:action="@{${studentMappings.URL_STUDENT_UPLOAD_FORM}}"
               enctype="multipart/form-data">
             <div class="form-group row">
                 <div class="col-9">
@@ -85,11 +85,17 @@
                     <td th:text="${student.gradeLevel}"></td>
                     <td th:text="${student.className}"></td>
                     <td>
-                        <a th:href="@{${studentMappings.STUDENT_EDIT}(id=${student.id})}"><i
+                        <a th:href="@{${studentMappings.URL_STUDENT_EDIT}(id=${student.id})}"><i
                                 class="fa-solid fa-pen-to-square black-link"></i></a>
                         &nbsp;
-                        <a th:href="@{${studentMappings.STUDENT_DELETE}(id=${student.id})}"
+                        <a href="#" th:attr="data-id=${student.id}"
                            class="delete-link"><i class="fa-solid fa-trash black-link"></i></a>
+
+                        <!-- hidden form for deletion -->
+                        <form th:id="'delete-form-'+${student.id}"
+                              th:action="@{${studentMappings.URL_STUDENT_DELETE}(id=${student.id})}"
+                              th:method="delete" style="display:none;">
+                        </form>
                     </td>
                 </tr>
                 </tbody>
@@ -144,6 +150,10 @@
 
     function changePageSize() {
         $("#searchForm").submit();
+    }
+    function submitDeleteForm(studentId) {
+        const form = document.getElementById(`delete-form-${studentId}`);
+        form.submit();
     }
 </script>
 </body>

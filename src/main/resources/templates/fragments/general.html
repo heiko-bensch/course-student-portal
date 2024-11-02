@@ -27,8 +27,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                             th:text="#{delete.confirmation.btn.cancel}"></button>
-                    <a id="confirmDeleteButton" class="btn btn-danger" href="#"
-                       th:text="#{delete.confirmation.btn.ok}"></a>
+                    <button type="button" id="confirmDeleteButton" class="btn btn-danger" th:text="#{delete.confirmation.btn.ok}"></button>
                 </div>
             </div>
         </div>
@@ -38,14 +37,20 @@
             var deleteLinks = document.querySelectorAll('.delete-link');
             var confirmDeleteButton = document.getElementById('confirmDeleteButton');
             var confirmationModal = new bootstrap.Modal(document.getElementById('confirmationModal'));
-
+            var deleteForm;
+            console.log(confirmDeleteButton);
             deleteLinks.forEach(function (link) {
                 link.addEventListener('click', function (event) {
                     event.preventDefault(); // Prevent the default link behavior
-                    var deleteUrl = this.getAttribute('href');
-                    confirmDeleteButton.setAttribute('href', deleteUrl);
+                    var id = this.getAttribute('data-id');
+                    deleteForm = document.getElementById(`delete-form-${id}`);
                     confirmationModal.show();
                 });
+            });
+            confirmDeleteButton.addEventListener('click', function () {
+                console.log('confirmDeleteButton clicked');
+                console.log(deleteForm);
+                deleteForm.submit();
             });
         });
 
@@ -70,11 +75,11 @@
             <li class="nav-item" th:classappend="${requestURI == courseMappings.URL_COURSE_CREATE} ? 'active'">
                 <a class="nav-link" th:href="@{${courseMappings.URL_COURSE_CREATE}}" th:text="#{nav.course-create}"></a>
             </li>
-            <li class="nav-item" th:classappend="${requestURI == studentMappings.STUDENT_LIST} ? 'active'">
-                <a class="nav-link" th:href="@{${studentMappings.STUDENT_LIST}}" th:text="#{nav.student-list}"></a>
+            <li class="nav-item" th:classappend="${requestURI == studentMappings.URL_STUDENT_LIST} ? 'active'">
+                <a class="nav-link" th:href="@{${studentMappings.URL_STUDENT_LIST}}" th:text="#{nav.student-list}"></a>
             </li>
-            <li class="nav-item" th:classappend="${requestURI == studentMappings.STUDENT_CREATE} ? 'active'">
-                <a class="nav-link" th:href="@{${studentMappings.STUDENT_CREATE}}" th:text="#{nav.student-create}"></a>
+            <li class="nav-item" th:classappend="${requestURI == studentMappings.URL_STUDENT_CREATE} ? 'active'">
+                <a class="nav-link" th:href="@{${studentMappings.URL_STUDENT_CREATE}}" th:text="#{nav.student-create}"></a>
             </li>
             <li class="nav-item" th:classappend="${requestURI == studentCourseMappings.STUDENT_COURSE_LIST} ? 'active'">
                 <a class="nav-link" th:href="@{${studentCourseMappings.STUDENT_COURSE_LIST}}"

@@ -58,8 +58,13 @@
                     <a th:href="@{${courseMappings.URL_COURSE_EDIT}(id=${course.id})}" class="black-link"><i
                             class="fa-solid fa-pen-to-square"></i></a>
                     &nbsp;
-                    <a th:href="@{${courseMappings.URL_COURSE_DELETE}(id=${course.id})}" class="delete-link black-link"><i
-                            class="fa-solid fa-trash"></i></a>
+                    <a href="#" class="delete-link black-link" th:attr="data-id=${course.id}">
+                        <i class="fa-solid fa-trash"></i></a>
+                    <!-- hidden form for deletion -->
+                    <form th:id="'delete-form-'+${course.id}"
+                          th:action="@{${courseMappings.URL_COURSE_DELETE}(id=${course.id})}"
+                          th:method="delete" style="display:none;">
+                    </form>
                 </td>
             </tr>
             </tbody>

@@ -1,11 +1,11 @@
 package de.bensch.course.controller;
 
 import static de.bensch.course.config.constants.SessionConstants.SEMESTER;
-import static de.bensch.course.controller.routing.StudentMappings.STUDENT_CREATE;
-import static de.bensch.course.controller.routing.StudentMappings.STUDENT_DELETE;
-import static de.bensch.course.controller.routing.StudentMappings.STUDENT_EDIT;
-import static de.bensch.course.controller.routing.StudentMappings.STUDENT_LIST;
-import static de.bensch.course.controller.routing.StudentMappings.redirect;
+import static de.bensch.course.controller.routing.StudentPaths.URL_STUDENT_CREATE;
+import static de.bensch.course.controller.routing.StudentPaths.URL_STUDENT_DELETE;
+import static de.bensch.course.controller.routing.StudentPaths.URL_STUDENT_EDIT;
+import static de.bensch.course.controller.routing.StudentPaths.URL_STUDENT_LIST;
+import static de.bensch.course.controller.routing.StudentPaths.redirect;
 
 import java.util.List;
 import java.util.Objects;
@@ -15,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,13 +42,13 @@ public class StudentController {
     public static final String MODEL_STUDENT = "student";
     private final StudentService studentService;
 
-    @GetMapping(STUDENT_LIST)
-    public String courses(Model model,
-                          @RequestParam(required = false) String keyword,
-                          @RequestParam(required = false, defaultValue = "all") String selectedGradeLevel,
-                          @RequestParam(defaultValue = "1") int page,
-                          @RequestParam(defaultValue = "10") int size,
-                          @RequestParam(defaultValue = "id,asc") String[] sort) {
+    @GetMapping(URL_STUDENT_LIST)
+    public String showStudentListPage(Model model,
+                                      @RequestParam(required = false) String keyword,
+                                      @RequestParam(required = false, defaultValue = "all") String selectedGradeLevel,
+                                      @RequestParam(defaultValue = "1") int page,
+                                      @RequestParam(defaultValue = "10") int size,
+                                      @RequestParam(defaultValue = "id,asc") String[] sort) {
         String semester = (String) model.getAttribute(SessionConstants.SEMESTER);
 
         Pageable pageable = PageUtils.createPageable(page, size, sort);
@@ -61,9 +62,48 @@ public class StudentController {
         }
         PageUtils.addPaginationAttributesToModel(model, studentPage);
         addAttributesToModel(model, studentPage.getContent(), selectedGradeLevel, gradeLevels);
-        return STUDENT_LIST;
+        return URL_STUDENT_LIST;
     }
 
+    @GetMapping(URL_STUDENT_CREATE)
+    public String showCreateStudentForm(Model model) {
+        model.addAttribute(MODEL_STUDENT, new Student());
+        return URL_STUDENT_CREATE;
+    }
+
+    @PostMapping(URL_STUDENT_CREATE)
+    public String showCreateStudentForm(Model model, @ModelAttribute Student student) {
+        String result;
+        if (student.getId() == null) {
+            result = redirect(URL_STUDENT_CREATE);
+        } else {
+            result = redirect(URL_STUDENT_LIST);
+        }
+        student.setSemester((String) model.getAttribute(SEMESTER));
+        studentService.save(student);
+        return result;
+    }
+
+    @GetMapping(URL_STUDENT_EDIT)
+    public String showEditStudentForm(@PathVariable("id") Long id, Model model) {
+        Student student = studentService.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid student ID:" + id));
+        model.addAttribute(MODEL_STUDENT, student);
+        return URL_STUDENT_CREATE;
+    }
+
+    @PostMapping(URL_STUDENT_EDIT)
+    public String editStudentSubmit(Model model, @PathVariable("id") Long id, @ModelAttribute Student student) {
+        student.setSemester((String) model.getAttribute(SEMESTER));
+        studentService.save(student);
+        return redirect(URL_STUDENT_LIST);
+    }
+
+    @DeleteMapping(URL_STUDENT_DELETE)
+    public String deleteStudent(@PathVariable("id") Long id) {
+        studentService.delete(id);
+        return redirect(URL_STUDENT_LIST);
+    }
 
     private Page<Student> getStudentsByGradeLevel(String selectedGradeLevel, Pageable pageable, String semester) {
         if (Objects.equals("all", selectedGradeLevel)) {
@@ -85,45 +125,5 @@ public class StudentController {
         model.addAttribute(MODEL_STUDENT_LIST1, studentPage);
         model.addAttribute(MODEL_SELECTED_GRADE_LEVEL, selectedGradeLevel);
         model.addAttribute(MODEL_GRADE_LEVELS, gradeLevels);
-    }
-
-    @GetMapping(STUDENT_CREATE)
-    public String createStudent(Model model) {
-        model.addAttribute(MODEL_STUDENT, new Student());
-        return STUDENT_CREATE;
-    }
-
-    @PostMapping(STUDENT_CREATE)
-    public String createStudentSubmit(Model model, @ModelAttribute Student student) {
-        String result;
-        if (student.getId() == null) {
-            result = redirect(STUDENT_CREATE);
-        } else {
-            result = redirect(STUDENT_LIST);
-        }
-        student.setSemester((String) model.getAttribute(SEMESTER));
-        studentService.save(student);
-        return result;
-    }
-
-    @GetMapping(STUDENT_EDIT)
-    public String editStudentForm(@PathVariable("id") Long id, Model model) {
-        Student student = studentService.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid student ID:" + id));
-        model.addAttribute(MODEL_STUDENT, student);
-        return STUDENT_CREATE;
-    }
-
-    @PostMapping(STUDENT_EDIT)
-    public String editStudentSubmit(Model model,@PathVariable("id") Long id, @ModelAttribute Student student) {
-        student.setSemester((String) model.getAttribute(SEMESTER));
-        studentService.save(student);
-        return redirect(STUDENT_LIST);
-    }
-
-    @GetMapping(STUDENT_DELETE)
-    public String deleteStudent(@PathVariable("id") Long id) {
-        studentService.delete(id);
-        return redirect(STUDENT_LIST);
     }
 }

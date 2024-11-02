@@ -6,6 +6,7 @@ import static de.bensch.course.controller.routing.CoursePaths.URL_COURSE_LIST;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
@@ -160,7 +161,7 @@ class CourseControllerTest {
 
     @Test
     void deleteCourse() throws Exception {
-        mockMvc.perform(get("/course-delete/1"))
+        mockMvc.perform(delete("/course-delete/1"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl(URL_COURSE_LIST));
 
