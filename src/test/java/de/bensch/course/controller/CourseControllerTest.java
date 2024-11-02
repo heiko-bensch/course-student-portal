@@ -26,7 +26,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.web.servlet.MockMvc;
 
-import de.bensch.course.TestSecurityConfig;
 import de.bensch.course.model.entity.Course;
 import de.bensch.course.service.CourseService;
 import de.bensch.course.service.SemesterService;
