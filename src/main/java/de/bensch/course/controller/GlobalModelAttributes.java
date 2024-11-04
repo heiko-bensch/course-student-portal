@@ -2,7 +2,7 @@ package de.bensch.course.controller;
 
 import de.bensch.course.controller.routing.CoursePaths;
 import de.bensch.course.controller.routing.StudentPaths;
-import de.bensch.course.controller.routing.StudentCourseMappings;
+import de.bensch.course.controller.routing.StudentCoursePaths;
 import de.bensch.course.service.SemesterService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
@@ -25,7 +25,7 @@ public class GlobalModelAttributes {
     @ModelAttribute
     public void addAttributes(Model model, HttpServletRequest request) {
         model.addAttribute(MODEL_REQUEST_URI, request.getRequestURI());
-        model.addAttribute(MODEL_STUDENT_COURSE_MAPPINGS, new StudentCourseMappings());
+        model.addAttribute(MODEL_STUDENT_COURSE_MAPPINGS, new StudentCoursePaths());
         model.addAttribute(MODEL_COURSE_MAPPINGS, new CoursePaths());
         model.addAttribute(MODEL_STUDENT_MAPPINGS, new StudentPaths());
         model.addAttribute(MODEL_SEMESTER_LIST, semesterService.findAllSemester());
