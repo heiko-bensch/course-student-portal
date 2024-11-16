@@ -13,6 +13,8 @@ import org.springframework.context.annotation.Import;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.nio.charset.StandardCharsets;
+
 import static de.bensch.course.controller.FileUploadController.MODEL_MESSAGE;
 import static de.bensch.course.controller.routing.StudentPaths.URL_STUDENT_UPLOAD_FORM;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
@@ -42,7 +44,7 @@ class FileUploadControllerTest {
                 "file",
                 "students.xlsx",
                 "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                "Sample Excel content".getBytes()  // Simuliere Dateiinhalte
+                "Sample Excel content".getBytes(StandardCharsets.UTF_8)  // Simuliere Dateiinhalte
         );
 
         mockMvc.perform(multipart(URL_STUDENT_UPLOAD_FORM)
@@ -75,7 +77,7 @@ class FileUploadControllerTest {
                 "file",
                 "students.xlsx",
                 "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                "Faulty content".getBytes()
+                "Faulty content".getBytes(StandardCharsets.UTF_8)
         );
 
         // Simuliere einen Fehler im Service (du kannst das Mocken mit Mockito verwenden, wenn nötig)
