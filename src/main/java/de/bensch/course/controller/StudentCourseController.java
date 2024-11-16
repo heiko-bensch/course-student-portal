@@ -1,31 +1,5 @@
 package de.bensch.course.controller;
 
-import static de.bensch.course.config.constants.SessionConstants.SEMESTER;
-import static de.bensch.course.controller.routing.StudentCoursePaths.URL_STUDENT_COURSE_ASSIGNMENT;
-import static de.bensch.course.controller.routing.StudentCoursePaths.URL_STUDENT_COURSE_EXPORT;
-import static de.bensch.course.controller.routing.StudentCoursePaths.URL_STUDENT_COURSE_LIST;
-
-import java.io.IOException;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import de.bensch.course.model.WeekDay;
 import de.bensch.course.model.dto.StudentCourseSelectionDTO;
 import de.bensch.course.model.entity.Course;
@@ -37,6 +11,24 @@ import de.bensch.course.service.StudentCourseSelectionService;
 import de.bensch.course.service.StudentService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.io.IOException;
+import java.util.Collection;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+
+import static de.bensch.course.config.constants.SessionConstants.SEMESTER;
+import static de.bensch.course.controller.routing.StudentCoursePaths.*;
 
 @Controller
 @AllArgsConstructor
@@ -46,13 +38,21 @@ import lombok.extern.slf4j.Slf4j;
 public class StudentCourseController {
 
     public static final String SELECTED_GRADE_LEVEL = "selectedGradeLevel";
+
     public static final String MODEL_STUDENT_COURSE = "studentCourse";
+
     public static final String MODEL_MONDAY_COURSE_LIST = "mondayCourseList";
+
     public static final String MODEL_TUESDAY_COURSE_LIST = "tuesdayCourseList";
+
     public static final String MODEL_WEDNESDAY_COURSE_LIST = "wednesdayCourseList";
+
     public static final String MODEL_THURSDAY_COURSE_LIST = "thursdayCourseList";
+
     public static final String MODEL_STUDENT_LIST = "studentList";
+
     public static final String MODEL_GRADE_LEVELS = "gradeLevels";
+
     private final StudentService studentService;
 
     private final StudentCourseSelectionService studentCourseSelectionService;
@@ -89,7 +89,8 @@ public class StudentCourseController {
     }
 
     @GetMapping(URL_STUDENT_COURSE_ASSIGNMENT + "/{id}")
-    public String showStudentCourseAssignmentForm(Model model, @PathVariable("id") Long id, @RequestParam(required = false, defaultValue = "all") String selectedGradeLevel) {
+    public String showStudentCourseAssignmentForm(Model model, @PathVariable("id") Long id,
+                                                  @RequestParam(required = false, defaultValue = "all") String selectedGradeLevel) {
         String semester = (String) model.getAttribute(SEMESTER);
         semester = Objects.requireNonNullElse(semester, "01/2024");
         Iterable<Course> monday = courseService.findBySemesterAndDayOfWeek(semester, WeekDay.Monday);
@@ -133,7 +134,6 @@ public class StudentCourseController {
         }
 
     }
-
 
 
     @GetMapping(URL_STUDENT_COURSE_EXPORT)
