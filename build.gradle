@@ -1,7 +1,9 @@
+import org.springframework.boot.gradle.plugin.SpringBootPlugin
+
 plugins {
     id 'java'
-    alias(libs.plugins.spring.boot.gradle.plugin )
-    alias(libs.plugins.nebula.release )
+    alias(libs.plugins.spring.boot.gradle.plugin)
+    alias(libs.plugins.nebula.release)
     alias(libs.plugins.jib)
     alias(libs.plugins.spotbugs)
     alias(libs.plugins.gradle.git.properties)
@@ -23,7 +25,6 @@ springBoot {
 }
 
 
-
 configurations {
     compileOnly {
         extendsFrom annotationProcessor
@@ -35,9 +36,8 @@ repositories {
 }
 
 
-
 dependencies {
-    implementation platform(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES)
+    implementation platform(SpringBootPlugin.BOM_COORDINATES)
     implementation libs.spring.boot.starter.data.jpa
     implementation libs.spring.boot.starter.thymeleaf
     implementation libs.spring.boot.starter.web
