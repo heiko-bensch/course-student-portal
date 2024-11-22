@@ -13,7 +13,10 @@ spring:
     locations:
         - classpath:db/migration
         - classpath:db/data
-
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
   security:
     oauth2:
       client:

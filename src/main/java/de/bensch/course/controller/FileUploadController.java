@@ -1,12 +1,11 @@
 package de.bensch.course.controller;
 
-import de.bensch.course.config.constants.SessionConstants;
-import de.bensch.course.model.entity.Student;
-import de.bensch.course.service.ExcelImportException;
-import de.bensch.course.service.ExcelImportService;
-import de.bensch.course.service.StudentService;
-import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import static de.bensch.course.controller.routing.StudentPaths.URL_STUDENT_LIST;
+import static de.bensch.course.controller.routing.StudentPaths.URL_STUDENT_UPLOAD_FORM;
+import static de.bensch.course.controller.routing.StudentPaths.redirect;
+
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,24 +13,28 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
+import de.bensch.course.config.constants.SessionConstants;
+import de.bensch.course.model.entity.Student;
+import de.bensch.course.service.ExcelImportService;
+import de.bensch.course.service.StudentService;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
-import static de.bensch.course.controller.UrlMappings.STUDENT_LIST;
-import static de.bensch.course.controller.UrlMappings.STUDENT_UPLOAD_FORM;
-
+@Slf4j
 @Controller
 @AllArgsConstructor
-@Slf4j
+@SuppressWarnings("squid:S3753")
 @SessionAttributes(SessionConstants.SEMESTER)
 public class FileUploadController {
 
+    public static final String MODEL_MESSAGE = "message";
     private final ExcelImportService excelImportService;
 
     private final StudentService studentService;
 
-    @PostMapping(STUDENT_UPLOAD_FORM)
-    public String uploadStudents(Model model, @RequestParam("file") MultipartFile file) throws ExcelImportException {
-        String message = "";
+    @PostMapping(URL_STUDENT_UPLOAD_FORM)
+    public String uploadStudents(Model model, @RequestParam("file") MultipartFile file) {
+        String message;
         String semester = (String) model.getAttribute(SessionConstants.SEMESTER);
         try {
             if (file.isEmpty()) {
@@ -42,7 +45,7 @@ public class FileUploadController {
                     message = "No data found in the Excel spreadsheet.";
                 } else {
                     studentService.saveAll(studentList);
-                    return "redirect:" + STUDENT_LIST;
+                    return redirect(URL_STUDENT_LIST);
                 }
             }
         } catch (Exception e) {
@@ -50,8 +53,8 @@ public class FileUploadController {
             message = "Could not upload the file. " + e.getMessage();
 
         }
-        model.addAttribute("message", message);
-        return STUDENT_LIST;
+        model.addAttribute(MODEL_MESSAGE, message);
+        return URL_STUDENT_LIST;
     }
 
 

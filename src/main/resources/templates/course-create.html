@@ -1,19 +1,21 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="de">
 <head>
-    <th:block th:replace="fragments/general :: styles"></th:block>
+    <th:block th:replace="~{fragments/general :: styles}"></th:block>
     <title>#{course-create.title}</title>
 </head>
 <title>#{course-create.title}</title>
 <body>
 
 <!-- Nav bar -->
-<div th:replace="fragments/general :: navbar"></div>
+<div th:replace="~{fragments/general :: navbar}"></div>
 
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-lg-6">
-            <form th:action="@{${course.id == null ? urlMappings.COURSE_CREATE : urlMappings.getCourseEditUrl(course.id)}}"
+            <form th:action="@{${course.id == null ?
+            courseMappings.URL_COURSE_CREATE :
+            courseMappings.getCourseEditUrl(course.id)}}"
                   th:object="${course}"
                   method="post" class="p-4 border rounded">
                 <div class="mb-6 pt-3">
@@ -47,7 +49,7 @@
                 </div>
                 <div class="row mt-3">
                     <div class="col-6 d-flex justify-content-start">
-                        <a th:href="@{${urlMappings.COURSE_LIST}}" class="btn btn-dark"
+                        <a th:href="@{${courseMappings.URL_COURSE_LIST}}" class="btn btn-dark"
                            th:text="#{course-modify.link.back}"></a>
                     </div>
                     <div class="col-6 d-flex justify-content-end">

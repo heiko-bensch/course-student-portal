@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="de">
 <head>
-    <th:block th:replace="fragments/general :: styles"></th:block>
+    <th:block th:replace="~{fragments/general :: styles}"></th:block>
     <title th:text="#{student-upload-form.title}">Title</title>
 </head>
 <title th:text="#{student-create.title}">"</title>
 <body>
 
 <!-- Nav bar -->
-<div th:replace="fragments/general :: navbar"></div>
+<div th:replace="~{fragments/general :: navbar}"></div>
 
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-lg-6">
-            <form th:action="@{${student.id == null ? urlMappings.STUDENT_CREATE : urlMappings.getStudentEditUrl(student.id)}}"
+            <form th:action="@{${student.id == null ? studentMappings.URL_STUDENT_CREATE : studentMappings.getStudentEditUrl(student.id)}}"
                   th:object="${student}"
                   method="post" class="p-4 border rounded">
                 <div class="mb-6 pt-3">
@@ -42,7 +42,7 @@
                 </div>
                 <div class="row pt-5">
                     <div class="col-6 d-flex justify-content-start">
-                        <a th:href="@{${urlMappings.STUDENT_LIST}}" class="btn btn-dark"
+                        <a th:href="@{${studentMappings.URL_STUDENT_LIST}}" class="btn btn-dark"
                            th:text="#{student-modify.link.back}"></a>
                     </div>
                     <div class="col-6 d-flex justify-content-end">
