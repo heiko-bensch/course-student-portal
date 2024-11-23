@@ -67,4 +67,4 @@ jobs:
 
       - name: Publish Sonar Results
         if: github.ref == 'refs/heads/master'
-        run: ./gradlew sonar --build-cache sonar -Dsonar.projectKey=${{ github.repository.name }} -Dsonar.toke="${{ secrets.SONAR_TOKEN }}" -Dsoner.host.url=${{ secrets.SONAR_HOST_URL }} --stacktrace
+        run: ./gradlew sonar --build-cache sonar -Dsonar.projectKey=${{ github.repository.name }} -Dsonar.toke="${{ secrets.SONAR_TOKEN }}" -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} --stacktrace
