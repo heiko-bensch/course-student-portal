@@ -36,7 +36,7 @@ jobs:
           add-job-summary: 'always'
 
       - name: Build with Gradle Wrapper
-        run: ./gradlew check --build-cache sonar
+        run: ./gradlew check --build-cache --stacktrace
 
       - uses: lcollins/spotbugs-github-action@v3.1.0
         if: always()
@@ -67,4 +67,4 @@ jobs:
 
       - name: Publish Sonar Results
         if: github.ref == 'refs/heads/master'
-        run: ./gradlew sonar --build-cache sonar -Dsonar.projectKey=${{ github.repository.name }} -Dsonar.toke="${{ secrets.SONAR_TOKEN }}" -Dsoner.host.url=${{ secrets.SONAR_HOST_URL }}
+        run: ./gradlew sonar --build-cache sonar -Dsonar.projectKey=${{ github.repository.name }} -Dsonar.toke="${{ secrets.SONAR_TOKEN }}" -Dsoner.host.url=${{ secrets.SONAR_HOST_URL }} --stacktrace
