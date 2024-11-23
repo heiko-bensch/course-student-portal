@@ -36,13 +36,13 @@ jobs:
           add-job-summary: 'always'
 
       - name: Build with Gradle Wrapper
-        run: ./gradlew check --build-cache
+        run: ./gradlew check --build-cache sonar
 
       - uses: lcollins/spotbugs-github-action@v3.1.0
         if: always()
         with:
           path: 'build/reports/spotbugs/spotbugs.xml'
-          
+
       - name: Add coverage to PR
         id: jacoco
         uses: madrapps/jacoco-report@v1.7.1
@@ -64,3 +64,7 @@ jobs:
           files: |
             build/test-results/**/*.xml
 
+
+      - name: Publish Sonar Results
+        if: github.ref == 'refs/heads/master'
+        run: ./gradlew sonar --build-cache sonar -Dsonar.projectKey=${{ github.repository.name }} -Dsonar.toke="${{ secrets.SONAR_TOKEN }}" -Dsoner.host.url=${{ secrets.SONAR_HOST_URL }}
