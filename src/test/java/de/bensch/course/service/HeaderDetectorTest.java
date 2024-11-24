@@ -38,30 +38,30 @@ class HeaderDetectorTest {
 
             row.createCell(3, CellType.NUMERIC).setCellValue(12);
             row.createCell(2, CellType.STRING).setBlank();
-            row.createCell(4, CellType.STRING).setCellValue(Colum.FirstName.getColumnName());
+            row.createCell(4, CellType.STRING).setCellValue(Colum.FIRST_NAME.getColumnName());
             row.createCell(5, CellType.NUMERIC).setCellValue(12);
-            row.createCell(7, CellType.STRING).setCellValue(Colum.LastName.getColumnName());
-            row.createCell(10, CellType.STRING).setCellValue(Colum.GradeLevel.getColumnName());
+            row.createCell(7, CellType.STRING).setCellValue(Colum.LAST_NAME.getColumnName());
+            row.createCell(10, CellType.STRING).setCellValue(Colum.GRADE_LEVEL.getColumnName());
 
             Optional<Header> header = headerDetector.detectHeader(sheet);
             assertThat(header).isNotEmpty();
             assertAll("header", () -> assertThat(header.get().isEmpty()).isFalse(),
                     () -> {
-                        var firstName = header.get().getIndex(Colum.FirstName);
+                        var firstName = header.get().getIndex(Colum.FIRST_NAME);
                         assertThat(firstName).isNotEmpty();
                         assertThat(firstName).contains(4);
                     },
                     () -> {
 
-                        var lastName = header.get().getIndex(Colum.LastName);
+                        var lastName = header.get().getIndex(Colum.LAST_NAME);
                         assertThat(lastName).isNotEmpty();
                         assertThat(lastName).contains(7);
                     },
                     () -> {
-                        var gradeLevel = header.get().getIndex(Colum.GradeLevel);
+                        var gradeLevel = header.get().getIndex(Colum.GRADE_LEVEL);
                         assertThat(gradeLevel).isNotEmpty();
                         assertThat(gradeLevel).contains(10);
-                        assertThat(header.get().getIndex(Colum.Class)).isEmpty();
+                        assertThat(header.get().getIndex(Colum.CLASS)).isEmpty();
                     }
             );
 

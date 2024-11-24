@@ -1,6 +1,5 @@
 package de.bensch.course.service.poi.export;
 
-import de.bensch.course.model.WeekDay;
 import de.bensch.course.model.entity.Course;
 import de.bensch.course.model.entity.StudentCourseSelection;
 import lombok.Getter;
@@ -25,8 +24,6 @@ public class POICourse {
 
     private final Course course;
 
-    private final WeekDay weekDay;
-
     /**
      * Constructs a POICourse instance with the specified course and associated student course selections.
      *
@@ -36,11 +33,7 @@ public class POICourse {
     public POICourse(Course course, List<StudentCourseSelection> courseSelections) {
         this.course = course;
         this.studentList = courseSelections;
-        if (!courseSelections.isEmpty()) {
-            this.weekDay = courseSelections.get(0).getWeekDay();
-        } else {
-            this.weekDay = WeekDay.MONDAY;
-        }
+
     }
 
     /**
@@ -102,22 +95,22 @@ public class POICourse {
     private void writeCourseEntry(POIContext context, XSSFSheet sheet, StudentCourseSelection selection,
                                   int rowIndex, int columnOffset, boolean isLastEntry) {
         CellStyle borderLeft = context.getStyleFactory()
-                .getCellStyle(isLastEntry ? EntryBorderLeftBottom : EntryBorderLeft);
-        CellStyle entry = context.getStyleFactory().getCellStyle(isLastEntry ? EntryBorderBottom : Entry);
+                .getCellStyle(isLastEntry ? ENTRY_BORDER_LEFT_BOTTOM : ENTRY_BORDER_LEFT);
+        CellStyle entry = context.getStyleFactory().getCellStyle(isLastEntry ? ENTRY_BORDER_BOTTOM : ENTRY);
         CellStyle borderRight = context.getStyleFactory()
-                .getCellStyle(isLastEntry ? EntryBorderRightBottom : EntryBorderRight);
+                .getCellStyle(isLastEntry ? ENTRY_BORDER_RIGHT_BOTTOM : ENTRY_BORDER_RIGHT);
 
         // Writing the data into the corresponding cells
-        POIUtil.addCell(sheet, rowIndex, StudentColumn.Prio.getColumnIndex(columnOffset), borderLeft, selection.getPriority() + ". Wahl");
-        POIUtil.addCell(sheet, rowIndex, StudentColumn.LastName.getColumnIndex(columnOffset), entry, selection.getStudent()
+        POIUtil.addCell(sheet, rowIndex, StudentColumn.PRIO.getColumnIndex(columnOffset), borderLeft, selection.getPriority() + ". Wahl");
+        POIUtil.addCell(sheet, rowIndex, StudentColumn.LAST_NAME.getColumnIndex(columnOffset), entry, selection.getStudent()
                 .getLastName());
-        POIUtil.addCell(sheet, rowIndex, StudentColumn.FirstName.getColumnIndex(columnOffset), entry, selection.getStudent()
+        POIUtil.addCell(sheet, rowIndex, StudentColumn.FIRST_NAME.getColumnIndex(columnOffset), entry, selection.getStudent()
                 .getFirstName());
-        POIUtil.addCell(sheet, rowIndex, StudentColumn.GradeLevel.getColumnIndex(columnOffset), entry, selection.getStudent()
+        POIUtil.addCell(sheet, rowIndex, StudentColumn.GRADE_LEVEL.getColumnIndex(columnOffset), entry, selection.getStudent()
                 .getGradeLevel());
-        POIUtil.addCell(sheet, rowIndex, StudentColumn.ClassName.getColumnIndex(columnOffset), entry, selection.getStudent()
+        POIUtil.addCell(sheet, rowIndex, StudentColumn.CLASS_NAME.getColumnIndex(columnOffset), entry, selection.getStudent()
                 .getClassName());
-        POIUtil.addCell(sheet, rowIndex, StudentColumn.Comment.getColumnIndex(columnOffset), borderRight, selection.getComment());
+        POIUtil.addCell(sheet, rowIndex, StudentColumn.COMMENT.getColumnIndex(columnOffset), borderRight, selection.getComment());
     }
 
     /**
@@ -143,7 +136,7 @@ public class POICourse {
     private int writeCourseHeader(POIContext context, XSSFSheet sheet, int rowIndex, int columnIndex) {
         var currentRowIndex = rowIndex;
         CellStyle cellStyle = context.getWorkbook().createCellStyle();
-        cellStyle.cloneStyleFrom(context.getStyleFactory().getCellStyle(CourseHeader));
+        cellStyle.cloneStyleFrom(context.getStyleFactory().getCellStyle(COURSE_HEADER));
 
         IndexedColors color = POIUtil.getColorForWeekday(course.getDayOfWeek());
         cellStyle.setFillForegroundColor(color.getIndex());
@@ -179,12 +172,12 @@ public class POICourse {
      */
     @Getter
     enum StudentColumn {
-        Prio(0, 7),
-        LastName(1, 20),
-        FirstName(2, 20),
-        GradeLevel(3, 4),
-        ClassName(4, 7),
-        Comment(5, 20);
+        PRIO(0, 7),
+        LAST_NAME(1, 20),
+        FIRST_NAME(2, 20),
+        GRADE_LEVEL(3, 4),
+        CLASS_NAME(4, 7),
+        COMMENT(5, 20);
 
         private final int columnIndex;
 
