@@ -49,18 +49,18 @@ class HeaderDetectorTest {
                     () -> {
                         var firstName = header.get().getIndex(Colum.FirstName);
                         assertThat(firstName).isNotEmpty();
-                        assertThat(firstName.get()).isEqualTo(4);
+                        assertThat(firstName).contains(4);
                     },
                     () -> {
 
                         var lastName = header.get().getIndex(Colum.LastName);
                         assertThat(lastName).isNotEmpty();
-                        assertThat(lastName.get()).isEqualTo(7);
+                        assertThat(lastName).contains(7);
                     },
                     () -> {
                         var gradeLevel = header.get().getIndex(Colum.GradeLevel);
                         assertThat(gradeLevel).isNotEmpty();
-                        assertThat(gradeLevel.get()).isEqualTo(10);
+                        assertThat(gradeLevel).contains(10);
                         assertThat(header.get().getIndex(Colum.Class)).isEmpty();
                     }
             );

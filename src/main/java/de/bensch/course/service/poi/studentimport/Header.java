@@ -1,6 +1,6 @@
 package de.bensch.course.service.poi.studentimport;
 
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -27,7 +27,7 @@ public class Header {
      */
     public Header(int rowNum) {
         this.rowNum = rowNum;
-        this.columns = new HashMap<>();
+        this.columns = new EnumMap<>(Colum.class);
     }
 
     /**
