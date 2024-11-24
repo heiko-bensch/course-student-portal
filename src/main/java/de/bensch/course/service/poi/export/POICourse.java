@@ -39,7 +39,7 @@ public class POICourse {
         if (!courseSelections.isEmpty()) {
             this.weekDay = courseSelections.get(0).getWeekDay();
         } else {
-            this.weekDay = WeekDay.Monday;
+            this.weekDay = WeekDay.MONDAY;
         }
     }
 

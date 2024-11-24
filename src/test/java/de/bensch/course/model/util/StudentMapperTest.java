@@ -1,10 +1,11 @@
 package de.bensch.course.model.util;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.ArrayList;
-import java.util.List;
-
+import de.bensch.course.model.WeekDay;
+import de.bensch.course.model.dto.StudentCourseSelectionDTO;
+import de.bensch.course.model.dto.StudentDTO;
+import de.bensch.course.model.entity.Course;
+import de.bensch.course.model.entity.Student;
+import de.bensch.course.model.entity.StudentCourseSelection;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,23 +15,23 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import de.bensch.course.model.WeekDay;
-import de.bensch.course.model.dto.StudentCourseSelectionDTO;
-import de.bensch.course.model.dto.StudentDTO;
-import de.bensch.course.model.entity.Course;
-import de.bensch.course.model.entity.Student;
-import de.bensch.course.model.entity.StudentCourseSelection;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
 /*
 Provide a reduced Spring configuration for the test.
 Load only the StudentMapper class and its dependencies.
  */
-@ContextConfiguration(classes = { StudentMapperTest.TestConfig.class })
+@ContextConfiguration(classes = {StudentMapperTest.TestConfig.class})
 class StudentMapperTest {
 
     EntityLoader<Student, Long> studentLoader;
+
     EntityLoader<Course, Long> courseLoader;
+
     @Autowired
     private StudentMapper studentMapper;
 
@@ -47,19 +48,19 @@ class StudentMapperTest {
         course.setId(43L);
         course.setGradeLevels("1222");
         course.setName("Course 1");
-        course.setDayOfWeek(WeekDay.Monday);
+        course.setDayOfWeek(WeekDay.MONDAY);
         course.setInstructor("Instructor");
 
         StudentCourseSelection selection;
         selection = new StudentCourseSelection();
-        selection.setWeekDay(WeekDay.Monday);
+        selection.setWeekDay(WeekDay.MONDAY);
         selection.setPriority(1);
         selection.setComment("Comment1");
         course.addStudentCourseSelection(selection);
         student.addStudentCourseSelection(selection);
 
         selection = new StudentCourseSelection();
-        selection.setWeekDay(WeekDay.Thursday);
+        selection.setWeekDay(WeekDay.THURSDAY);
         selection.setPriority(2);
         selection.setComment("Comment2");
 
@@ -175,14 +176,14 @@ class StudentMapperTest {
 
 
         List<StudentCourseSelection> expectedResult = new ArrayList<>();
-        expectedResult.add(createStudentCourseSelection(111L, 34L, 112L, WeekDay.Monday, 1, "comment113", "1/2024"));
-        expectedResult.add(createStudentCourseSelection(null, 34L, 123L, WeekDay.Monday, 2, null, "1/2024"));
+        expectedResult.add(createStudentCourseSelection(111L, 34L, 112L, WeekDay.MONDAY, 1, "comment113", "1/2024"));
+        expectedResult.add(createStudentCourseSelection(null, 34L, 123L, WeekDay.MONDAY, 2, null, "1/2024"));
 
-        expectedResult.add(createStudentCourseSelection(231L, 34L, null, WeekDay.Tuesday, 3, null, null));
+        expectedResult.add(createStudentCourseSelection(231L, 34L, null, WeekDay.TUESDAY, 3, null, null));
 
-        expectedResult.add(createStudentCourseSelection(311L, 34L, null, WeekDay.Wednesday, 1, "comment312", null));
+        expectedResult.add(createStudentCourseSelection(311L, 34L, null, WeekDay.WEDNESDAY, 1, "comment312", null));
 
-        expectedResult.add(createStudentCourseSelection(321L, 34L, null, WeekDay.Wednesday, 2, null, null));
+        expectedResult.add(createStudentCourseSelection(321L, 34L, null, WeekDay.WEDNESDAY, 2, null, null));
 
 
         assertThat(entityList).containsExactlyInAnyOrderElementsOf(expectedResult);

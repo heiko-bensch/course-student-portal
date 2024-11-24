@@ -37,7 +37,7 @@ class StudentCourseSelectionRepositoryTest {
         var courseSelection = new StudentCourseSelection();
         courseSelection.setPriority(1);
         courseSelection.setComment("Comment");
-        courseSelection.setWeekDay(WeekDay.Thursday);
+        courseSelection.setWeekDay(WeekDay.THURSDAY);
         courseSelection.setSemester("1/2024");
 
         course.get().addStudentCourseSelection(courseSelection);
@@ -52,21 +52,5 @@ class StudentCourseSelectionRepositoryTest {
             assertThat(courseSelection.getStudent()).isNotNull();
         }
     }
-
-    @Test
-    void testFindSummary() {
-//        List<StudentCourseSelectionView> all = courseSelectionRepository.findAllByStudentCourseCountByDayOfWeek();
-//        System.out.println("------" + all.size());
-//        Optional<StudentCourseSelectionView> first = all.stream().filter(s -> s.getId() == 1L).findFirst();
-//        if (first.isPresent()) {
-//            System.out.println(first.get().getCourseCountMonday());
-//            System.out.println(first.get().getCourseCountTuesday());
-//            System.out.println(first.get().getCourseCountWednesday());
-//            System.out.println(first.get().getCourseCountThursday());
-//            System.out.println(first.get().getLastName());
-//        }
-
-    }
-
 
 }

@@ -147,7 +147,7 @@ class CourseServiceTest {
     void testFindBySemesterAndDayOfWeek() {
         // Arrange
         String semester = "2024";
-        WeekDay weekDay = WeekDay.Monday;
+        WeekDay weekDay = WeekDay.MONDAY;
         List<Course> courses = List.of(new Course(), new Course());
 
         when(courseRepository.findBySemesterAndDayOfWeek(semester, weekDay)).thenReturn(courses);

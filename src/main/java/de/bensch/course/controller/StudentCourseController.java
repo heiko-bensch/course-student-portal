@@ -93,10 +93,10 @@ public class StudentCourseController {
                                                   @RequestParam(required = false, defaultValue = "all") String selectedGradeLevel) {
         String semester = (String) model.getAttribute(SEMESTER);
         semester = Objects.requireNonNullElse(semester, "01/2024");
-        Iterable<Course> monday = courseService.findBySemesterAndDayOfWeek(semester, WeekDay.Monday);
-        Iterable<Course> tuesday = courseService.findBySemesterAndDayOfWeek(semester, WeekDay.Tuesday);
-        Iterable<Course> wednesday = courseService.findBySemesterAndDayOfWeek(semester, WeekDay.Wednesday);
-        Iterable<Course> thursday = courseService.findBySemesterAndDayOfWeek(semester, WeekDay.Thursday);
+        Iterable<Course> monday = courseService.findBySemesterAndDayOfWeek(semester, WeekDay.MONDAY);
+        Iterable<Course> tuesday = courseService.findBySemesterAndDayOfWeek(semester, WeekDay.TUESDAY);
+        Iterable<Course> wednesday = courseService.findBySemesterAndDayOfWeek(semester, WeekDay.WEDNESDAY);
+        Iterable<Course> thursday = courseService.findBySemesterAndDayOfWeek(semester, WeekDay.THURSDAY);
 
         Optional<StudentCourseSelectionDTO> courseSelection = studentCourseSelectionService.findByStudentId(id);
 
