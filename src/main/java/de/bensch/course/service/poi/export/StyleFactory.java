@@ -6,7 +6,7 @@ import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -18,7 +18,7 @@ public class StyleFactory {
 
     private final XSSFWorkbook workbook;
 
-    private final Map<StyleEnum, CellStyle> styles = new HashMap<>();
+    private final Map<StyleEnum, CellStyle> styles = new EnumMap<>(StyleEnum.class);
 
     /**
      * Constructs a StyleFactory with the specified workbook.
@@ -79,9 +79,9 @@ public class StyleFactory {
         /**
          * Style for the header of a sheet.
          */
-        SheetHeader(workbook -> {
-            Font font = createFont(workbook, true, (short) 20, Font.U_SINGLE);
-            CellStyle style = workbook.createCellStyle();
+        SheetHeader(wb -> {
+            Font font = createFont(wb, true, (short) 20, Font.U_SINGLE);
+            CellStyle style = wb.createCellStyle();
             style.setFont(font);
             return style;
         }),
@@ -89,8 +89,8 @@ public class StyleFactory {
         /**
          * Style for regular entry cells.
          */
-        Entry(workbook -> {
-            CellStyle style = workbook.createCellStyle();
+        Entry(wb -> {
+            CellStyle style = wb.createCellStyle();
             style.setBorderBottom(BorderStyle.THIN);
             return style;
         }),
@@ -98,8 +98,8 @@ public class StyleFactory {
         /**
          * Style for entry cells with a medium bottom border.
          */
-        EntryBorderBottom(workbook -> {
-            CellStyle style = workbook.createCellStyle();
+        EntryBorderBottom(wb -> {
+            CellStyle style = wb.createCellStyle();
             style.setBorderBottom(BorderStyle.MEDIUM);
             return style;
         }),
@@ -107,13 +107,13 @@ public class StyleFactory {
         /**
          * Style for entry cells with medium right and thin bottom borders.
          */
-        EntryBorderRight(workbook -> createBorderStyle(workbook, BorderStyle.MEDIUM, BorderStyle.THIN)),
+        EntryBorderRight(wb -> createBorderStyle(wb, BorderStyle.MEDIUM, BorderStyle.THIN)),
 
         /**
          * Style for entry cells with medium left and thin borders.
          */
-        EntryBorderLeft(workbook -> {
-            CellStyle style = createBorderStyle(workbook, BorderStyle.THIN, BorderStyle.THIN);
+        EntryBorderLeft(wb -> {
+            CellStyle style = createBorderStyle(wb, BorderStyle.THIN, BorderStyle.THIN);
             style.setBorderLeft(BorderStyle.MEDIUM);
             return style;
         }),
@@ -121,8 +121,8 @@ public class StyleFactory {
         /**
          * Style for entry cells with medium left and bottom borders.
          */
-        EntryBorderLeftBottom(workbook -> {
-            CellStyle style = createBorderStyle(workbook, BorderStyle.THIN, BorderStyle.THIN);
+        EntryBorderLeftBottom(wb -> {
+            CellStyle style = createBorderStyle(wb, BorderStyle.THIN, BorderStyle.THIN);
             style.setBorderLeft(BorderStyle.MEDIUM);
             style.setBorderBottom(BorderStyle.MEDIUM);
             return style;
@@ -131,8 +131,8 @@ public class StyleFactory {
         /**
          * Style for entry cells with medium right and bottom borders.
          */
-        EntryBorderRightBottom(workbook -> {
-            CellStyle style = createBorderStyle(workbook, BorderStyle.THIN, BorderStyle.THIN);
+        EntryBorderRightBottom(wb -> {
+            CellStyle style = createBorderStyle(wb, BorderStyle.THIN, BorderStyle.THIN);
             style.setBorderRight(BorderStyle.MEDIUM);
             style.setBorderBottom(BorderStyle.MEDIUM);
             return style;
@@ -141,9 +141,9 @@ public class StyleFactory {
         /**
          * Style for course headers with light green background and centered text.
          */
-        CourseHeader(workbook -> {
-            Font font = createFont(workbook, true, (short) 12, Font.U_NONE);
-            CellStyle style = workbook.createCellStyle();
+        CourseHeader(wb -> {
+            Font font = createFont(wb, true, (short) 12, Font.U_NONE);
+            CellStyle style = wb.createCellStyle();
             style.setFont(font);
             style.setAlignment(HorizontalAlignment.CENTER);
             return style;

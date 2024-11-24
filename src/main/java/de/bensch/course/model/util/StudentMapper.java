@@ -40,10 +40,10 @@ public interface StudentMapper {
         for (StudentCourseSelection courseSelection : student.getCourseSelections()) {
             // Manuelles Mapping für verschachtelte Felder
             StudentCourseWeekdayDTO weekdayDTO = switch (courseSelection.getWeekDay()) {
-                case Monday -> courseSelectionDTO.getCourseSelectionMonday();
-                case Tuesday -> courseSelectionDTO.getCourseSelectionTuesday();
-                case Wednesday -> courseSelectionDTO.getCourseSelectionWednesday();
-                case Thursday -> courseSelectionDTO.getCourseSelectionThursday();
+                case MONDAY -> courseSelectionDTO.getCourseSelectionMonday();
+                case TUESDAY -> courseSelectionDTO.getCourseSelectionTuesday();
+                case WEDNESDAY -> courseSelectionDTO.getCourseSelectionWednesday();
+                case THURSDAY -> courseSelectionDTO.getCourseSelectionThursday();
             };
 
             var prioDTO = switch (courseSelection.getPriority()) {
@@ -92,16 +92,16 @@ public interface StudentMapper {
         Student student = studentLoader.loadEntityById(dto.getStudent().getId());
 
         // Montag mappen
-        selections.addAll(mapSelectionsForDay(student, dto.getCourseSelectionMonday(), WeekDay.Monday, courseLoader));
+        selections.addAll(mapSelectionsForDay(student, dto.getCourseSelectionMonday(), WeekDay.MONDAY, courseLoader));
 
         // Dienstag mappen
-        selections.addAll(mapSelectionsForDay(student, dto.getCourseSelectionTuesday(), WeekDay.Tuesday, courseLoader));
+        selections.addAll(mapSelectionsForDay(student, dto.getCourseSelectionTuesday(), WeekDay.TUESDAY, courseLoader));
 
         // Mittwoch mappen
-        selections.addAll(mapSelectionsForDay(student, dto.getCourseSelectionWednesday(), WeekDay.Wednesday, courseLoader));
+        selections.addAll(mapSelectionsForDay(student, dto.getCourseSelectionWednesday(), WeekDay.WEDNESDAY, courseLoader));
 
         // Donnerstag mappen
-        selections.addAll(mapSelectionsForDay(student, dto.getCourseSelectionThursday(), WeekDay.Thursday, courseLoader));
+        selections.addAll(mapSelectionsForDay(student, dto.getCourseSelectionThursday(), WeekDay.THURSDAY, courseLoader));
 
         return selections.stream()
                 .filter(s -> !Objects.isNull(s.getCourse()) || !Strings.isBlank(s.getComment()) || !Objects.isNull(s.getId()))

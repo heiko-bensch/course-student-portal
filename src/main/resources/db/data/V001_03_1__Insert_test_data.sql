@@ -1,83 +1,83 @@
 INSERT INTO course (name, day_of_week, instructor, grade_levels, semester)
-VALUES ('Freiarbeit Jgst. 4', 'Monday', 'Dr. Smith', '4', '1/2024');
+VALUES ('Freiarbeit Jgst. 4', 'MONDAY', 'Dr. Smith', '4', '1/2024');
 INSERT INTO course (name, day_of_week, instructor, grade_levels, semester)
-VALUES ('Freiarbeit Jgst. 1/2', 'Monday', 'Frau Flügel, Frau Schwaiger', '1/2', '1/2024');
+VALUES ('Freiarbeit Jgst. 1/2', 'MONDAY', 'Frau Flügel, Frau Schwaiger', '1/2', '1/2024');
 INSERT INTO course (name, day_of_week, instructor, grade_levels, semester)
-VALUES ('Schwimmen Jgst. 3', 'Monday', 'Frau Kroupa', '3', '1/2024'); --pflicht
+VALUES ('Schwimmen Jgst. 3', 'MONDAY', 'Frau Kroupa', '3', '1/2024'); --pflicht
 INSERT INTO course (name, day_of_week, instructor, grade_levels, semester)
-VALUES ('English is fun', 'Monday', 'Frau Poncer', '1/2', '1/2024');
+VALUES ('English is fun', 'MONDAY', 'Frau Poncer', '1/2', '1/2024');
 INSERT INTO course (name, day_of_week, instructor, grade_levels, semester)
-VALUES ('Nadel, Faden, Knoten', 'Monday', 'Frau  Merz-Schöpf', '1/2', '1/2024');
+VALUES ('Nadel, Faden, Knoten', 'MONDAY', 'Frau  Merz-Schöpf', '1/2', '1/2024');
 INSERT INTO course (name, day_of_week, instructor, grade_levels, semester)
-VALUES ('Bücherwerkstatt', 'Monday', 'Frau Buch', '1/2', '1/2024');
+VALUES ('Bücherwerkstatt', 'MONDAY', 'Frau Buch', '1/2', '1/2024');
 INSERT INTO course (name, day_of_week, instructor, grade_levels, semester)
-VALUES ('Abholung', 'Monday', null, null, '1/2024');
+VALUES ('Abholung', 'MONDAY', null, null, '1/2024');
 
 ---------------------------
 
 INSERT INTO course (name, day_of_week, instructor, grade_levels, semester)
-VALUES ('Freiarbeit Jgst. 4', 'Tuesday', 'Frau Dienstag', '4', '1/2024'); --verbindlich
+VALUES ('Freiarbeit Jgst. 4', 'TUESDAY', 'Frau Dienstag', '4', '1/2024'); --verbindlich
 INSERT INTO course (name, day_of_week, instructor, grade_levels, semester)
-VALUES ('Freiarbeit Jgst. 2/3', 'Tuesday', 'Frau Klaus', '2/3', '1/2024');
+VALUES ('Freiarbeit Jgst. 2/3', 'TUESDAY', 'Frau Klaus', '2/3', '1/2024');
 INSERT INTO course (name, day_of_week, instructor, grade_levels, semester)
-VALUES ('Play-volution – Spielkurs für die 1. Jahrgangsstufe', 'Tuesday', 'Frau Klaus', '1', '1/2024');
+VALUES ('Play-volution – Spielkurs für die 1. Jahrgangsstufe', 'TUESDAY', 'Frau Klaus', '1', '1/2024');
 INSERT INTO course (name, day_of_week, instructor, grade_levels, semester)
-VALUES ('Unterwegs in Frühling und Sommer', 'Tuesday', 'Frau Poncer', '1/2', '1/2024');
+VALUES ('Unterwegs in Frühling und Sommer', 'TUESDAY', 'Frau Poncer', '1/2', '1/2024');
 INSERT INTO course (name, day_of_week, instructor, grade_levels, semester)
-VALUES ('Zirkus EmiLe', 'Tuesday', 'Frau Poncer', '1-3', '1/2024');
+VALUES ('Zirkus EmiLe', 'TUESDAY', 'Frau Poncer', '1-3', '1/2024');
 INSERT INTO course (name, day_of_week, instructor, grade_levels, semester)
-VALUES ('Geschichten werden lebendig', 'Tuesday', 'Frau Poncer', '2/3', '1/2024');
+VALUES ('Geschichten werden lebendig', 'TUESDAY', 'Frau Poncer', '2/3', '1/2024');
 INSERT INTO course (name, day_of_week, instructor, grade_levels, semester)
-VALUES ('EPlastisches Gestalten', 'Tuesday', 'Frau Poncer', '1-3', '1/2024');
+VALUES ('EPlastisches Gestalten', 'TUESDAY', 'Frau Poncer', '1-3', '1/2024');
 INSERT INTO course (name, day_of_week, instructor, grade_levels, semester)
-VALUES ('Abholung', 'Tuesday', null, null, '1/2024');
+VALUES ('Abholung', 'TUESDAY', null, null, '1/2024');
 
 ---------------------------
 
 INSERT INTO course (name, day_of_week, instructor, grade_levels, semester)
-VALUES ('Kreativ und kunterbunt', 'Wednesday', 'Frau Poncer', '1/2', '1/2024');
+VALUES ('Kreativ und kunterbunt', 'WEDNESDAY', 'Frau Poncer', '1/2', '1/2024');
 INSERT INTO course (name, day_of_week, instructor, grade_levels, semester)
-VALUES ('Theater, Theater', 'Wednesday', 'Frau Poncer', '1-4', '1/2024');
+VALUES ('Theater, Theater', 'WEDNESDAY', 'Frau Poncer', '1-4', '1/2024');
 INSERT INTO course (name, day_of_week, instructor, grade_levels, semester)
-VALUES ('Der Wirbelwind genießt die Ruhe', 'Wednesday', 'Frau Poncer', '1-4', '1/2024');
+VALUES ('Der Wirbelwind genießt die Ruhe', 'WEDNESDAY', 'Frau Poncer', '1-4', '1/2024');
 INSERT INTO course (name, day_of_week, instructor, grade_levels, semester)
-VALUES ('Musical – Projekt 6K united!', 'Wednesday', 'Frau Poncer', '3/2', '1/2024');
+VALUES ('Musical – Projekt 6K united!', 'WEDNESDAY', 'Frau Poncer', '3/2', '1/2024');
 INSERT INTO course (name, day_of_week, instructor, grade_levels, semester)
-VALUES ('Experimentieren', 'Wednesday', 'Frau Poncer', '1/2', '1/2024');
+VALUES ('Experimentieren', 'WEDNESDAY', 'Frau Poncer', '1/2', '1/2024');
 INSERT INTO course (name, day_of_week, instructor, grade_levels, semester)
-VALUES ('Schulacker', 'Wednesday', 'Frau Poncer', '1/4', '1/2024');
+VALUES ('Schulacker', 'WEDNESDAY', 'Frau Poncer', '1/4', '1/2024');
 INSERT INTO course (name, day_of_week, instructor, grade_levels, semester)
-VALUES ('Outdoor Sport', 'Wednesday', 'Frau Poncer', '3/4', '1/2024');
+VALUES ('Outdoor Sport', 'WEDNESDAY', 'Frau Poncer', '3/4', '1/2024');
 INSERT INTO course (name, day_of_week, instructor, grade_levels, semester)
-VALUES ('Interkulturelle Geschichten, Marionetten und Kulissen für Kinder', 'Wednesday', 'Frau Poncer',
+VALUES ('Interkulturelle Geschichten, Marionetten und Kulissen für Kinder', 'WEDNESDAY', 'Frau Poncer',
         '1-4', '1/2024');
 INSERT INTO course (name, day_of_week, instructor, grade_levels, semester)
-VALUES ('Und Action …', 'Wednesday', 'Frau Poncer', '1/2', '1/2024');
+VALUES ('Und Action …', 'WEDNESDAY', 'Frau Poncer', '1/2', '1/2024');
 INSERT INTO course (name, day_of_week, instructor, grade_levels, semester)
-VALUES ('Abholung', 'Wednesday', null, null, '1/2024');
+VALUES ('Abholung', 'WEDNESDAY', null, null, '1/2024');
 
 ---------------------
 
 INSERT INTO course (name, day_of_week, instructor, grade_levels, semester)
-VALUES ('Mit Märchen die Natur erleben', 'Thursday', 'Frau Poncer', '1/2', '1/2024');
+VALUES ('Mit Märchen die Natur erleben', 'THURSDAY', 'Frau Poncer', '1/2', '1/2024');
 INSERT INTO course (name, day_of_week, instructor, grade_levels, semester)
-VALUES ('Kreativwerkstatt', 'Thursday', 'Frau Poncer', '1/2', 'Ï');
+VALUES ('Kreativwerkstatt', 'THURSDAY', 'Frau Poncer', '1/2', 'Ï');
 INSERT INTO course (name, day_of_week, instructor, grade_levels, semester)
-VALUES ('Freiarbeit 1-4', 'Thursday', 'Frau Poncer', '1-4', '1/2024');
+VALUES ('Freiarbeit 1-4', 'THURSDAY', 'Frau Poncer', '1-4', '1/2024');
 INSERT INTO course (name, day_of_week, instructor, grade_levels, semester)
-VALUES ('EmiLe Kochstudio', 'Thursday', 'Frau Poncer', '3/4', '1/2024');
+VALUES ('EmiLe Kochstudio', 'THURSDAY', 'Frau Poncer', '3/4', '1/2024');
 INSERT INTO course (name, day_of_week, instructor, grade_levels, semester)
-VALUES ('Italienisch für den Urlaub', 'Thursday', 'Frau Poncer', '3/4', '1/2024');
+VALUES ('Italienisch für den Urlaub', 'THURSDAY', 'Frau Poncer', '3/4', '1/2024');
 INSERT INTO course (name, day_of_week, instructor, grade_levels, semester)
-VALUES ('Chill out', 'Thursday', 'Frau Poncer', '1/2', '1/2024');
+VALUES ('Chill out', 'THURSDAY', 'Frau Poncer', '1/2', '1/2024');
 INSERT INTO course (name, day_of_week, instructor, grade_levels, semester)
-VALUES ('Schach', 'Thursday', 'Frau Poncer', '3/4', '1/2024');
+VALUES ('Schach', 'THURSDAY', 'Frau Poncer', '3/4', '1/2024');
 INSERT INTO course (name, day_of_week, instructor, grade_levels, semester)
-VALUES ('Kunst-Entdecker_in: Von der Skulptur bis zum Recycling', 'Thursday', 'Frau Poncer', '1-4', '1/2024');
+VALUES ('Kunst-Entdecker_in: Von der Skulptur bis zum Recycling', 'THURSDAY', 'Frau Poncer', '1-4', '1/2024');
 INSERT INTO course (name, day_of_week, instructor, grade_levels, semester)
-VALUES ('Zirkus EmiLe', 'Thursday', 'Frau Poncer', '1-4', '1/2024');
+VALUES ('Zirkus EmiLe', 'THURSDAY', 'Frau Poncer', '1-4', '1/2024');
 INSERT INTO course (name, day_of_week, instructor, grade_levels, semester)
-VALUES ('Abholung', 'Thursday', null, null, '1/2024');
+VALUES ('Abholung', 'THURSDAY', null, null, '1/2024');
 
 -----------------------------------------------
 
@@ -162,20 +162,20 @@ INSERT INTO course_selection (student_id, course_id, day_of_week, priority, comm
 SELECT 1, id, day_of_week, 1, '12:45 Uhr', semester
 FROM course
 WHERE name = 'Abholung'
-  and day_of_week = 'Tuesday';
+  and day_of_week = 'TUESDAY';
 
 ------ Mittwoch  --------
 INSERT INTO course_selection (student_id, course_id, day_of_week, priority, comment, semester)
 SELECT 1, id, day_of_week, 1, null, semester
 FROM course
 WHERE name = 'Theater, Theater'
-  and day_of_week = 'Wednesday';
+  and day_of_week = 'WEDNESDAY';
 
 INSERT INTO course_selection (student_id, course_id, day_of_week, priority, comment, semester)
 SELECT 1, id, day_of_week, 1, null, semester
 FROM course
 WHERE name = 'Der Wirbelwind genießt die Ruhe'
-  and day_of_week = 'Wednesday';
+  and day_of_week = 'WEDNESDAY';
 
 
 ------ Donnerstag --------
@@ -184,16 +184,16 @@ INSERT INTO course_selection (student_id, course_id, day_of_week, priority, comm
 SELECT 1, id, day_of_week, 1, 'Hallo Selb', semester
 FROM course
 WHERE name = 'EmiLe Kochstudio'
-  and day_of_week = 'Thursday';
+  and day_of_week = 'THURSDAY';
 
 INSERT INTO course_selection (student_id, course_id, day_of_week, priority, comment, semester)
 SELECT 1, id, day_of_week, 2, null, semester
 FROM course
 WHERE name = 'Kreativwerkstatt'
-  and day_of_week = 'Thursday';
+  and day_of_week = 'THURSDAY';
 
 INSERT INTO course_selection (student_id, course_id, day_of_week, priority, comment, semester)
 SELECT 1, id, day_of_week, 3, null, semester
 FROM course
 WHERE name = 'Mit Märchen die Natur erleben'
-  and day_of_week = 'Thursday';
+  and day_of_week = 'THURSDAY';

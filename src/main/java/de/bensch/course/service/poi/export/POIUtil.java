@@ -116,10 +116,10 @@ public class POIUtil {
      */
     public static IndexedColors getColorForWeekday(WeekDay dayOfWeek) {
         return switch (dayOfWeek) {
-            case Thursday -> IndexedColors.LIGHT_GREEN;
-            case Monday -> IndexedColors.LIGHT_CORNFLOWER_BLUE;
-            case Tuesday -> IndexedColors.LEMON_CHIFFON;
-            case Wednesday -> IndexedColors.LIGHT_TURQUOISE;
+            case THURSDAY -> IndexedColors.LIGHT_GREEN;
+            case MONDAY -> IndexedColors.LIGHT_CORNFLOWER_BLUE;
+            case TUESDAY -> IndexedColors.LEMON_CHIFFON;
+            case WEDNESDAY -> IndexedColors.LIGHT_TURQUOISE;
         };
     }
 }

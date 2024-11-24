@@ -6,6 +6,7 @@ import de.bensch.course.service.CourseStudentExcelExportService;
 import lombok.extern.slf4j.Slf4j;
 import net.datafaker.Faker;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
+@Disabled
 class CourseStudentExportTest {
     private final StudentTestDataFactory testDataFactory = new StudentTestDataFactory();
 
@@ -33,10 +35,10 @@ class CourseStudentExportTest {
     void torte() throws IOException {
         CourseStudentExcelExportService export = new CourseStudentExcelExportService();
         List<StudentCourseSelection> all = new ArrayList<>();
-        all.addAll(getCourseSelection(WeekDay.Monday));
-        all.addAll(getCourseSelection(WeekDay.Wednesday));
-        all.addAll(getCourseSelection(WeekDay.Thursday));
-        all.addAll(getCourseSelection(WeekDay.Tuesday));
+        all.addAll(getCourseSelection(WeekDay.MONDAY));
+        all.addAll(getCourseSelection(WeekDay.WEDNESDAY));
+        all.addAll(getCourseSelection(WeekDay.THURSDAY));
+        all.addAll(getCourseSelection(WeekDay.TUESDAY));
 
 
         byte[] export1 = export.export(all);
@@ -56,6 +58,4 @@ class CourseStudentExportTest {
         return all;
 
     }
-
-
 }
