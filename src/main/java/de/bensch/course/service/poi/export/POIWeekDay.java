@@ -65,7 +65,7 @@ public class POIWeekDay {
                 .collect(groupingBy(StudentCourseSelection::getWeekDay))
                 .entrySet()
                 .stream()
-                .map((e) -> new POIWeekDay(semester, e.getKey(), POICourse.createPOICourse(e.getValue())))
+                .map(e -> new POIWeekDay(semester, e.getKey(), POICourse.createPOICourse(e.getValue())))
                 .sorted(Comparator.comparing(s -> s.weekDay))
                 .toList();
     }
@@ -115,7 +115,7 @@ public class POIWeekDay {
         int rowIndex = 0;
         int columnIndex = 3;
         XSSFSheet sheet = poiContext.getWorkbook().createSheet(weekDay.getDisplayName());
-        CellStyle cellStyle = poiContext.getStyleFactory().getCellStyle(StyleFactory.StyleEnum.SheetHeader);
+        CellStyle cellStyle = poiContext.getStyleFactory().getCellStyle(StyleFactory.StyleEnum.SHEET_HEADER);
 
         POIUtil.addCell(sheet, rowIndex, columnIndex, cellStyle, "Kurswahl P1 " + semester);
         POIUtil.addCell(sheet, ++rowIndex, columnIndex, cellStyle, weekDay.getDisplayName());

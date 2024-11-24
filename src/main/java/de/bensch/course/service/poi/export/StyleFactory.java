@@ -79,7 +79,7 @@ public class StyleFactory {
         /**
          * Style for the header of a sheet.
          */
-        SheetHeader(wb -> {
+        SHEET_HEADER(wb -> {
             Font font = createFont(wb, true, (short) 20, Font.U_SINGLE);
             CellStyle style = wb.createCellStyle();
             style.setFont(font);
@@ -89,7 +89,7 @@ public class StyleFactory {
         /**
          * Style for regular entry cells.
          */
-        Entry(wb -> {
+        ENTRY(wb -> {
             CellStyle style = wb.createCellStyle();
             style.setBorderBottom(BorderStyle.THIN);
             return style;
@@ -98,7 +98,7 @@ public class StyleFactory {
         /**
          * Style for entry cells with a medium bottom border.
          */
-        EntryBorderBottom(wb -> {
+        ENTRY_BORDER_BOTTOM(wb -> {
             CellStyle style = wb.createCellStyle();
             style.setBorderBottom(BorderStyle.MEDIUM);
             return style;
@@ -107,12 +107,12 @@ public class StyleFactory {
         /**
          * Style for entry cells with medium right and thin bottom borders.
          */
-        EntryBorderRight(wb -> createBorderStyle(wb, BorderStyle.MEDIUM, BorderStyle.THIN)),
+        ENTRY_BORDER_RIGHT(wb -> createBorderStyle(wb, BorderStyle.MEDIUM, BorderStyle.THIN)),
 
         /**
          * Style for entry cells with medium left and thin borders.
          */
-        EntryBorderLeft(wb -> {
+        ENTRY_BORDER_LEFT(wb -> {
             CellStyle style = createBorderStyle(wb, BorderStyle.THIN, BorderStyle.THIN);
             style.setBorderLeft(BorderStyle.MEDIUM);
             return style;
@@ -121,7 +121,7 @@ public class StyleFactory {
         /**
          * Style for entry cells with medium left and bottom borders.
          */
-        EntryBorderLeftBottom(wb -> {
+        ENTRY_BORDER_LEFT_BOTTOM(wb -> {
             CellStyle style = createBorderStyle(wb, BorderStyle.THIN, BorderStyle.THIN);
             style.setBorderLeft(BorderStyle.MEDIUM);
             style.setBorderBottom(BorderStyle.MEDIUM);
@@ -131,7 +131,7 @@ public class StyleFactory {
         /**
          * Style for entry cells with medium right and bottom borders.
          */
-        EntryBorderRightBottom(wb -> {
+        ENTRY_BORDER_RIGHT_BOTTOM(wb -> {
             CellStyle style = createBorderStyle(wb, BorderStyle.THIN, BorderStyle.THIN);
             style.setBorderRight(BorderStyle.MEDIUM);
             style.setBorderBottom(BorderStyle.MEDIUM);
@@ -141,7 +141,7 @@ public class StyleFactory {
         /**
          * Style for course headers with light green background and centered text.
          */
-        CourseHeader(wb -> {
+        COURSE_HEADER(wb -> {
             Font font = createFont(wb, true, (short) 12, Font.U_NONE);
             CellStyle style = wb.createCellStyle();
             style.setFont(font);

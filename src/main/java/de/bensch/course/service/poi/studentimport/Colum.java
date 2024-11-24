@@ -13,27 +13,27 @@ public enum Colum {
     /**
      * Represents the last name column ("Name").
      */
-    LastName("Name"),
+    LAST_NAME("Name"),
 
     /**
      * Represents the first name column ("Vorname").
      */
-    FirstName("Vorname"),
+    FIRST_NAME("Vorname"),
 
     /**
      * Represents the grade level column ("Klassenstufe").
      */
-    GradeLevel("Klassenstufe"),
+    GRADE_LEVEL("Klassenstufe"),
 
     /**
      * Represents the class column ("Klasse").
      */
-    Class("Klasse"),
+    CLASS("Klasse"),
 
     /**
      * Represents the ballot submission status column ("Wahlzettel abgegeben").
      */
-    BallotSubmitted("Wahlzettel abgegeben");
+    BALLOT_SUBMITTED("Wahlzettel abgegeben");
 
     /**
      * The name of the column associated with the enum constant.

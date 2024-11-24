@@ -87,27 +87,27 @@ public class ExcelImportService {
         Student student;
         student = new Student();
         student.setSemester(semester);
-        header.getIndex(Colum.FirstName).ifPresent(c -> {
+        header.getIndex(Colum.FIRST_NAME).ifPresent(c -> {
             var val = CellUtil.getStringValue(row.getCell(c));
             student.setFirstName(val);
         });
 
-        header.getIndex(Colum.LastName).ifPresent(c -> {
+        header.getIndex(Colum.LAST_NAME).ifPresent(c -> {
             var val = CellUtil.getStringValue(row.getCell(c));
             student.setLastName(val);
         });
 
-        header.getIndex(Colum.GradeLevel).ifPresent(c -> {
+        header.getIndex(Colum.GRADE_LEVEL).ifPresent(c -> {
             var val = CellUtil.getStringValue(row.getCell(c));
             student.setGradeLevel(val);
         });
 
-        header.getIndex(Colum.Class).ifPresent(c -> {
+        header.getIndex(Colum.CLASS).ifPresent(c -> {
             var val = CellUtil.getStringValue(row.getCell(c));
             student.setClassName(val);
         });
 
-        header.getIndex(Colum.BallotSubmitted).ifPresent(c -> {
+        header.getIndex(Colum.BALLOT_SUBMITTED).ifPresent(c -> {
             var val = CellUtil.getBooleanValue(row.getCell(c));
             student.setBallotSubmitted(val);
         });

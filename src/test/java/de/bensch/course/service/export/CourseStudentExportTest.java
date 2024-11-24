@@ -6,7 +6,6 @@ import de.bensch.course.service.CourseStudentExcelExportService;
 import lombok.extern.slf4j.Slf4j;
 import net.datafaker.Faker;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -17,8 +16,9 @@ import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+
 @Slf4j
-@Disabled
 class CourseStudentExportTest {
     private final StudentTestDataFactory testDataFactory = new StudentTestDataFactory();
 
@@ -32,7 +32,7 @@ class CourseStudentExportTest {
     }
 
     @Test
-    void torte() throws IOException {
+    void TestExport() throws IOException {
         CourseStudentExcelExportService export = new CourseStudentExcelExportService();
         List<StudentCourseSelection> all = new ArrayList<>();
         all.addAll(getCourseSelection(WeekDay.MONDAY));
@@ -43,6 +43,7 @@ class CourseStudentExportTest {
 
         byte[] export1 = export.export(all);
         Files.write(Path.of("torte.xlsx"), export1, StandardOpenOption.WRITE, StandardOpenOption.CREATE);
+        assertThat(export1).isNotNull();
 
     }
 
