@@ -102,6 +102,7 @@ jib {
         }
     }
     from {
+        image = 'amazoncorretto:17'
         platforms {
             platform {
                 architecture = 'amd64'
