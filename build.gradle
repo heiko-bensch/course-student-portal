@@ -88,12 +88,11 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
-def githubUsername = project.findProperty('githubUsername') ?: 'default_username'
 def imageName = project.findProperty('imageName') ?: 'default_image'
 
 jib {
     to {
-        image = "ghcr.io/${githubUsername}/${imageName}"
+        image = "${imageName}"
         tags = [project.version.toString(), 'latest']
         container {
             jvmFlags = ['-Xms512m', '-Xdebug', '-XX:+UnlockExperimentalVMOptions', '-XX:+UseContainerSupport']
